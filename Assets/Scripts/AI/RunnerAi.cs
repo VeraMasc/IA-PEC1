@@ -20,7 +20,10 @@ public class RunnerAi : MonoBehaviour
 	/// </summary>
 	public Transform secondaryPoint;
 
-
+	/// <summary>
+	/// Retraso entre el agente y el objeto que le sigue
+	/// </summary>
+	public float agentDelay;
 	/// <summary>
 	/// Proximidad a targetPoint a partir de la que se aplica el suavizado
 	/// </summary>
@@ -39,7 +42,7 @@ public class RunnerAi : MonoBehaviour
 			return Vector3.Lerp(targetPoint.position, secondaryPoint.position, lerpFactor);
 		}
 	}
-	
+
 
 	/// <summary>
 	/// Índice del waypoint objetivo
@@ -60,34 +63,42 @@ public class RunnerAi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		agent.updatePosition = false;
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if(!agent.hasPath || agent.remainingDistance <= 1  ){
 			regeneratePath();
 		}
+		else{
+			followAgent();
+		}
     }
+
+	public void followAgent(){
+		var pos =agent.nextPosition;
+		var diff = pos-transform.position;
+		
+		if(diff.magnitude >=2){
+			transform.position += diff.normalized * (diff.magnitude-2);
+		}
+	}
 
 	/// <summary>
 	/// Abandona el path previo (si lo hay) y genera uno nuevo
 	/// </summary>
 	public void regeneratePath(){
 		updateTargetIfNeeded();
-		// if (agent.hasPath)
-		// 		velocity = Quaternion.FromToRotation(Vector3.up, Vector3.forward) * agent.desiredVelocity;
-		// Vector2 targetDir = Quaternion.FromToRotation(Vector3.up, Vector3.forward)* (targetPoint.position - transform.position).normalized;
-		// velocity = velocity+ (targetDir * targetAttraction) +(Random.insideUnitCircle * noise) ;
-		// agent.destination =  transform.position + (Quaternion.FromToRotation(Vector3.forward, Vector3.up) * (Vector3)velocity*2);
-		// agent.speed = velocity.magnitude;
+
 		if (effectiveTarget == null)
 			return;
-		var diff = (Vector3)effectiveTarget - transform.position;
-		var step = Vector3.ClampMagnitude(diff.normalized * stepSize, diff.magnitude);
-		agent.destination = transform.position + step;
-		//agent.destination = targetPoint.position;
+
+		// var diff = (Vector3)effectiveTarget - transform.position;
+		// var step = Vector3.ClampMagnitude(diff.normalized * stepSize, diff.magnitude);
+		// agent.destination = transform.position + step;
+		agent.destination = (Vector3)effectiveTarget;
 	}
 
 	/// <summary>
@@ -96,7 +107,7 @@ public class RunnerAi : MonoBehaviour
 	public void updateTargetIfNeeded(){
 		if ( targetPoint !=null && ((Vector3)effectiveTarget - transform.position).magnitude > 4)
 			return;
-		
+
 		(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,1);
 		(secondaryPoint,_) = Waypoints.singleton.getNextPoint(targetIndex,1);
 	}
