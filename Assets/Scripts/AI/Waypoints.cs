@@ -60,7 +60,7 @@ public class Waypoints : MonoBehaviour
 	/// <param name="dir">Sentido de movimiento del runner (en la lista de waypoints)</param>
 	/// <returns>Tuple of the point's Transform & it's index</returns>
 	public (Transform, int) getNextPoint(int current, int dir){
-		var index = (current + dir) % waypointsList.Length;
+		var index = (current + dir + waypointsList.Length) % waypointsList.Length;
 		return (waypointsList[index], index);
 	}
 

@@ -20,6 +20,11 @@ public class RunnerAi : MonoBehaviour
 	/// </summary>
 	public int targetIndex;
 
+	/// <summary>
+	/// Sentido en el que sigue el recorrido
+	/// </summary>
+	public int pathDir;
+
 
 
 	/// <summary>
@@ -47,6 +52,7 @@ public class RunnerAi : MonoBehaviour
 		//Velocidad aleatoria
 		var halfRspeed = randomSpeed / 2;
 		agent.speed += Random.Range(-halfRspeed, halfRspeed);
+		pathDir = Random.value < 0.5f? 1 : -1;
 
     }
 
@@ -99,12 +105,12 @@ public class RunnerAi : MonoBehaviour
 	/// </summary>
 	public void getNextTarget(){
 		if(targetPoint == null){
-			(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,0);
+			(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex, pathDir==1? 0:-1);
 			setAgentPos();
 			return;
 		}
 
-		(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,1);
+		(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,pathDir);
 	}
 
 	void OnDrawGizmosSelected() {
