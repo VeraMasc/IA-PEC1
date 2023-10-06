@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Script encargado de gestionar a los runners
@@ -26,6 +27,10 @@ public class RunnerAi : MonoBehaviour
 	/// </summary>
 	public float agentDelay=2f;
 
+	/// <summary>
+	/// Rango de variación de la velocidad
+	/// </summary>
+	public float randomSpeed = 1f;
 
 	
 
@@ -38,19 +43,27 @@ public class RunnerAi : MonoBehaviour
     void Start()
     {
 		agent.updatePosition = false;
+
+		//Velocidad aleatoria
+		var halfRspeed = randomSpeed / 2;
+		agent.speed += Random.Range(-halfRspeed, halfRspeed);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if(!agent.hasPath || agent.remainingDistance <= 1  ){
-			regeneratePath();
+			regeneratePath(); 
 		}
 		else{
 			followAgent();
 		}
     }
 
+	/// <summary>
+	/// Actualiza la posición para que siga al agente desde una cierta distancia
+	/// </summary>
 	public void followAgent(){
 		var pos =agent.nextPosition;
 		var diff = pos-transform.position;
@@ -61,10 +74,19 @@ public class RunnerAi : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Inicializa la posición del agente a cierta distancia para que no haya delay en el movimiento
+	/// </summary>
+	private void setAgentPos(){
+		var diff = targetPoint.position-transform.position;
+		var offsetPos = transform.position + diff.normalized * agentDelay;
+		agent.nextPosition = offsetPos;
+	}
+
+	/// <summary>
 	/// Abandona el path previo (si lo hay) y genera uno nuevo
 	/// </summary>
 	public void regeneratePath(){
-		updateTargetIfNeeded();
+		getNextTarget();
 
 		if (targetPoint == null)
 			return;
@@ -75,8 +97,12 @@ public class RunnerAi : MonoBehaviour
 	/// <summary>
 	/// Cambia de target point si ya se ha llegado al actual
 	/// </summary>
-	public void updateTargetIfNeeded(){
-
+	public void getNextTarget(){
+		if(targetPoint == null){
+			(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,0);
+			setAgentPos();
+			return;
+		}
 
 		(targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,1);
 	}

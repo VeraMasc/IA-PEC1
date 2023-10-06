@@ -144,12 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPoint: {fileID: 0}
-  secondaryPoint: {fileID: 0}
-  smoothingFactor: 2
-  smoothingDist: 10
-  targetIndex: -1
-  stepSize: 4
-  targetAttraction: 0
-  velocity: {x: 0, y: 3}
-  noise: 0.3
+  targetIndex: 0
+  agentDelay: 2
+  randomSpeed: 1
   agent: {fileID: 3010135547998777784}
