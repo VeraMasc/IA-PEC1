@@ -15,11 +15,11 @@ la escena (nombre de la plaza?) o en la User Interface
 Los objetivos de esta actividad son la aplicación del algoritmo A* y las técnicas de
 patrulla (patrolling). Para esto se pide:
 
-- [ ] Añadir un conjunto grande de agentes que simulen a personas corriendo por la
+- [x] Añadir un conjunto grande de agentes que simulen a personas corriendo por la
 parte exterior de la plaza. Los modelos de los agentes no hace falta que sean
 complejos, pueden estar basados en cápsulas o en assets sencillos.
-- [ ] Añadir alguna técnica de suavizado (smoothing) al movimiento de patrulla.
-- [ ] Cada uno de los agentes se tiene que mover a una velocidad y sentido aleatorios.
+- [x] Añadir alguna técnica de suavizado (smoothing) al movimiento de patrulla.
+- [x] Cada uno de los agentes se tiene que mover a una velocidad y sentido aleatorios.
 
 Ayudaos del componente NavMeshAgent para implementar esta actividad.
 
