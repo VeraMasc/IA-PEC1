@@ -43,20 +43,33 @@ public class GrandpaAI : MonoBehaviour
 	public float wanderRange = 8f;
 
 	/// <summary>
+	/// Rango en el que detectan los bancos
+	/// </summary>
+	public float detectionRange = 2f;
+
+	/// <summary>
 	/// Segundos que pasa descansando en un banco
 	/// </summary>
 	public float restTime = 3f;
+
+	/// <summary>
+	/// Contador del tiempo que queda de descanso
+	/// </summary>
+	public float restRemaining ;
 
 	/// <summary>
 	/// Mask del navmesh area de "banco"
 	/// </summary>
 	int benchMask;
 
+	int defaultMask;
+
 	int benchLayer;
     // Start is called before the first frame update
     void Start()
     {
 		benchMask = 1 << NavMesh.GetAreaFromName("Bench");
+		defaultMask = agent.areaMask;
 		benchLayer = LayerMask.GetMask("Bench");
     }
 
@@ -73,7 +86,7 @@ public class GrandpaAI : MonoBehaviour
 	private void executeState()
 	{
 		//Cambiar de estado automáticamente al terminar el path actual
-		if(!agent.hasPath)
+		if(stateNeedsUpdate())
 			state = getNextState();
 
 		switch(state){
@@ -95,6 +108,7 @@ public class GrandpaAI : MonoBehaviour
 			return;
 		
 		var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
+		randomVector = Vector3.Max(randomVector, randomVector.normalized*2); //Minimum 1 unit movement
 		agent.destination =  randomVector + transform.position;		
 		
 		
@@ -105,7 +119,7 @@ public class GrandpaAI : MonoBehaviour
 	/// Ejecuta el estado de descanso
 	/// </summary>
 	public void rest(){
-
+		restRemaining -= Time.deltaTime;
 	}
 
 	/// <summary>
@@ -118,11 +132,11 @@ public class GrandpaAI : MonoBehaviour
 		
 		if(state == GrandpaState.goToBench){
 			agent.SamplePathPosition(benchMask, 0.1f, out NavMeshHit hit);
-			if(hit.mask==benchMask)
-				Debug.Log("On Bench");
+			if (hit.mask == benchMask)
+				newState = GrandpaState.rest;
 			
 		} else if( state == GrandpaState.wander){
-			var hits = Physics.OverlapSphere(transform.position, 3f, benchLayer);
+			var hits = Physics.OverlapSphere(transform.position, detectionRange, benchLayer);
 
 			var closest = hits.Select(hit => 
 				new { hit, dist=(hit.transform.position - transform.position).magnitude}//Calculate dist
@@ -135,10 +149,37 @@ public class GrandpaAI : MonoBehaviour
 				newState = GrandpaState.goToBench;
 			}
 
-		}
+		} 
 
+		if (state != newState)
+			initializeState(newState);
 		return newState;
 	}
 
+	bool stateNeedsUpdate(){
+		if (!agent.hasPath && state != GrandpaState.rest)
+			return true;
+
+		if(state == GrandpaState.goToBench && agent.remainingDistance <1f){
+			return true;
+		}
+
+		if(state == GrandpaState.rest && restRemaining <0){
+			return true;
+		}
+
+		return false;
+	}
+
+	void initializeState(GrandpaState newState){
+		if (newState == GrandpaState.rest){
+			Debug.Log("BenchMask");
+			agent.areaMask = benchMask; //Force to stay in bench
+			restRemaining = restTime;
+			agent.ResetPath();
+		}else if(state == GrandpaState.rest){
+			agent.areaMask = defaultMask; //Allow to leave bench
+		}
+	}
 
 }

@@ -145,4 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   agent: {fileID: 3010135547998777784}
-  wanderRange: 8
+  wanderRange: 6
+  detectionRange: 2
+  restTime: 3
+  restRemaining: 0

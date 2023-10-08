@@ -14,7 +14,7 @@ NavMeshProjectSettings:
   - name: Plaza
     cost: 1
   - name: Bench
-    cost: 2
+    cost: 4
   - name: 
     cost: 1
   - name: 
