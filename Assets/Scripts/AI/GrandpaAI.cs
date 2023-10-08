@@ -19,7 +19,11 @@ public enum GrandpaState{
 	/// <summary>
 	/// Descansando en un banco
 	/// </summary>
-	rest
+	rest,
+	/// <summary>
+	/// Yendo a descansar en un banco
+	/// </summary>
+	leaveBench,
 }
 
 /// <summary>
@@ -104,11 +108,11 @@ public class GrandpaAI : MonoBehaviour
 	/// Ejecuta el estado de deambular
 	/// </summary>
 	public void wander(){
-		if (agent.hasPath)
+		if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance)
 			return;
 		
 		var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
-		randomVector = Vector3.Max(randomVector, randomVector.normalized*2); //Minimum 1 unit movement
+		randomVector = Vector3.Max(randomVector, randomVector.normalized*3); //Minimum 1 unit movement
 		agent.destination =  randomVector + transform.position;		
 		
 		
@@ -149,7 +153,9 @@ public class GrandpaAI : MonoBehaviour
 				newState = GrandpaState.goToBench;
 			}
 
-		} 
+		} else if(state == GrandpaState.rest){
+			newState = GrandpaState.leaveBench;
+		}
 
 		if (state != newState)
 			initializeState(newState);
@@ -177,9 +183,18 @@ public class GrandpaAI : MonoBehaviour
 			agent.areaMask = benchMask; //Force to stay in bench
 			restRemaining = restTime;
 			agent.ResetPath();
-		}else if(state == GrandpaState.rest){
-			agent.areaMask = defaultMask; //Allow to leave bench
+		}else{
+
+			if(newState == GrandpaState.leaveBench){
+				agent.areaMask = defaultMask; //Allow to leave bench
+				//Get away from bench
+				var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
+					randomVector = randomVector+ randomVector.normalized*3; 
+					agent.destination =  randomVector + transform.position;		
+			}
+
 		}
+		
 	}
 
 }
