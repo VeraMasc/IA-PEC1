@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 /// <summary>
 /// Estados posibles de la máquina de estados de los "Abuelos"
@@ -42,6 +43,11 @@ public class GrandpaAI : MonoBehaviour
 	public float wanderRange = 8f;
 
 	/// <summary>
+	/// Segundos que pasa descansando en un banco
+	/// </summary>
+	public float restTime = 3f;
+
+	/// <summary>
 	/// Mask del navmesh area de "banco"
 	/// </summary>
 	int benchMask;
@@ -66,6 +72,10 @@ public class GrandpaAI : MonoBehaviour
 	/// </summary>
 	private void executeState()
 	{
+		//Cambiar de estado automáticamente al terminar el path actual
+		if(!agent.hasPath)
+			state = getNextState();
+
 		switch(state){
 			case GrandpaState.wander:
 				wander(); break;
@@ -74,21 +84,20 @@ public class GrandpaAI : MonoBehaviour
 				rest(); break;
 		}
 
-		//Cambiar de estado automáticamente al terminar el path actual
-		if(!agent.hasPath)
-			state = getNextState();
+		
 	}
 
 	/// <summary>
 	/// Ejecuta el estado de deambular
 	/// </summary>
 	public void wander(){
-		if(!agent.hasPath){
-			
-			var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
-			agent.destination =  randomVector + transform.position;		
-			
-		}
+		if (agent.hasPath)
+			return;
+		
+		var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
+		agent.destination =  randomVector + transform.position;		
+		
+		
 			
 	}
 
@@ -106,16 +115,30 @@ public class GrandpaAI : MonoBehaviour
 		var newState = GrandpaState.wander; //Por defecto volverá a wander
 
 		
-		agent.SamplePathPosition(benchMask, 0.1f, out NavMeshHit hit);
-		if(hit.mask==benchMask)
-			Debug.Log("On Bench");
+		
 		if(state == GrandpaState.goToBench){
+			agent.SamplePathPosition(benchMask, 0.1f, out NavMeshHit hit);
+			if(hit.mask==benchMask)
+				Debug.Log("On Bench");
 			
 		} else if( state == GrandpaState.wander){
 			var hits = Physics.OverlapSphere(transform.position, 3f, benchLayer);
-			Debug.Log("Bench Hit");
+
+			var closest = hits.Select(hit => 
+				new { hit, dist=(hit.transform.position - transform.position).magnitude}//Calculate dist
+			).DefaultIfEmpty()
+			.Aggregate((curMin, x) => curMin == null || x.dist  < curMin.dist ? x : curMin);
+
+			if(closest != null){
+				Debug.Log("Bench Hit");
+				agent.destination = closest.hit.transform.position;
+				newState = GrandpaState.goToBench;
+			}
+
 		}
 
 		return newState;
 	}
+
+
 }
