@@ -12,6 +12,10 @@ public enum GrandpaState{
 	/// </summary>
 	wander,
 	/// <summary>
+	/// Yendo a descansar en un banco
+	/// </summary>
+	goToBench,
+	/// <summary>
 	/// Descansando en un banco
 	/// </summary>
 	rest
@@ -36,16 +40,32 @@ public class GrandpaAI : MonoBehaviour
 	/// Rango máximo en el que puede deambular cada vez
 	/// </summary>
 	public float wanderRange = 8f;
-    // Start is called before the first frame update
 
+	/// <summary>
+	/// Mask del navmesh area de "banco"
+	/// </summary>
+	int benchMask;
+
+	int benchLayer;
+    // Start is called before the first frame update
     void Start()
     {
-        
+		benchMask = 1 << NavMesh.GetAreaFromName("Bench");
+		benchLayer = LayerMask.GetMask("Bench");
     }
 
     // Update is called once per frame
     void Update()
     {
+		executeState();
+		
+    }
+
+	/// <summary>
+	/// Ejecuta el estado actual de la FSM
+	/// </summary>
+	private void executeState()
+	{
 		switch(state){
 			case GrandpaState.wander:
 				wander(); break;
@@ -54,10 +74,14 @@ public class GrandpaAI : MonoBehaviour
 				rest(); break;
 		}
 
-		state = getNextState();
-    }
+		//Cambiar de estado automáticamente al terminar el path actual
+		if(!agent.hasPath)
+			state = getNextState();
+	}
 
-
+	/// <summary>
+	/// Ejecuta el estado de deambular
+	/// </summary>
 	public void wander(){
 		if(!agent.hasPath){
 			
@@ -67,6 +91,10 @@ public class GrandpaAI : MonoBehaviour
 		}
 			
 	}
+
+	/// <summary>
+	/// Ejecuta el estado de descanso
+	/// </summary>
 	public void rest(){
 
 	}
@@ -75,6 +103,19 @@ public class GrandpaAI : MonoBehaviour
 	/// Calcula el siguiente estado de la Máquina de Estados Finitos
 	/// </summary>
 	public GrandpaState getNextState(){
-		return GrandpaState.wander;
+		var newState = GrandpaState.wander; //Por defecto volverá a wander
+
+		
+		agent.SamplePathPosition(benchMask, 0.1f, out NavMeshHit hit);
+		if(hit.mask==benchMask)
+			Debug.Log("On Bench");
+		if(state == GrandpaState.goToBench){
+			
+		} else if( state == GrandpaState.wander){
+			var hits = Physics.OverlapSphere(transform.position, 3f, benchLayer);
+			Debug.Log("Bench Hit");
+		}
+
+		return newState;
 	}
 }
