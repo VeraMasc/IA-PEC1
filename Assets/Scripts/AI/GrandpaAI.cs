@@ -47,6 +47,12 @@ public class GrandpaAI : MonoBehaviour
 	public float wanderRange = 8f;
 
 	/// <summary>
+	/// Veces que se añade la velocidad actual al cálculo de la posición futura.
+	/// </summary>
+	public float wanderInertia = 2f;
+
+	public float minWanderRange = 5f;
+	/// <summary>
 	/// Rango en el que detectan los bancos
 	/// </summary>
 	public float detectionRange = 2f;
@@ -69,12 +75,15 @@ public class GrandpaAI : MonoBehaviour
 	int defaultMask;
 
 	int benchLayer;
+
+	public RandomBetweenInt avoidance = new RandomBetweenInt(0, 50);
     // Start is called before the first frame update
     void Start()
     {
 		benchMask = 1 << NavMesh.GetAreaFromName("Bench");
 		defaultMask = agent.areaMask;
 		benchLayer = LayerMask.GetMask("Bench");
+		agent.avoidancePriority = avoidance.value;
     }
 
     // Update is called once per frame
@@ -94,6 +103,7 @@ public class GrandpaAI : MonoBehaviour
 			state = getNextState();
 
 		switch(state){
+			case GrandpaState.leaveBench:
 			case GrandpaState.wander:
 				wander(); break;
 
@@ -111,8 +121,10 @@ public class GrandpaAI : MonoBehaviour
 		if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance)
 			return;
 		
-		var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
-		randomVector = Vector3.Max(randomVector, randomVector.normalized*3); //Minimum 1 unit movement
+		var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange) + agent.velocity * wanderInertia;
+		var minVector = randomVector.normalized * minWanderRange;
+		if(minVector.magnitude > randomVector.magnitude) //Minimum movement
+			randomVector = minVector; 
 		agent.destination =  randomVector + transform.position;		
 		
 		
@@ -140,21 +152,21 @@ public class GrandpaAI : MonoBehaviour
 				newState = GrandpaState.rest;
 			
 		} else if( state == GrandpaState.wander){
-			var hits = Physics.OverlapSphere(transform.position, detectionRange, benchLayer);
 
-			var closest = hits.Select(hit => 
-				new { hit, dist=(hit.transform.position - transform.position).magnitude}//Calculate dist
-			).DefaultIfEmpty()
-			.Aggregate((curMin, x) => curMin == null || x.dist  < curMin.dist ? x : curMin);
+			var closest = benchNearby(detectionRange);
 
 			if(closest != null){
-				Debug.Log("Bench Hit");
 				agent.destination = closest.hit.transform.position;
 				newState = GrandpaState.goToBench;
 			}
 
 		} else if(state == GrandpaState.rest){
 			newState = GrandpaState.leaveBench;
+
+		} else if (state == GrandpaState.leaveBench){
+			var closest = benchNearby(detectionRange/2);
+			if (closest != null)
+				newState = GrandpaState.leaveBench;
 		}
 
 		if (state != newState)
@@ -163,7 +175,7 @@ public class GrandpaAI : MonoBehaviour
 	}
 
 	bool stateNeedsUpdate(){
-		if (!agent.hasPath && state != GrandpaState.rest)
+		if ((!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance) && state != GrandpaState.rest)
 			return true;
 
 		if(state == GrandpaState.goToBench && agent.remainingDistance <1f){
@@ -177,6 +189,21 @@ public class GrandpaAI : MonoBehaviour
 		return false;
 	}
 
+	public ClosestBench benchNearby(float range){
+		var hits = Physics.OverlapSphere(transform.position, range, benchLayer);
+
+		var closest = hits.Select(hit => 
+			new ClosestBench{ hit=hit, dist=(hit.transform.position - transform.position).magnitude}//Calculate dist
+		).DefaultIfEmpty()
+		.Aggregate((curMin, x) => curMin == null || x.dist  < curMin.dist ? x : curMin);
+
+		if(closest != null){
+			Debug.Log("Bench Hit");
+		}
+
+		return closest;
+	}
+
 	void initializeState(GrandpaState newState){
 		if (newState == GrandpaState.rest){
 			Debug.Log("BenchMask");
@@ -187,14 +214,16 @@ public class GrandpaAI : MonoBehaviour
 
 			if(newState == GrandpaState.leaveBench){
 				agent.areaMask = defaultMask; //Allow to leave bench
-				//Get away from bench
-				var randomVector = Quaternion.FromToRotation(Vector3.forward,Vector3.up) * (Vector3)(Random.insideUnitCircle * wanderRange);
-					randomVector = randomVector+ randomVector.normalized*3; 
-					agent.destination =  randomVector + transform.position;		
+					
 			}
 
 		}
 		
 	}
 
+}
+
+public class ClosestBench{
+	public Collider hit;
+	public float dist;
 }
