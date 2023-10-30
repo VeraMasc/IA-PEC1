@@ -13,10 +13,15 @@ Los abuelos tienen 4 estados definidos en el enum **GrandpaState**. Estos son:
 
 ### Cambios de estado
 
+Por cuestiones de simplicidad y eficiencia, los cambios de estado no se calculan en todo momento, sino solo cuando el estado actual ha finalizado su ejecución. Es decir, que o bien el agente ha llegado a su destino, o el tiempo de descanso en el banco se ha finalizado.
+
 ### Wander
 
-Es el estado base de los abuelos en el cual lo que hacen es simplemente deambular de forma aleatoria por el escenario.
-**ELABORAR**
+Es el estado base de los abuelos en el cual lo que hacen es simplemente deambular de forma aleatoria por el escenario. Para lograrlo, le damos al agente una posición de destino aleatoria pero relativamente cercana.
+
+Una vez llegue a la posición de destino, ejecutará el cálculo del siguiente estado. Si encuentra un banco cerca, cambiará a **GoToBench**, si no, reiniciará el estado **Wander**.
+
+
 
 ### GoToBench
 
