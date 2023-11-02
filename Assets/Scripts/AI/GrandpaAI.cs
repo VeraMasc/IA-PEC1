@@ -50,7 +50,9 @@ public class GrandpaAI : MonoBehaviour
 	/// Veces que se añade la velocidad actual al cálculo de la posición futura.
 	/// </summary>
 	public float wanderInertia = 2f;
-
+	/// <summary>
+	/// Rango mínimo en el que puede deambular cada vez
+	/// </summary>
 	public float minWanderRange = 5f;
 	/// <summary>
 	/// Rango en el que detectan los bancos
@@ -72,8 +74,14 @@ public class GrandpaAI : MonoBehaviour
 	/// </summary>
 	int benchMask;
 
+	/// <summary>
+	/// Navmesh mask por defecto del agente
+	/// </summary>
 	int defaultMask;
 
+	/// <summary>
+	/// Layer en la que se encuentra el bench (se usa para detectarlos)
+	/// </summary>
 	int benchLayer;
 
 	public RandomBetweenInt avoidance = new RandomBetweenInt(0, 50);

@@ -11,6 +11,8 @@ Los abuelos tienen 4 estados definidos en el enum **GrandpaState**. Estos son:
 2. Rest
 3. LeaveBench
 
+**DIAGRAMA**
+
 ### Cambios de estado
 
 Por cuestiones de simplicidad y eficiencia, los cambios de estado no se calculan en todo momento, sino solo cuando el estado actual ha finalizado su ejecución. Es decir, que o bien el agente ha llegado a su destino, o el tiempo de descanso en el banco se ha finalizado.
@@ -42,3 +44,9 @@ Este estado es casi indistinguible de Wander salvo por un leve matiz: cuando det
 De no encontrar ningún banco cerca, el estado cambia a **Wander**, de lo contrario, se mantiene en **LeaveBench** hasta "dejar atrás" los bancos y poder deambular un poco antes de volver a sentarse.
 
 Podría haber implementado esta solución al problema de los abuelos que entran en bucle de muchas otras formas, desde probabilidades en el cambio de estado, hasta un "cooldown", una probablilidad que aumentara con el tiempo, etc. Pero ya que se hacía mucho hincapié en las máquinas de estados he pensado que añadir este estado era la más adecuada para este ejercicio.
+
+## Código
+
+Por motivos de simplicidad y legiblidad, he preferido dejar la explicación de lo que hace el código en forma de comentarios en [GrandpaAi](/Assets/Scripts/AI/GrandpaAI.cs) y limitar esta explicación a indicar donde se encuentra cada cosa. 
+
+La ejecución de los estados frame por frame es realizada por [ExecuteState](/Assets/Scripts/AI/GrandpaAI.cs#:~:text=executeState)
