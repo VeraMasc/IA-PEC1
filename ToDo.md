@@ -5,9 +5,9 @@
 Los objetivos de esta actividad son la toma de decisiones con el mundo 3D y la creación
 de las NavMesh. Por esto se pide:
 
-- [ ] Desarrollad un escenario 3D con obstáculos «no caminables» como bancos,
+- [x] Desarrollad un escenario 3D con obstáculos «no caminables» como bancos,
 árboles, una fuente…
-- [ ] Incluid vuestro nombre y año (ejemplo: Gerard Escudero @ 2023) en un lugar de
+- [x] Incluid vuestro nombre y año (ejemplo: Gerard Escudero @ 2023) en un lugar de
 la escena (nombre de la plaza?) o en la User Interface
 
 ## Actividad 2
@@ -30,8 +30,8 @@ comportamiento de un agente. Por esto se pide definir una máquina de estado par
 segundo conjunto de agentes que simule a abuelos paseando por la plaza. Estos
 agentes tienen que contener al menos los comportamientos:
 
-- [ ] Wander: el agente va paseando por el escenario.
-- [ ] Idle: cuando se acerca a un banco, se queda un tiempo descansando.
+- [x] Wander: el agente va paseando por el escenario.
+- [x] Idle: cuando se acerca a un banco, se queda un tiempo descansando.
 
 ## Entrega
 

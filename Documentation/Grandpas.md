@@ -49,4 +49,6 @@ Podría haber implementado esta solución al problema de los abuelos que entran 
 
 Por motivos de simplicidad y legiblidad, he preferido dejar la explicación de lo que hace el código en forma de comentarios en [GrandpaAi](/Assets/Scripts/AI/GrandpaAI.cs) y limitar esta explicación a indicar donde se encuentra cada cosa. 
 
-La ejecución de los estados frame por frame es realizada por [ExecuteState](/Assets/Scripts/AI/GrandpaAI.cs#:~:text=executeState)
+La ejecución de los estados frame por frame es realizada por **executeState**, pero en general estos no hacen gran cosa a parte de comprovar si se puede dar el estado actual por finalizado.
+
+Lo verdaderamente importante son la funcione que decide el próximo estado (**getNextState**) y la que lo inicializa (**initializeState**), ya que la mayor parte del movimiento en sí está gestionada por el propio sistema de navmesh agents de unity.
