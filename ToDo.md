@@ -35,4 +35,7 @@ agentes tienen que contener al menos los comportamientos:
 
 ## Entrega
 
-- MIRAR LOS VIDEOS QUE PIDEN
+- [ ] Video Runners
+- [ ] Video Grandpas
+- [ ] Informe PDF
+- [ ] Enlace al repositorio
