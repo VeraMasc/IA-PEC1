@@ -1,7 +1,14 @@
-# README
+# Informe
+
 1. [Controles](#controles)
 2. [Apartados](#apartados)
     1. [Runners](#runners)
+        1. [Camino](#camino)
+        2. [Suavizado](#suavizado)
+        3. [Código Runners](#código-runners)
+        4. [Código seguir recorrido](#código-seguir-recorrido)
+            1. [Código Delay](#código-delay)
+            2. [Código Waypoints](#código-waypoints)
     2. [Abuelos](#abuelos)
         1. [Estados](#estados)
             1. [Cambios de estado](#cambios-de-estado)
@@ -9,11 +16,13 @@
             3. [GoToBench](#gotobench)
             4. [Rest](#rest)
             5. [LeaveBench](#leavebench)
-                1. [Código Abuelos](#código-abuelos)
-            6. [GrandpaState](#grandpastate)
-            7. [Código Ejecución Estados](#código-ejecución-estados)
-            8. [Código Cambio de Estados](#código-cambio-de-estados)
-            9. [Código addicional](#código-addicional)
+        2. [Código Abuelos](#código-abuelos)
+            1. [GrandpaState](#grandpastate)
+            2. [Código Ejecución Estados](#código-ejecución-estados)
+            3. [Código Cambio de Estados](#código-cambio-de-estados)
+            4. [Código addicional](#código-addicional)
+
+[Repositorio](https://github.com/VeraMasc/IA-PEC1)
 
 ## Controles
 
@@ -25,11 +34,161 @@
 
 ### Runners
 
-[Runners](/Documentation/Runners.md)
+Implementados en [RunnerAi.cs](https://github.com/VeraMasc/IA-PEC1/tree/main/Assets/Scripts/AI/RunnerAi.cs). En el juego se ven como cápsulas de color rojo.
+
+#### Camino
+
+Para describir el camino hemos usado una lista de puntos en el mapa y una clase ([Waypoints](#código-waypoints)) que permite a los Runners obtener la siguiente parada de su recorrido en función de su última parada visitada y el sentido en el que realizan el recorrido.
+
+Para seguir el recorrido simplemente marcamos el siguiente punto como destino del agente y cuando se acerca a este lo suficiente movemos el destino hacia el siguiente punto, así indefinidamente.
+
+#### Suavizado
+
+Para que los runners se muevan de forma fluida usamos una versión modificada del movimiento de los navmesh agents que unity usa por defecto para que implementa el suavizado por "ghost agent".
+
+Concretamente, la modificación que hemos hecho altera como el objeto sigue el movimiento del agente simulado. En vez de hacer que la posición del Gameobject sea exactamente la misma que la del agente, hacemos que este siga al agente desde cierta distancia y siempre se aproxime a él a través del camino más corto. Ver en [Código Delay](#código-delay)
+
+De esta forma logramos que los movimientos del agente, especialmente los giros, se traduzcan en movimientos más graduales por parte del Gameobject.
+
+#### Código Runners
+
+#### Código seguir recorrido
+
+```cs
+    /// <summary>
+    /// Inicializa la posición del agente a cierta distancia para que no haya delay en el movimiento
+    /// </summary>
+    private void setAgentPos(){
+        var diff = targetPoint.position-transform.position;
+        var offsetPos = transform.position + diff.normalized * agentDelay;
+        agent.nextPosition = offsetPos;
+    }
+
+    /// <summary>
+    /// Abandona el path previo (si lo hay) y genera uno nuevo
+    /// </summary>
+    public void regeneratePath(){
+        getNextTarget();
+
+        if (targetPoint == null)
+            return;
+
+        agent.destination = targetPoint.position;
+    }
+
+    /// <summary>
+    /// Cambia de target point si ya se ha llegado al actual
+    /// </summary>
+    public void getNextTarget(){
+        if(targetPoint == null){
+            (targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex, pathDir==1? 0:-1);
+            setAgentPos();
+            return;
+        }
+
+        (targetPoint, targetIndex) = Waypoints.singleton.getNextPoint(targetIndex,pathDir);
+    }
+```
+
+##### Código Delay
+
+```cs
+    /// <summary>
+    /// Actualiza la posición para que siga al agente desde una cierta distancia
+    /// </summary>
+    public void followAgent(){
+        var pos =agent.nextPosition;
+        var diff = pos-transform.position;
+        
+        if(diff.magnitude >=agentDelay){
+            transform.position += diff.normalized * (diff.magnitude-agentDelay);
+        }
+    }
+
+    /// <summary>
+    /// Inicializa la posición del agente a cierta distancia para que no haya delay en el movimiento
+    /// </summary>
+    private void setAgentPos(){
+        var diff = targetPoint.position-transform.position;
+        var offsetPos = transform.position + diff.normalized * agentDelay;
+        agent.nextPosition = offsetPos;
+    }
+```
+
+
+##### Código Waypoints
+
+Ver en el archivo [Waypoints.cs](https://github.com/VeraMasc/IA-PEC1/tree/main/Assets/Scripts/AI/Waypoints.cs)
+
+```cs
+/// <summary>
+/// Singleton que controla los wayponts del recorrido de los runners
+/// </summary>
+public class Waypoints : MonoBehaviour
+{
+
+    public Transform[] waypointsList;
+
+    private static Waypoints _singleton;
+    ///<summary>GameManager Singleton</summary>
+    public static Waypoints singleton
+    {
+        get 
+        {
+            if (_singleton == null)
+            {
+                _singleton = FindObjectOfType<Waypoints>(); //Para cuando el maldito hotreload me pierde la referencia
+            }
+            return _singleton;
+        }
+    }
+
+    void Awake()
+    {
+        if(singleton!=null &&  singleton != this) //Prevent duplicate singleton
+        {
+            Destroy(this);
+            return;
+        }
+
+        _singleton=this;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        waypointsList = getWaypoints().ToArray();
+    }
+
+    /// <summary>
+    /// Recupera una lista con todos los waypoints hijos
+    /// </summary>
+    public List<Transform> getWaypoints(){
+        var ret = new List<Transform>();
+            
+            foreach (Transform child in transform) {
+                ret.Add(child);
+
+            }
+            return ret;
+    }
+
+    /// <summary>
+    /// Obtiene el siguiente punto en el recorrido de un runner
+    /// </summary>
+    /// <param name="current">Waypoint actual del runner</param>
+    /// <param name="dir">Sentido de movimiento del runner (en la lista de waypoints)</param>
+    /// <returns>Tuple of the point's Transform & it's index</returns>
+    public (Transform, int) getNextPoint(int current, int dir){
+        var index = (current + dir + waypointsList.Length) % waypointsList.Length;
+        return (waypointsList[index], index);
+    }
+
+}
+```
 
 ### Abuelos
 
-Implementados en [GrandpaAi](/Assets/Scripts/AI/GrandpaAI.cs). En el juego se ven como cápsulas de color morado.
+Implementados en [GrandpaAi.cs](https://github.com/VeraMasc/IA-PEC1/tree/main/Assets/Scripts/AI/GrandpaAI.cs). En el juego se ven como cápsulas de color morado.
 
 #### Estados
 
@@ -62,7 +221,6 @@ Es el estado base de los abuelos en el cual lo que hacen es simplemente deambula
 Una vez llegue a la posición de destino, ejecutará el cálculo del siguiente estado. Si encuentra un banco cerca, cambiará a [GoToBench](#gotobench), si no, reiniciará el estado [Wander](#wander).
 
 
-
 ##### GoToBench
 
 En este estado lo que hacen es ir al banco más cercano e intentar "sentarse" en él. Hasta que detectan que están lo suficientemente cerca de la posición objetivo y que se encuentan encima de un banco (una navmesh area de tipo Bench), entonces pasan al estado [Rest](#rest).
@@ -83,9 +241,9 @@ De no encontrar ningún banco cerca, el estado cambia a [Wander](#wander), de lo
 
 Podría haber implementado esta solución al problema de los abuelos que entran en bucle de muchas otras formas, desde probabilidades en el cambio de estado, hasta un "cooldown", una probablilidad que aumentara con el tiempo, etc. Pero ya que se hacía mucho hincapié en las máquinas de estados he pensado que añadir este estado era la más adecuada para este ejercicio.
 
-###### Código Abuelos
+#### Código Abuelos
 
-> Por motivos de simplicidad y legiblidad, recomendaría mirar directamente el código en [GrandpaAi](/Assets/Scripts/AI/GrandpaAI.cs). Está todo comentado y resulta mucho más legible
+> Por motivos de simplicidad y legiblidad, recomendaría mirar directamente el código en [GrandpaAi](https://github.com/VeraMasc/IA-PEC1/tree/main/Assets/Scripts/AI/GrandpaAI.cs). Está todo comentado y resulta mucho más legible
 
 La ejecución de los estados frame por frame es realizada por **executeState**, pero en general estos no hacen gran cosa a parte de comprovar si se puede dar el estado actual por finalizado.
 

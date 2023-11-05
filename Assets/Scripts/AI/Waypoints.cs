@@ -64,9 +64,4 @@ public class Waypoints : MonoBehaviour
 		return (waypointsList[index], index);
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
