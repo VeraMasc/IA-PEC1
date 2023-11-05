@@ -24,6 +24,8 @@
 
 [Repositorio](https://github.com/VeraMasc/IA-PEC1)
 
+[Video](https://youtu.be/MQNjHo94NJs)
+
 ## Controles
 
 - Desplazar la cámara con WASD
