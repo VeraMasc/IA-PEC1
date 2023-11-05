@@ -2620,10 +2620,6 @@ PrefabInstance:
       propertyPath: m_Acceleration
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3010135547998777784, guid: 74c5ff4d4f51578419a9823d9278152f, type: 3}
-      propertyPath: m_WalkableMask
-      value: 24
-      objectReference: {fileID: 0}
     - target: {fileID: 3168190464217967329, guid: 74c5ff4d4f51578419a9823d9278152f, type: 3}
       propertyPath: m_Name
       value: Grandpa Agent (1)
@@ -5131,9 +5127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b9976bba5c6504da53009b3ef59d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDist: 5
+  minDist: -10
   maxDist: 10
-  offset: {fileID: 0}
+  offset: {fileID: 1577829795}
 --- !u!1001 &1587302353
 PrefabInstance:
   m_ObjectHideFlags: 0

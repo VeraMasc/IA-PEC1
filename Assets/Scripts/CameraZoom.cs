@@ -12,6 +12,7 @@ public class CameraZoom : MonoBehaviour
 	void Start()
 	{
 		offset = GetComponent<CinemachineCameraOffset>();
+        Cursor.visible = false; 
 	}
 
 
