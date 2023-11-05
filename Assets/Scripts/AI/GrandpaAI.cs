@@ -182,6 +182,10 @@ public class GrandpaAI : MonoBehaviour
 		return newState;
 	}
 
+    /// <summary>
+    /// Detecta si el estado actual se encuentra finalizado y ha de pasar al siguiente
+    /// </summary>
+    /// <returns>true si ha finalizado</returns>
 	bool stateNeedsUpdate(){
 		if ((!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance) && state != GrandpaState.rest)
 			return true;
@@ -197,6 +201,11 @@ public class GrandpaAI : MonoBehaviour
 		return false;
 	}
 
+    /// <summary>
+    /// Detecta si hay algún banco cerca
+    /// </summary>
+    /// <param name="range">Radio en el que comprueba si hay un banco</param>
+    /// <returns>Datos del banco más cercano</returns>
 	public ClosestBench benchNearby(float range){
 		var hits = Physics.OverlapSphere(transform.position, range, benchLayer);
 
@@ -212,9 +221,13 @@ public class GrandpaAI : MonoBehaviour
 		return closest;
 	}
 
+    /// <summary>
+    /// Inicializa el nuevo estado solo cuando se produce un cambio
+    /// (No se activa si se repite el mismo estado)
+    /// </summary>
+    /// <param name="newState">Próximo estado</param>
 	void initializeState(GrandpaState newState){
 		if (newState == GrandpaState.rest){
-			Debug.Log("BenchMask");
 			agent.areaMask = benchMask; //Force to stay in bench
 			restRemaining = restTime;
 			agent.ResetPath();
@@ -231,7 +244,16 @@ public class GrandpaAI : MonoBehaviour
 
 }
 
+/// <summary>
+/// Datos del banco más cercano detectado
+/// </summary>
 public class ClosestBench{
+    /// <summary>
+    /// Collider del banco (si existe)
+    /// </summary>
 	public Collider hit;
+    /// <summary>
+    /// Distancia hasta el banco (si existe)
+    /// </summary>
 	public float dist;
 }
