@@ -41,9 +41,6 @@ Los abuelos tienen 4 estados definidos en el enum [GrandpaState](#grandpastate).
 4. [LeaveBench](#leavebench)
 
 ```mermaid
----
-title: Diagrama de estados
----
 stateDiagram-v2
     [*] --> Wander
     Wander -->  Wander : No bench
