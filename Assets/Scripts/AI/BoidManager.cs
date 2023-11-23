@@ -35,6 +35,8 @@ public class BoidManager : MonoBehaviour
 
     public float spawnRange = 6;
 
+    public float updateRate =0.1f;
+
     public float neighbourDistance;
     public float nearbyDistance;
     public float directionNoise = 0.05f;

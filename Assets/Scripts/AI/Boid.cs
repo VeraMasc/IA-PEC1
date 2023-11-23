@@ -5,6 +5,8 @@ using UnityEngine;
 public class Boid : MonoBehaviour
 {
     public BoidManager manager;
+
+    public float updateTimer;
     public Vector3 direction;
 
     public float speed =1f;
@@ -30,7 +32,12 @@ public class Boid : MonoBehaviour
             manager.rotationSpeed * Time.deltaTime);
         transform.Translate(0.0f, 0.0f, Time.deltaTime * speed);
 
-        calculateSpeed();
+        updateTimer += Time.deltaTime * speed;
+        if(updateTimer >= manager.updateRate){
+            calculateSpeed();
+            updateTimer = 0;
+        }
+        
     }
 
 
