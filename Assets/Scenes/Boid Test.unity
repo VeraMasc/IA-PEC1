@@ -249,6 +249,9 @@ MonoBehaviour:
   minSpeed: 1
   maxSpeed: 2.5
   spawnRange: 15
+  updateRate: 0.15
+  watchNearbyRate: 1
+  watchNearbyTimer: 0
   neighbourDistance: 5
   nearbyDistance: 8
   directionNoise: 0.2

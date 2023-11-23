@@ -37,6 +37,10 @@ public class BoidManager : MonoBehaviour
 
     public float updateRate =0.1f;
 
+    public float watchNearbyRate =0.5f;
+
+    public float watchNearbyTimer = 0;
+
     public float neighbourDistance;
     public float nearbyDistance;
     public float directionNoise = 0.05f;
@@ -51,8 +55,10 @@ public class BoidManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)){
+        watchNearbyTimer += Time.deltaTime;
+        if (watchNearbyTimer >= watchNearbyRate || Input.GetKeyDown(KeyCode.C)){
             calculateNearby();
+            watchNearbyTimer = 0;
         }
     }
 

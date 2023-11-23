@@ -46,12 +46,7 @@ public class Boid : MonoBehaviour
     }
 
     void alignWithNeighbors(Boid go, ref Vector3 align, float distance){
-            if (go != this) {
-                if (distance <= manager.neighbourDistance) {
-                    align += go.direction;
-                }
-            }
-            else { align += direction; } //Sigue también su propio alineamiento (evita bugs)
+        align += go.direction;
     }
 
     void forceSeparation(Boid go, ref Vector3  separation, float distance){
@@ -73,24 +68,27 @@ public class Boid : MonoBehaviour
                 {
                     mantainCohesion(go, ref cohesion, distance);
                     forceSeparation(go, ref separation, distance);
+                    alignWithNeighbors(go, ref align, distance);
                     num++;
                 }
+                
             }
             
-            alignWithNeighbors(go, ref align, distance);
+            
             
         }
-
+        align += direction; //Sigue también su propio alineamiento (evita bugs)
         //Divide by boids
         align /= num+1;
-        align += Random.insideUnitSphere * manager.directionNoise;
+        //align += Random.insideUnitSphere * manager.directionNoise;
         speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
 
         
         if (num > 0)
             cohesion = (cohesion / num - transform.position).normalized * speed;
 
-        direction = (cohesion + align + separation).normalized * speed;
+        direction = (cohesion + align + separation).normalized * speed
+            + Random.insideUnitSphere * manager.directionNoise;
         stayWithinBounds();
     }
 
