@@ -250,6 +250,7 @@ MonoBehaviour:
   maxSpeed: 2.5
   spawnRange: 15
   neighbourDistance: 5
+  nearbyDistance: 8
   directionNoise: 0.2
 --- !u!1 &276540532
 GameObject:
