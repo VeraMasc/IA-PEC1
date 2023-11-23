@@ -13,16 +13,18 @@ public class Boid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        direction = Vector3.forward;
+        direction = transform.forward * speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        calculateSpeed();
+        
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 
             manager.rotationSpeed * Time.deltaTime);
         transform.Translate(0.0f, 0.0f, Time.deltaTime * speed);
+
+        calculateSpeed();
     }
 
 
@@ -46,7 +48,7 @@ public class Boid : MonoBehaviour
 
     Vector3 alignWithNeighbors(){
         Vector3 align = Vector3.zero;
-        int num = 0;
+        int num = 1; //Siempre habrá al menos un alineamiento (el suyo)
         foreach (GameObject go in manager.allBoids) {
             if (go != this.gameObject) {
                 float distance = Vector3.Distance(go.transform.position, 
@@ -56,18 +58,36 @@ public class Boid : MonoBehaviour
                     num++;
                 }
             }
+            else { align += direction; } //Sigue también su propio alineamiento (evita bugs)
         }
-        if (num > 0) {
-            align /= num;
-            speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
-        }
+
+
+        align /= num;
+        speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
+
         return align;
     }
 
-    void calculateSpeed(){
-        Vector3 cohesion = mantainCohesion();
-        Vector3 align = direction;
+    Vector3 forceSeparation(){
         Vector3 separation = Vector3.zero;
+        foreach (GameObject go in manager.allBoids) {
+            if (go != this.gameObject) {
+                float distance = Vector3.Distance(go.transform.position, 
+                                                transform.position);
+                if (distance <= manager.neighbourDistance)
+                    separation -= (transform.position - go.transform.position) / 
+                                (distance * distance);
+            }
+        }
+        return separation;
+    }
+
+    void calculateSpeed(){
+        Vector3 cohesion, align, separation;
+        cohesion = align = separation = Vector3.zero; //Para debuggear el resto del código
+        //cohesion = mantainCohesion();
+        align = alignWithNeighbors();
+        //separation = forceSeparation();
         direction = (cohesion + align + separation).normalized * speed;
     }
 }

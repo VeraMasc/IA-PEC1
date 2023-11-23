@@ -25,6 +25,8 @@ public class BoidManager : MonoBehaviour
 
     public float maxSpeed = 1.5f;
 
+    public float spawnRange = 6;
+
     public float neighbourDistance;
     // Start is called before the first frame update
     void Start()
@@ -41,7 +43,7 @@ public class BoidManager : MonoBehaviour
     void initBoids(){
         allBoids = new GameObject[numBoids];
         for (int i = 0; i < numBoids; ++i) {
-            Vector3 pos = this.transform.position + Random.insideUnitSphere * 6; // random position
+            Vector3 pos = this.transform.position + Random.insideUnitSphere * spawnRange; // random position
             Vector3 randomize = Random.insideUnitSphere.normalized; // random vector direction
             allBoids[i] = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));
             allBoids[i].GetComponent<Boid>().manager = this;

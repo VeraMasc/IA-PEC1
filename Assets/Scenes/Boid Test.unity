@@ -242,10 +242,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allBoids: []
-  numBoids: 3
+  numBoids: 7
   boidPrefab: {fileID: 465251044816109219, guid: 6db3be1c71ebc204c861c239c210e147, type: 3}
   rotationSpeed: 5
-  neighbourDistance: 1
+  minSpeed: 0.5
+  maxSpeed: 1.5
+  spawnRange: 8
+  neighbourDistance: 6
 --- !u!1 &276540532
 GameObject:
   m_ObjectHideFlags: 0
