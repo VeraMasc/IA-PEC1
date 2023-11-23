@@ -9,7 +9,7 @@ public class BoidManager : MonoBehaviour
     /// <summary>
     /// Lista de todos los boids
     /// </summary>
-    public GameObject[] allBoids;
+    public Boid[] allBoids;
 
     /// <summary>
     /// Número de boids a crear
@@ -50,12 +50,13 @@ public class BoidManager : MonoBehaviour
     }
 
     void initBoids(){
-        allBoids = new GameObject[numBoids];
+        allBoids = new Boid[numBoids];
         for (int i = 0; i < numBoids; ++i) {
             Vector3 pos = this.transform.position + Random.insideUnitSphere * spawnRange; // random position
             Vector3 randomize = Random.insideUnitSphere.normalized; // random vector direction
-            allBoids[i] = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));
-            allBoids[i].GetComponent<Boid>().manager = this;
+            var newBoid = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));
+            allBoids[i] = newBoid.GetComponent<Boid>();
+            allBoids[i].manager = this;
         }
     }
 

@@ -8,12 +8,18 @@ public class Boid : MonoBehaviour
     public Vector3 direction;
 
     public float speed =1f;
+
+    /// <summary>
+    /// Array de boids cercanos que pueden ser vecinos
+    /// </summary>
+    public Boid[] boidsNearby;
     
 
     // Start is called before the first frame update
     void Start()
     {
         direction = transform.forward * speed;
+        boidsNearby = manager.allBoids;
     }
 
     // Update is called once per frame
@@ -28,67 +34,55 @@ public class Boid : MonoBehaviour
     }
 
 
-    Vector3 mantainCohesion(){
-        Vector3 cohesion = Vector3.zero;
-        int num = 0;
-        foreach (GameObject go in manager.allBoids) {
-            if (go != this.gameObject) {
-                float distance = Vector3.Distance(go.transform.position, 
-                                                transform.position);
-                if (distance <= manager.neighbourDistance) {
-                    cohesion += go.transform.position;
-                    num++;
-                }
-            }
-        }
-        if (num > 0)
-            cohesion = (cohesion / num - transform.position).normalized * speed;
-        return cohesion;
+    void mantainCohesion(Boid go, ref Vector3 cohesion, float distance){
+        cohesion += go.transform.position;
     }
 
-    Vector3 alignWithNeighbors(){
-        Vector3 align = Vector3.zero;
-        int num = 1; //Siempre habrá al menos un alineamiento (el suyo)
-        foreach (GameObject go in manager.allBoids) {
-            if (go != this.gameObject) {
-                float distance = Vector3.Distance(go.transform.position, 
-                                                transform.position);
+    void alignWithNeighbors(Boid go, ref Vector3 align, float distance){
+            if (go != this) {
                 if (distance <= manager.neighbourDistance) {
-                    align += go.GetComponent<Boid>().direction;
-                    num++;
+                    align += go.direction;
                 }
             }
             else { align += direction; } //Sigue también su propio alineamiento (evita bugs)
-        }
-
-
-        align /= num;
-        align += Random.insideUnitSphere * manager.directionNoise;
-        speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
-
-        return align;
     }
 
-    Vector3 forceSeparation(){
-        Vector3 separation = Vector3.zero;
-        foreach (GameObject go in manager.allBoids) {
-            if (go != this.gameObject) {
-                float distance = Vector3.Distance(go.transform.position, 
-                                                transform.position);
-                if (distance <= manager.neighbourDistance)
-                    separation += (transform.position - go.transform.position) / 
+    void forceSeparation(Boid go, ref Vector3  separation, float distance){
+                
+        separation += (transform.position - go.transform.position) / 
                                 (distance * distance);
-            }
-        }
-        return separation;
     }
 
     void calculateSpeed(){
         Vector3 cohesion, align, separation;
         cohesion = align = separation = Vector3.zero; //Para debuggear el resto del código
-        cohesion = mantainCohesion();
-        align = alignWithNeighbors();
-        separation = forceSeparation();
+
+        int num = 0;
+        foreach (Boid go in boidsNearby)
+        {
+            float distance = Vector3.Distance(go.transform.position, transform.position);
+            if (go != this) { //Ignore self
+                if (distance <= manager.neighbourDistance)
+                {
+                    mantainCohesion(go, ref cohesion, distance);
+                    forceSeparation(go, ref separation, distance);
+                    num++;
+                }
+            }
+            
+            alignWithNeighbors(go, ref align, distance);
+            
+        }
+
+        //Divide by boids
+        align /= num+1;
+        align += Random.insideUnitSphere * manager.directionNoise;
+        speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
+
+        
+        if (num > 0)
+            cohesion = (cohesion / num - transform.position).normalized * speed;
+
         direction = (cohesion + align + separation).normalized * speed;
         stayWithinBounds();
     }
