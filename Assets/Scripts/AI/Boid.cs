@@ -63,6 +63,7 @@ public class Boid : MonoBehaviour
 
 
         align /= num;
+        align += Random.insideUnitSphere * manager.directionNoise;
         speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
 
         return align;
@@ -75,7 +76,7 @@ public class Boid : MonoBehaviour
                 float distance = Vector3.Distance(go.transform.position, 
                                                 transform.position);
                 if (distance <= manager.neighbourDistance)
-                    separation -= (transform.position - go.transform.position) / 
+                    separation += (transform.position - go.transform.position) / 
                                 (distance * distance);
             }
         }
@@ -85,9 +86,19 @@ public class Boid : MonoBehaviour
     void calculateSpeed(){
         Vector3 cohesion, align, separation;
         cohesion = align = separation = Vector3.zero; //Para debuggear el resto del código
-        //cohesion = mantainCohesion();
+        cohesion = mantainCohesion();
         align = alignWithNeighbors();
-        //separation = forceSeparation();
+        separation = forceSeparation();
         direction = (cohesion + align + separation).normalized * speed;
+        stayWithinBounds();
+    }
+
+    void stayWithinBounds(){
+        var nextpos = direction + transform.position;
+        if (manager.boundsBox.Contains(nextpos))
+            return;
+
+        nextpos = manager.boundsBox.ClosestPoint(nextpos);
+        direction = nextpos - transform.position;
     }
 }
