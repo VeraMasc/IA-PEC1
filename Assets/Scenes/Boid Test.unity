@@ -242,19 +242,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allBoids: []
-  numBoids: 15
-  boidPrefab: {fileID: 465251044816109219, guid: 6db3be1c71ebc204c861c239c210e147, type: 3}
-  bounds: {x: 25, y: 20, z: 25}
-  rotationSpeed: 1
-  minSpeed: 1
-  maxSpeed: 2.5
+  numBoids: 2
+  boidPrefab: {fileID: 903323735182599696, guid: aca71719f2f7a304f92e0ba3d7c9ba8c, type: 3}
+  bounds: {x: 20, y: 15, z: 15}
+  rotationSpeed: 3
+  minSpeed: 2
+  maxSpeed: 4
   spawnRange: 15
-  updateRate: 0.15
+  updateRate: 0.1
   watchNearbyRate: 1
   watchNearbyTimer: 0
   neighbourDistance: 5
   nearbyDistance: 8
-  directionNoise: 0.2
+  directionNoise: 0.3
 --- !u!1 &276540532
 GameObject:
   m_ObjectHideFlags: 0
