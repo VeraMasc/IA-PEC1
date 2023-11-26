@@ -11,6 +11,7 @@ using Unity.AI.Navigation;
 public class NavMeshSourceTag : MonoBehaviour
 {
     public bool useCollider;
+    public Vector3 scale = Vector3.one;
     public static List<MeshFilter> Meshes = new List<MeshFilter>();
 
     public static List<Collider> Shapes = new List<Collider>();
@@ -109,8 +110,9 @@ public class NavMeshSourceTag : MonoBehaviour
  
             var s = new NavMeshBuildSource();
             if(col.GetType() == typeof(SphereCollider)){
+                var tag = col.GetComponent<NavMeshSourceTag>();
                 s.shape = NavMeshBuildSourceShape.Sphere;
-                s.size = (col as SphereCollider).radius * Vector3.one;
+                s.size = (col as SphereCollider).radius * (tag?.scale ?? Vector3.one);
                 s.transform = col.transform.localToWorldMatrix;
 
                 var modifier = col.GetComponent<NavMeshModifier>();
