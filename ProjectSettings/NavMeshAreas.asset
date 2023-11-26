@@ -25,8 +25,8 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
-  - name: 
-    cost: 1
+  - name: Poop
+    cost: 10
   - name: 
     cost: 1
   - name: 
