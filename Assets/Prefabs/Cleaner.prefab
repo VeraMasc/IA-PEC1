@@ -166,8 +166,12 @@ MonoBehaviour:
     colorParamsLostDefaultValue: 
     objectParams:
     - {fileID: 0}
+    - {fileID: 5337264568715587972}
+    - {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
     objectParamsNames:
     - wanderArea
+    - speechBubble
+    - message1
     objectParamsLostDefaultValue: 
     layerMaskParams: []
     layerMaskParamsNames: []
@@ -260,19 +264,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.2875842
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.000000008292839
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.9577554
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.0000000024900821
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -299,6 +303,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
+--- !u!114 &5337264568715587972 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1927757256550472805, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
+  m_PrefabInstance: {fileID: 5823436730464562657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fe6ebcccfc32b4a9e6d65a867d7246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7362134211198895588 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}

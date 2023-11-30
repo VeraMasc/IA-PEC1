@@ -665,13 +665,85 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 328440195748389348, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 328440195748389348, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 328440195748389348, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 328440195748389348, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 328440195748389348, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 3168190464217967329, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_Name
       value: Cleaner
       objectReference: {fileID: 0}
+    - target: {fileID: 4892697432524718536, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
+    - target: {fileID: 4892697432524718536, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871405706516888364, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5964086876045049623, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5007465203087833557, guid: 4f4e9e7914788304aa65c8d0181f6ecb, type: 3}
+    - target: {fileID: 5964086876045049623, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.828719
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000009478732
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5596649
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000000014035551
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -162.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897464378401614768, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: maxTasksPerTick
+      value: 53
+      objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParams.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParams.Array.data[0]
@@ -679,7 +751,7 @@ PrefabInstance:
       objectReference: {fileID: 2030774994}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[0]

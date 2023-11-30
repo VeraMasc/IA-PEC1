@@ -16,7 +16,11 @@ namespace BBUnity.Actions
 
         [InParam("speechBubble")]
         [Help("")]
-        public GameObject speechBubble;
+        public SpeechBubble speech;
+
+        [InParam("message")]
+        [Help("")]
+        public Sprite message;
 
         [InParam("duration")]
         [Help("")]
@@ -25,15 +29,18 @@ namespace BBUnity.Actions
         /// <summary></summary>
         public override void OnStart()
         {
-        
+            speech.say(message);
         }
         /// <summary>Method of Update of MoveToRandomPosition </summary>
         /// <remarks>Check the status of the task, if it has traveled the road or is close to the goal it is completed
         /// and otherwise it will remain in operation.</remarks>
         public override TaskStatus OnUpdate()
         {
-            if (duration<=0)
+            if (duration<=0){
+                
                 return TaskStatus.COMPLETED;
+            }
+                
             duration -= Time.deltaTime;
             return TaskStatus.RUNNING;
         }
@@ -42,7 +49,13 @@ namespace BBUnity.Actions
         /// <summary>Abort method of MoveToRandomPosition </summary>
         public override void OnAbort()
         {
-            
+            speech.clearBubble();
         }
+        
+        public override void OnEnd()
+        {
+            speech.clearBubble();
+        }
+        
     }
 }
