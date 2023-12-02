@@ -28,6 +28,8 @@ public class SpeechBubble : MonoBehaviour {
 	
 	public enum BillboardType { LookAtCamera, CameraForward };
 
+	public bool needsUpdate;
+
 	
 	private void Awake() {
 		originalRotation = transform.rotation.eulerAngles;
@@ -44,6 +46,12 @@ public class SpeechBubble : MonoBehaviour {
 	
 
 	void OnRenderObject(){
+
+		if(needsUpdate){
+			needsUpdate = false;
+			background.enabled = image.enabled = image.sprite != null;
+		}
+
 		var camera = SceneView.currentDrawingSceneView?.camera;
 		camera ??= Application.isPlaying? Camera.main : null;
 		if (camera == null)
@@ -69,20 +77,20 @@ public class SpeechBubble : MonoBehaviour {
   	}
 
 
+	
 	/// <summary>
 	/// Resetea el bocadillo
 	/// </summary>
 	public void clearBubble(){
-		text.text="";
-		image.enabled = false;
-		background.enabled = false;
+		image.sprite = null;
+		needsUpdate = true;
 		Debug.Log("message Clear");
 	}
 
 	public void say(Sprite emoji){
-		background.enabled = true;
-		image.enabled = true;
+		
 		image.sprite = emoji;
+		needsUpdate = true;
 		Debug.Log("message Changed");
 	}
 }
