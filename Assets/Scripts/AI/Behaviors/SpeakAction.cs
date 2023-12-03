@@ -26,6 +26,10 @@ namespace BBUnity.Actions
         [Help("")]
         public float duration;
 
+        [InParam("hasDuration")]
+        [Help("")]
+        public bool hasDuration;
+
         /// <summary></summary>
         public override void OnStart()
         {
@@ -36,7 +40,7 @@ namespace BBUnity.Actions
         /// and otherwise it will remain in operation.</remarks>
         public override TaskStatus OnUpdate()
         {
-            if (duration<=0){
+            if (!hasDuration || duration<=0){
                 
                 return TaskStatus.COMPLETED;
             }
@@ -49,12 +53,14 @@ namespace BBUnity.Actions
         /// <summary>Abort method of MoveToRandomPosition </summary>
         public override void OnAbort()
         {
-            speech.clearBubble();
+            if(hasDuration)
+                speech.clearBubble();
         }
         
         public override void OnEnd()
         {
-            speech.clearBubble();
+            if(hasDuration)
+                speech.clearBubble();
         }
         
     }
