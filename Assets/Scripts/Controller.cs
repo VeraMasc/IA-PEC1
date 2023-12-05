@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Singleton para contener la información de uso habitual en el juego
 /// </summary>
+[ExecuteInEditMode]
 public class Controller : MonoBehaviour
 {
 
@@ -22,9 +24,9 @@ public class Controller : MonoBehaviour
 		}
 	}
 
-    public List<GameObject> dogs;
+    public List<Collider> dogs;
 
-    public List<GameObject> poops;
+    public List<Poop> poops;
 
 	void Awake()
 	{
@@ -36,4 +38,15 @@ public class Controller : MonoBehaviour
 
 		_singleton=this;
 	}
+
+    void Update()
+    {
+        if (Application.isPlaying)
+            return;
+
+        //Busca automáticamente todos los perros cada vez que cambias la escena
+        dogs = GameObject.FindGameObjectsWithTag("Dog")
+            ?.Select(o => o.GetComponent<Collider>())
+            .ToList();
+    }
 }

@@ -37,7 +37,7 @@ namespace BBUnity.Conditions
 		{
             var thisPos = gameObject.transform.position;
             var layerMask = LayerMask.GetMask("Interactive");
-            var results = Physics.OverlapSphere(thisPos, maxRange, layerMask).AsEnumerable();
+            var results = Controller.singleton.dogs.AsEnumerable();//Physics.OverlapSphere(thisPos, maxRange, layerMask).AsEnumerable();
             
             if(objectTag != "") //Filtrar por tag
                 results = results.Where(obj => obj.tag == objectTag);
