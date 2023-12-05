@@ -178,6 +178,8 @@ MonoBehaviour:
     - {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
     - {fileID: 2708641565336787273, guid: 14d81272f784e4148a10ae647bf1cffd, type: 3}
     - {fileID: 7932168425148528463, guid: 4ecc1c32a894a494bb39f7c5cae466d8, type: 3}
+    - {fileID: 2456029002847663828, guid: ef7939299a8c0c5499924298229df213, type: 3}
+    - {fileID: -1453888577314850278, guid: 6d3d543b8ad63a748920e928edf43f1d, type: 3}
     - {fileID: 0}
     objectParamsNames:
     - wanderArea
@@ -185,6 +187,8 @@ MonoBehaviour:
     - messageAlert
     - messageTrash
     - messageSweep
+    - messageDog
+    - messagePoop
     objectParamsLostDefaultValue: 
     layerMaskParams: []
     layerMaskParamsNames: []

@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a7c8ca992f915438a96c2077353778, type: 3}
+  m_Name: ScareDog
+  m_EditorClassIdentifier: 
+  brickName: Assets/Scripts/AI/Behaviors/ScareDog.asset
+  xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
+    version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
+    id=\"0\" guid=\"987110430bb3cc9469999a2d0f7d331c\" nextId=\"6\">\r\n      <root>\r\n       
+    <SequenceNode id=\"1\" />\r\n      </root>\r\n      <inputParams>\r\n       
+    <inputValues>\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
+    isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"alertMessage\"
+    type=\"UnityEngine.Sprite\" isBlackboard=\"True\" blackboard=\"messageAlert\"
+    />\r\n          <entry name=\"dogMessage\" type=\"UnityEngine.Sprite\" isBlackboard=\"True\"
+    blackboard=\"messageDog\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
+    <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n    <SequenceNode
+    id=\"1\">\r\n      <children>\r\n        <elem>\r\n          <ActionNode id=\"2\"
+    />\r\n        </elem>\r\n        <elem>\r\n          <ActionNode id=\"3\" />\r\n       
+    </elem>\r\n        <elem>\r\n          <ActionNode id=\"4\" />\r\n        </elem>\r\n       
+    <elem>\r\n          <ActionNode id=\"5\" />\r\n        </elem>\r\n      </children>\r\n     
+    <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </SequenceNode>\r\n   
+    <ActionNode id=\"2\" action=\"Speak\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
+    <entry name=\"speechBubble\" type=\"SpeechBubble\" isBlackboard=\"True\" blackboard=\"speechBubble\"
+    />\r\n          <entry name=\"message\" type=\"UnityEngine.Sprite\" isBlackboard=\"True\"
+    blackboard=\"alertMessage\" />\r\n          <entry name=\"duration\" type=\"System.Single\"
+    isBlackboard=\"False\" value=\"1\" />\r\n          <entry name=\"hasDuration\"
+    type=\"System.Boolean\" isBlackboard=\"False\" value=\"True\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n   
+    <ActionNode id=\"3\" action=\"Speak\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
+    <entry name=\"speechBubble\" type=\"SpeechBubble\" isBlackboard=\"True\" blackboard=\"speechBubble\"
+    />\r\n          <entry name=\"message\" type=\"UnityEngine.Sprite\" isBlackboard=\"True\"
+    blackboard=\"dogMessage\" />\r\n          <entry name=\"duration\" type=\"System.Single\"
+    isBlackboard=\"False\" value=\"0\" />\r\n          <entry name=\"hasDuration\"
+    type=\"System.Boolean\" isBlackboard=\"False\" value=\"False\" />\r\n       
+    </inputValues>\r\n      </inputParams>\r\n      <outputParams />\r\n      <localParams
+    />\r\n    </ActionNode>\r\n    <ActionNode id=\"4\" action=\"Basic/WaitForSeconds\">\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"seconds\" type=\"System.Single\"
+    isBlackboard=\"False\" value=\"2\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
+    <outputParams />\r\n      <localParams />\r\n    </ActionNode>\r\n    <ActionNode
+    id=\"5\" action=\"ShutUp\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
+    <entry name=\"speechBubble\" type=\"SpeechBubble\" isBlackboard=\"True\" blackboard=\"speechBubble\"
+    />\r\n        </inputValues>\r\n      </inputParams>\r\n      <outputParams />\r\n     
+    <localParams />\r\n    </ActionNode>\r\n  </runtimeInfo>\r\n  <editorInfo>\r\n   
+    <BehaviorTree id=\"0\" _name=\"ScareDog\" _description=\"\" _removeIfClosed=\"False\">\r\n     
+    <_rootList>\r\n        <elem>\r\n          <SequenceNode id=\"1\" />\r\n       
+    </elem>\r\n        <elem>\r\n          <ActionNode id=\"2\" />\r\n        </elem>\r\n       
+    <elem>\r\n          <ActionNode id=\"3\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <ActionNode id=\"4\" />\r\n        </elem>\r\n        <elem>\r\n          <ActionNode
+    id=\"5\" />\r\n        </elem>\r\n      </_rootList>\r\n      <_nodes>\r\n       
+    <nodes>\r\n          <SequenceNode id=\"1\" />\r\n          <ActionNode id=\"2\"
+    />\r\n          <ActionNode id=\"3\" />\r\n          <ActionNode id=\"4\" />\r\n         
+    <ActionNode id=\"5\" />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n   
+    <SequenceNode id=\"1\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"244.2 46.8\" name=\"Sequence\" description=\"Executes all its children
+    in sequence until all of them are successful\" cardinality=\"-1\" hasParent=\"False\">\r\n         
+    <BehaviorTree id=\"0\" />\r\n          <SequenceNode id=\"1\" />\r\n        </data>\r\n     
+    </_data>\r\n    </SequenceNode>\r\n    <ActionNode id=\"2\">\r\n      <_data>\r\n       
+    <data breakpoint=\"0\" selected=\"False\" position=\"87.20001 343.8\" name=\"Speak\"
+    description=\"Dice un mensaje mediante un bocadillo\" cardinality=\"0\" hasParent=\"True\">\r\n         
+    <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"2\" />\r\n          <SequenceNode
+    id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
+    <ActionNode id=\"3\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
+    position=\"187.2 339.8\" name=\"Speak\" description=\"Dice un mensaje mediante
+    un bocadillo\" cardinality=\"0\" hasParent=\"True\">\r\n          <BehaviorTree
+    id=\"0\" />\r\n          <ActionNode id=\"3\" />\r\n          <SequenceNode id=\"1\"
+    />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ActionNode
+    id=\"4\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"305.2 326.8\" name=\"Basic/WaitForSeconds\" description=\"Action that
+    success after a period of time.\" cardinality=\"0\" hasParent=\"True\">\r\n         
+    <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"4\" />\r\n          <SequenceNode
+    id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
+    <ActionNode id=\"5\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"511.2 321.8\" name=\"ShutUp\" description=\"Deja de hablar\" cardinality=\"0\"
+    hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
+    id=\"5\" />\r\n          <SequenceNode id=\"1\" />\r\n        </data>\r\n     
+    </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
+  zoom: 1
+  subslist: []
+  _guid: 987110430bb3cc9469999a2d0f7d331c
