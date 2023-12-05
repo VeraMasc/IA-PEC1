@@ -214,9 +214,7 @@ public class GrandpaAI : MonoBehaviour
 		).DefaultIfEmpty()
 		.Aggregate((curMin, x) => curMin == null || x.dist  < curMin.dist ? x : curMin);
 
-		if(closest != null){
-			Debug.Log("Bench Hit");
-		}
+	
 
 		return closest;
 	}

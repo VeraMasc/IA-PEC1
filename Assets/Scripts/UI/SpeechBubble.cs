@@ -84,14 +84,14 @@ public class SpeechBubble : MonoBehaviour {
 	public void clearBubble(){
 		image.sprite = null;
 		needsUpdate = true;
-		Debug.Log("message Clear");
+
 	}
 
 	public void say(Sprite emoji){
 		
 		image.sprite = emoji;
 		needsUpdate = true;
-		Debug.Log("message Changed");
+
 	}
 }
 

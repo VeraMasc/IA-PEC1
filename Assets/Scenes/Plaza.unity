@@ -707,19 +707,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.76631194
+      value: -0.12083121
       objectReference: {fileID: 0}
     - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000011451613
+      value: 0.000000002002018
       objectReference: {fileID: 0}
     - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6424687
+      value: 0.9926731
       objectReference: {fileID: 0}
     - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000013659041
+      value: -2.4369046e-10
       objectReference: {fileID: 0}
     - target: {fileID: 7362134211198895588, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -734,16 +734,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
-      propertyPath: blackboard.objectParams.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParams.Array.data[0]
       value: 
       objectReference: {fileID: 2030774994}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[0]
@@ -751,7 +747,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[3]
-      value: message2
+      value: messageTrash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8034087047112048788, guid: b6f92162f325f61489866664a18e0593, type: 3}
+      propertyPath: blackboard.objectParamsNames.Array.data[4]
+      value: messageSweep
       objectReference: {fileID: 0}
     - target: {fileID: 8218958966930311084, guid: b6f92162f325f61489866664a18e0593, type: 3}
       propertyPath: m_RootOrder

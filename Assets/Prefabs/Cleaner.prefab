@@ -122,7 +122,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 3
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 99
   m_AngularSpeed: 100
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -158,9 +158,13 @@ MonoBehaviour:
     floatParams:
     - 0.5
     - 4
+    - 30
+    - 0
     floatParamsNames:
     - trueProbability
     - seconds
+    - visionRange
+    - TrashCollected
     floatParamsLostDefaultValue: 
     stringParams: []
     stringParamsNames: []
@@ -172,12 +176,15 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 5337264568715587972}
     - {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
+    - {fileID: 2708641565336787273, guid: 14d81272f784e4148a10ae647bf1cffd, type: 3}
     - {fileID: 7932168425148528463, guid: 4ecc1c32a894a494bb39f7c5cae466d8, type: 3}
+    - {fileID: 0}
     objectParamsNames:
     - wanderArea
     - speechBubble
-    - message1
-    - message2
+    - messageAlert
+    - messageTrash
+    - messageSweep
     objectParamsLostDefaultValue: 
     layerMaskParams: []
     layerMaskParamsNames: []
@@ -270,19 +277,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.60974306
+      value: 0.21543573
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1.3539016e-16
+      value: -4.783634e-17
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.79259914
+      value: 0.97651803
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.7599236e-16
+      value: 2.1683056e-16
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_AnchoredPosition.x
