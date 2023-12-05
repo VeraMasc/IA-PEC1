@@ -16,10 +16,10 @@ namespace BBUnity.Actions
     {
 
         /// <summary>
-        /// Rángo máximo a tener en cuenta (- para infinito)
+        /// Rángo máximo a tener en cuenta
         /// </summary>
         [InParam("maxRange")]
-        [Help("Rángo máximo a tener en cuenta (- para infinito)")]
+        [Help("Rángo máximo a tener en cuenta")]
         public float maxRange;
 
 
@@ -34,7 +34,8 @@ namespace BBUnity.Actions
         {
             var thisPos = gameObject.transform.position;
             var layerMask = LayerMask.GetMask("Interactive");
-            var results = Physics.OverlapSphere(thisPos, maxRange, layerMask);
+            var results = Physics.OverlapSphere(thisPos, maxRange, layerMask)
+                .Where(obj => obj.tag == "Trash");
 
             //Obtener papelera más cercana dentro del rango
             var best = results.Select(t =>
