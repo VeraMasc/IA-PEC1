@@ -1,6 +1,9 @@
 using System.Linq;
 using Pada1.BBCore;
+using Pada1.BBCore.Tasks;
 using UnityEngine;
+
+
 
 namespace BBUnity.Conditions
 {
@@ -33,6 +36,8 @@ namespace BBUnity.Conditions
         [Help("Resultado de buscar al perro más cercana")]
         public GameObject nearestObj;
 
+        
+
         public override bool Check()
 		{
             var thisPos = gameObject.transform.position;
@@ -52,7 +57,7 @@ namespace BBUnity.Conditions
                 nearestObj = best.gameObject;
                 return true;
             }
-
+    
             return false;
 		}
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Poop : MonoBehaviour
 {
+    // public event System.EventHandler OnCleaned;
     void OnEnable()
     {
         Controller.singleton.poops.Add(this);
@@ -11,6 +12,9 @@ public class Poop : MonoBehaviour
 
     void OnDisable()
     {
-        Controller.singleton.poops.Remove(this);
+        Controller.singleton?.poops?.Remove(this);
+        // OnCleaned(this, System.EventArgs.Empty);
     }
+
+    
 }

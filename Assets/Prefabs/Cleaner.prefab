@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3945853325985280031}
   - component: {fileID: 3010135547998777784}
   - component: {fileID: 8034087047112048788}
+  - component: {fileID: 171600276648248363}
   m_Layer: 0
   m_Name: Cleaner
   m_TagString: Untagged
@@ -181,6 +182,7 @@ MonoBehaviour:
     - {fileID: 2456029002847663828, guid: ef7939299a8c0c5499924298229df213, type: 3}
     - {fileID: -1453888577314850278, guid: 6d3d543b8ad63a748920e928edf43f1d, type: 3}
     - {fileID: 0}
+    - {fileID: 0}
     objectParamsNames:
     - wanderArea
     - speechBubble
@@ -189,6 +191,7 @@ MonoBehaviour:
     - messageSweep
     - messageDog
     - messagePoop
+    - detectedPoop
     objectParamsLostDefaultValue: 
     layerMaskParams: []
     layerMaskParamsNames: []
@@ -219,6 +222,19 @@ MonoBehaviour:
     quaternionParams: []
     quaternionParamsNames: []
     quaternionParamsLostDefaultValue: 
+--- !u!114 &171600276648248363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3168190464217967329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859b4fceb8338c34e988617018116079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectedPoop: {fileID: 0}
 --- !u!1001 &5823436730464562657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -281,19 +297,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.21543573
+      value: -0.99261343
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -4.783634e-17
+      value: 2.2040446e-16
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.97651803
+      value: 0.121320255
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 2.1683056e-16
+      value: 2.6938508e-17
       objectReference: {fileID: 0}
     - target: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
       propertyPath: m_AnchoredPosition.x
