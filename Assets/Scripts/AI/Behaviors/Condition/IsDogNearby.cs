@@ -79,25 +79,14 @@ namespace BBUnity.Conditions
             var results = Controller.singleton.dogs.AsEnumerable();//Physics.OverlapSphere(thisPos, maxRange, layerMask).AsEnumerable();
             
             if (poopingOnly){
-                Debug.Log( String.Join(",", results.Select(dog =>{
-                    var index = dog.blackboard.boolParamsNames.IndexOf("IsPooping");
-                    return index == -1 ? null : (bool?)dog.blackboard.boolParams[index];
-                
-                    } ))
-                    );
-                
-                Debug.Log( String.Join(",", results.Select(dog =>{
-                        return dog.blackboard.getParam<bool?>("IsPooping");
 
-                    } ))
-                    );
-                //results = results.Where( dog => dog.blackboard.boolParams.f)
+                results = results.Where(dog => dog.isDogPooping);
             }
 
             //Obtener papelera más cercana dentro del rango
             var best = results.Select(t =>
                     new {t, distance= Vector3.Distance(t.transform.position, thisPos)
-                }).Aggregate(new {  t = (BehaviorExecutor) null , distance = Mathf.Infinity}, (i1, i2) => i1.distance < i2.distance ? i1 : i2)
+                }).Aggregate(new {  t = (MyBlackboard) null , distance = Mathf.Infinity}, (i1, i2) => i1.distance < i2.distance ? i1 : i2)
                 ;
 
             

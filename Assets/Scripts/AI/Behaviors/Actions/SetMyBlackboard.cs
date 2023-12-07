@@ -7,9 +7,9 @@ using System;
 
 namespace BBUnity.Actions
 {
-    [Action("AccessBlackboard")]
+    [Action("SetMyBlackboard")]
     [Help("Deja de hablar")]
-    public class AccessMyBlackboard : GOAction
+    public class SetMyBlackboard : GOAction
     {
 
         
@@ -19,17 +19,17 @@ namespace BBUnity.Actions
 
 
 
-        [OutParam("objOut")]
-        public GameObject objOut;
+        [InParam("objIn")]
+        public GameObject objIn;
 
-        [OutParam("floatOut")]
-        public float floatOut;
+        [InParam("floatIn")]
+        public float floatIn;
 
-        [OutParam("stringOut")]
-        public string stringOut;
+        [InParam("stringIn")]
+        public string stringIn;
 
-        [OutParam("boolOut")]
-        public bool boolOut;
+        [InParam("boolIn")]
+        public bool boolIn;
 
         MyBlackboard _blackboard;
 
@@ -41,24 +41,27 @@ namespace BBUnity.Actions
         public override void OnStart()
         {
             var field = blackboard.GetType().GetField(fieldName);
+
             if (field == null)
                 throw new Exception($"MyBlackboard field with name {fieldName} not found");
             var type = field.FieldType;
 
-            if( typeof(string).IsAssignableFrom(type)){
-                stringOut = field.GetValue(blackboard) as string;
+            Debug.Log(type);
+
+            if( type.IsAssignableFrom(typeof(string))){
+                field.SetValue(blackboard, stringIn);
             }
 
-            if( typeof(float).IsAssignableFrom(type)){
-                floatOut = (float)(field.GetValue(blackboard));
+            if( type.IsAssignableFrom(typeof(float))){
+                field.SetValue(blackboard,floatIn);
             }
 
-            if( typeof(bool).IsAssignableFrom(type)){
-                boolOut = (bool)(field.GetValue(blackboard));
+            if( type.IsAssignableFrom(typeof(bool))){
+                field.SetValue(blackboard,boolIn);
             }
 
-            if( typeof(GameObject).IsAssignableFrom(type)){
-                objOut = (GameObject)(field.GetValue(blackboard));
+            if( type.IsAssignableFrom(typeof(GameObject))){
+                field.SetValue(blackboard,objIn);
             }
         }
 

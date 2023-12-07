@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4794901917981575383}
   - component: {fileID: -353496078548428218}
   - component: {fileID: 2633676077979960866}
+  - component: {fileID: 5420012861643275477}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Untagged
@@ -128,6 +129,20 @@ MonoBehaviour:
     quaternionParams: []
     quaternionParamsNames: []
     quaternionParamsLostDefaultValue: 
+--- !u!114 &5420012861643275477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2330170279615974804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859b4fceb8338c34e988617018116079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectedPoop: {fileID: 0}
+  isDogPooping: 1
 --- !u!1 &2767178284293295113
 GameObject:
   m_ObjectHideFlags: 0
