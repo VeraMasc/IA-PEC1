@@ -16,5 +16,9 @@ public class Poop : MonoBehaviour
         // OnCleaned(this, System.EventArgs.Empty);
     }
 
+    public void CleanUp(){
+        Destroy(gameObject);
+    }
+
     
 }
