@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a7c8ca992f915438a96c2077353778, type: 3}
   m_Name: TakeOutGarbage
   m_EditorClassIdentifier: 
-  brickName: Assets/Scripts/AI/Behaviors/TakeOutGarbage.asset
+  brickName: Assets/Scripts/AI/Behaviors/SubBehaviors/TakeOutGarbage.asset
   xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
     version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
     id=\"0\" guid=\"acdd128d0f3874d4fa077883a94296ae\" nextId=\"15\">\r\n      <root>\r\n       
@@ -106,7 +106,7 @@ MonoBehaviour:
     description=\"Deja de hablar\" cardinality=\"0\" hasParent=\"True\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"12\" />\r\n         
     <SequenceNode id=\"7\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
-    <ActionNode id=\"14\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
+    <ActionNode id=\"14\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
     position=\"852 626.3333\" name=\"Basic/SetFloat\" description=\"Sets a value
     to a float variable\" cardinality=\"0\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ActionNode id=\"14\" />\r\n          <SequenceNode

@@ -24,7 +24,7 @@ public class Controller : MonoBehaviour
 		}
 	}
 
-    public List<Collider> dogs;
+    public List<BehaviorExecutor> dogs;
 
     public List<Poop> poops;
 
@@ -46,7 +46,7 @@ public class Controller : MonoBehaviour
 
         //Busca automáticamente todos los perros cada vez que cambias la escena
         dogs = GameObject.FindGameObjectsWithTag("Dog")
-            ?.Select(o => o.GetComponent<Collider>())
+            ?.Select(o => o.GetComponentInParent<BehaviorExecutor>())
             .ToList();
     }
 }

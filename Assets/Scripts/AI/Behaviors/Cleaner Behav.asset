@@ -15,7 +15,7 @@ MonoBehaviour:
   brickName: Assets/Scripts/AI/Behaviors/Cleaner Behav.asset
   xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
     version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
-    id=\"0\" guid=\"66973c3bd61965c4282aae854e415710\" nextId=\"71\">\r\n      <root>\r\n       
+    id=\"0\" guid=\"66973c3bd61965c4282aae854e415710\" nextId=\"83\">\r\n      <root>\r\n       
     <RepeatDecorator id=\"10\" />\r\n      </root>\r\n      <inputParams>\r\n       
     <inputValues>\r\n          <entry name=\"wanderArea\" type=\"UnityEngine.GameObject\"
     isBlackboard=\"False\" />\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
@@ -36,20 +36,77 @@ MonoBehaviour:
     name=\"detectedPoop\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\" />\r\n       
     </outputValues>\r\n      </outputParams>\r\n      <localParams />\r\n    </BehaviorTree>\r\n   
     <RepeatDecorator id=\"10\" loops=\"-1\" policy=\"ContinueWhenChildFails\">\r\n     
-    <child>\r\n        <SelectorNode id=\"59\" />\r\n      </child>\r\n      <inputParams
-    />\r\n      <outputParams />\r\n      <localParams />\r\n    </RepeatDecorator>\r\n   
-    <SelectorNode id=\"59\">\r\n      <children>\r\n        <elem>\r\n          <DecoratorGuard
-    id=\"67\" />\r\n        </elem>\r\n        <elem>\r\n          <DecoratorGuard
-    id=\"60\" />\r\n        </elem>\r\n        <elem>\r\n          <SubbehaviorNode
-    id=\"26\" />\r\n        </elem>\r\n      </children>\r\n      <inputParams />\r\n     
-    <outputParams />\r\n      <localParams />\r\n    </SelectorNode>\r\n    <DecoratorGuard
-    id=\"67\">\r\n      <guard>\r\n        <ConditionEvalNode id=\"68\" />\r\n     
-    </guard>\r\n      <child>\r\n        <SubbehaviorNode id=\"69\" />\r\n      </child>\r\n     
-    <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </DecoratorGuard>\r\n   
-    <DecoratorGuard id=\"60\">\r\n      <guard>\r\n        <ConditionEvalNode id=\"61\"
-    />\r\n      </guard>\r\n      <child>\r\n        <SubbehaviorNode id=\"62\" />\r\n     
-    </child>\r\n      <inputParams />\r\n      <outputParams />\r\n      <localParams
-    />\r\n    </DecoratorGuard>\r\n    <SubbehaviorNode id=\"26\">\r\n      <_guid>acdd128d0f3874d4fa077883a94296ae</_guid>\r\n     
+    <child>\r\n        <PrioritySelectorNode id=\"75\" />\r\n      </child>\r\n     
+    <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </RepeatDecorator>\r\n   
+    <PrioritySelectorNode id=\"75\">\r\n      <children>\r\n        <elem>\r\n         
+    <GuardAndNode>\r\n            <guard>\r\n              <ConditionEvalNode id=\"82\"
+    />\r\n            </guard>\r\n            <child>\r\n              <SubbehaviorNode
+    id=\"81\" />\r\n            </child>\r\n          </GuardAndNode>\r\n       
+    </elem>\r\n        <elem>\r\n          <GuardAndNode>\r\n            <guard>\r\n             
+    <ConditionEvalNode id=\"80\" />\r\n            </guard>\r\n            <child>\r\n             
+    <SubbehaviorNode id=\"79\" />\r\n            </child>\r\n          </GuardAndNode>\r\n       
+    </elem>\r\n        <elem>\r\n          <GuardAndNode>\r\n            <guard>\r\n             
+    <ConditionEvalNode id=\"78\" />\r\n            </guard>\r\n            <child>\r\n             
+    <SubbehaviorNode id=\"77\" />\r\n            </child>\r\n          </GuardAndNode>\r\n       
+    </elem>\r\n        <elem>\r\n          <GuardAndNode>\r\n            <guard>\r\n             
+    <ConditionEvalNode id=\"76\" />\r\n            </guard>\r\n            <child>\r\n             
+    <SubbehaviorNode id=\"26\" />\r\n            </child>\r\n          </GuardAndNode>\r\n       
+    </elem>\r\n      </children>\r\n      <inputParams />\r\n      <outputParams
+    />\r\n      <localParams />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode
+    id=\"82\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Perception/IsDogNearby\">\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
+    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n         
+    <entry name=\"poopingOnly\" type=\"System.Boolean\" isBlackboard=\"False\" value=\"True\"
+    />\r\n        </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n       
+    <outputValues>\r\n          <entry name=\"nearestObj\" type=\"UnityEngine.GameObject\"
+    isBlackboard=\"True\" blackboard=\"detectedDog\" />\r\n        </outputValues>\r\n     
+    </outputParams>\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
+    id=\"81\">\r\n      <_guid>987110430bb3cc9469999a2d0f7d331c</_guid>\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"speechBubble\"
+    type=\"SpeechBubble\" isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n         
+    <entry name=\"alertMessage\" type=\"UnityEngine.Sprite\" isBlackboard=\"True\"
+    blackboard=\"messageAlert\" />\r\n          <entry name=\"dogMessage\" type=\"UnityEngine.Sprite\"
+    isBlackboard=\"True\" blackboard=\"messageDog\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n   
+    <ConditionEvalNode id=\"80\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Perception/IsPoopNearby\">\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
+    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n       
+    </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
+    <entry name=\"nearestObj\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
+    blackboard=\"detectedPoop\" />\r\n        </outputValues>\r\n      </outputParams>\r\n     
+    <localParams />\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode id=\"79\">\r\n     
+    <_guid>1e1f5fa91c17d4c4eb1cd1f9e6634752</_guid>\r\n      <inputParams>\r\n       
+    <inputValues>\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
+    isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"messagePoop\"
+    type=\"UnityEngine.Sprite\" isBlackboard=\"True\" blackboard=\"messagePoop\"
+    />\r\n          <entry name=\"visionRange\" type=\"System.Single\" isBlackboard=\"True\"
+    blackboard=\"visionRange\" />\r\n          <entry name=\"detectedPoop\" type=\"UnityEngine.GameObject\"
+    isBlackboard=\"True\" blackboard=\"detectedPoop\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
+    <entry name=\"detectedPoop\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
+    />\r\n        </outputValues>\r\n      </outputParams>\r\n      <localParams
+    />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode id=\"78\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\"
+    name=\"Basic/CheckFloat\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
+    <entry name=\"valueA\" type=\"System.Single\" isBlackboard=\"False\" value=\"10\"
+    />\r\n          <entry name=\"valueB\" type=\"System.Single\" isBlackboard=\"True\"
+    blackboard=\"TrashCollected\" />\r\n          <entry name=\"comparison\" type=\"BBCore.Conditions.CompareType\"
+    isBlackboard=\"False\" value=\"greaterOrEqual\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n   
+    <SubbehaviorNode id=\"77\">\r\n      <_guid>ed74b5995f9bb51498f91e5e50422c12</_guid>\r\n     
+    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"messageSweep\"
+    type=\"UnityEngine.Sprite\" isBlackboard=\"True\" blackboard=\"messageSweep\"
+    />\r\n          <entry name=\"wanderArea\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
+    blackboard=\"wanderArea\" />\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
+    isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"TrashCollected\"
+    type=\"System.Single\" isBlackboard=\"False\" value=\"0\" />\r\n        </inputValues>\r\n     
+    </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
+    <entry name=\"targetPosition\" type=\"UnityEngine.Vector3\" isBlackboard=\"True\"
+    />\r\n          <entry name=\"TrashCollected\" type=\"System.Single\" isBlackboard=\"True\"
+    blackboard=\"TrashCollected\" />\r\n        </outputValues>\r\n      </outputParams>\r\n     
+    <localParams />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode id=\"76\"
+    policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"AlwaysTrue\">\r\n      <inputParams
+    />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n   
+    <SubbehaviorNode id=\"26\">\r\n      <_guid>acdd128d0f3874d4fa077883a94296ae</_guid>\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"duration\"
     type=\"System.Single\" isBlackboard=\"True\" blackboard=\"seconds\" />\r\n         
     <entry name=\"speechBubble\" type=\"SpeechBubble\" isBlackboard=\"True\" blackboard=\"speechBubble\"
@@ -60,101 +117,77 @@ MonoBehaviour:
     <entry name=\"nearestTrash\" type=\"UnityEngine.Vector3\" isBlackboard=\"True\"
     blackboard=\"\" />\r\n          <entry name=\"TrashCollected\" type=\"System.Single\"
     isBlackboard=\"True\" blackboard=\"TrashCollected\" />\r\n        </outputValues>\r\n     
-    </outputParams>\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode
-    id=\"68\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Perception/IsPoopNearby\">\r\n     
-    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
-    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n       
-    </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
-    <entry name=\"nearestObj\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
-    blackboard=\"detectedPoop\" />\r\n        </outputValues>\r\n      </outputParams>\r\n     
-    <localParams />\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode id=\"69\">\r\n     
-    <_guid>1e1f5fa91c17d4c4eb1cd1f9e6634752</_guid>\r\n      <inputParams>\r\n       
-    <inputValues>\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
-    isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"messagePoop\"
-    type=\"UnityEngine.Sprite\" isBlackboard=\"True\" blackboard=\"messagePoop\"
-    />\r\n          <entry name=\"detectedPoop\" type=\"UnityEngine.GameObject\"
-    isBlackboard=\"True\" blackboard=\"detectedPoop\" />\r\n          <entry name=\"visionRange\"
-    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n       
-    </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
-    <entry name=\"detectedPoop\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
-    blackboard=\"\" />\r\n        </outputValues>\r\n      </outputParams>\r\n     
-    <localParams />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode id=\"61\"
-    policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Basic/CheckFloat\">\r\n      <inputParams>\r\n       
-    <inputValues>\r\n          <entry name=\"valueA\" type=\"System.Single\" isBlackboard=\"False\"
-    value=\"10\" />\r\n          <entry name=\"valueB\" type=\"System.Single\" isBlackboard=\"True\"
-    blackboard=\"TrashCollected\" />\r\n          <entry name=\"comparison\" type=\"BBCore.Conditions.CompareType\"
-    isBlackboard=\"False\" value=\"greaterOrEqual\" />\r\n        </inputValues>\r\n     
-    </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n   
-    <SubbehaviorNode id=\"62\">\r\n      <_guid>ed74b5995f9bb51498f91e5e50422c12</_guid>\r\n     
-    <inputParams>\r\n        <inputValues>\r\n          <entry name=\"messageSweep\"
-    type=\"UnityEngine.Sprite\" isBlackboard=\"True\" blackboard=\"messageSweep\"
-    />\r\n          <entry name=\"wanderArea\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
-    blackboard=\"wanderArea\" />\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
-    isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"TrashCollected\"
-    type=\"System.Single\" isBlackboard=\"False\" value=\"0\" />\r\n        </inputValues>\r\n     
-    </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
-    <entry name=\"targetPosition\" type=\"UnityEngine.Vector3\" isBlackboard=\"True\"
-    />\r\n          <entry name=\"TrashCollected\" type=\"System.Single\" isBlackboard=\"True\"
-    />\r\n        </outputValues>\r\n      </outputParams>\r\n      <localParams
-    />\r\n    </SubbehaviorNode>\r\n  </runtimeInfo>\r\n  <editorInfo>\r\n    <BehaviorTree
-    id=\"0\" _name=\"Cleaner Behav\" _description=\"\" _removeIfClosed=\"False\">\r\n     
-    <_rootList>\r\n        <elem>\r\n          <RepeatDecorator id=\"10\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <SubbehaviorNode id=\"26\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <SelectorNode id=\"59\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <DecoratorGuard id=\"60\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <ConditionEvalNode id=\"61\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <SubbehaviorNode id=\"62\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <DecoratorGuard id=\"67\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <ConditionEvalNode id=\"68\" />\r\n       
-    </elem>\r\n        <elem>\r\n          <SubbehaviorNode id=\"69\" />\r\n       
-    </elem>\r\n      </_rootList>\r\n      <_nodes>\r\n        <nodes>\r\n         
-    <ConditionEvalNode id=\"61\" />\r\n          <RepeatDecorator id=\"10\" />\r\n         
-    <SubbehaviorNode id=\"62\" />\r\n          <SubbehaviorNode id=\"26\" />\r\n         
-    <DecoratorGuard id=\"60\" />\r\n          <SelectorNode id=\"59\" />\r\n         
-    <DecoratorGuard id=\"67\" />\r\n          <ConditionEvalNode id=\"68\" />\r\n         
-    <SubbehaviorNode id=\"69\" />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n   
-    <RepeatDecorator id=\"10\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"601.4916 -150.8409\" name=\"Repeat\" description=\"Repeats
-    the execution of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n         
+    </outputParams>\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n  </runtimeInfo>\r\n 
+    <editorInfo>\r\n    <BehaviorTree id=\"0\" _name=\"Cleaner Behav\" _description=\"\"
+    _removeIfClosed=\"False\">\r\n      <_rootList>\r\n        <elem>\r\n         
+    <RepeatDecorator id=\"10\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <SubbehaviorNode id=\"26\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <PrioritySelectorNode id=\"75\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <ConditionEvalNode id=\"76\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <SubbehaviorNode id=\"77\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <ConditionEvalNode id=\"78\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <SubbehaviorNode id=\"79\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <ConditionEvalNode id=\"80\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <SubbehaviorNode id=\"81\" />\r\n        </elem>\r\n        <elem>\r\n         
+    <ConditionEvalNode id=\"82\" />\r\n        </elem>\r\n      </_rootList>\r\n     
+    <_nodes>\r\n        <nodes>\r\n          <ConditionEvalNode id=\"80\" />\r\n         
+    <RepeatDecorator id=\"10\" />\r\n          <SubbehaviorNode id=\"79\" />\r\n         
+    <SubbehaviorNode id=\"26\" />\r\n          <PrioritySelectorNode id=\"75\" />\r\n         
+    <ConditionEvalNode id=\"76\" />\r\n          <SubbehaviorNode id=\"77\" />\r\n         
+    <ConditionEvalNode id=\"78\" />\r\n          <SubbehaviorNode id=\"81\" />\r\n         
+    <ConditionEvalNode id=\"82\" />\r\n        </nodes>\r\n      </_nodes>\r\n   
+    </BehaviorTree>\r\n    <RepeatDecorator id=\"10\">\r\n      <_data>\r\n       
+    <data breakpoint=\"0\" selected=\"False\" position=\"489.231 -100.2409\" name=\"Repeat\"
+    description=\"Repeats the execution of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <RepeatDecorator id=\"10\" />\r\n       
-    </data>\r\n      </_data>\r\n    </RepeatDecorator>\r\n    <SelectorNode id=\"59\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"591.576
-    49.17281\" name=\"Selector\" description=\"Executes all its children until one
-    of them is successful\" cardinality=\"-1\" hasParent=\"True\">\r\n          <BehaviorTree
-    id=\"0\" />\r\n          <SelectorNode id=\"59\" />\r\n          <RepeatDecorator
-    id=\"10\" />\r\n        </data>\r\n      </_data>\r\n    </SelectorNode>\r\n   
-    <DecoratorGuard id=\"67\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"269.35 207.9\" name=\"Guard\" description=\"Guard\"
-    cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <DecoratorGuard id=\"67\" />\r\n          <SelectorNode id=\"59\" />\r\n       
-    </data>\r\n      </_data>\r\n    </DecoratorGuard>\r\n    <DecoratorGuard id=\"60\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"556.2588
-    204.2529\" name=\"Guard\" description=\"Guard\" cardinality=\"1\" hasParent=\"True\">\r\n         
-    <BehaviorTree id=\"0\" />\r\n          <DecoratorGuard id=\"60\" />\r\n         
-    <SelectorNode id=\"59\" />\r\n        </data>\r\n      </_data>\r\n    </DecoratorGuard>\r\n   
-    <SubbehaviorNode id=\"26\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"905.7209 208.9746\" name=\"TakeOutGarbage\" description=\"\"
-    cardinality=\"-1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <SelectorNode id=\"59\" />\r\n          <SelectorNode id=\"59\" />\r\n       
+    </data>\r\n      </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode
+    id=\"75\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"417.3894 64.45\" name=\"Priority Selector\" description=\"\" cardinality=\"1\"
+    hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode
+    id=\"75\" />\r\n          <RepeatDecorator id=\"10\" />\r\n        </data>\r\n     
+    </_data>\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"82\">\r\n     
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"True\" position=\"132.8571
+    464.4897\" name=\"Perception/IsDogNearby\" description=\"Eval\" cardinality=\"1\"
+    hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
+    id=\"82\" />\r\n          <PrioritySelectorNode id=\"75\" />\r\n        </data>\r\n     
+    </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode id=\"81\">\r\n     
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"74.57143
+    326.8571\" name=\"ScareDog\" description=\"\" cardinality=\"-1\" hasParent=\"False\">\r\n         
+    <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode id=\"81\" />\r\n       
     </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode
-    id=\"68\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
-    position=\"269.35 207.9\" name=\"Perception/IsPoopNearby\" description=\"Eval\"
-    cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <ConditionEvalNode id=\"68\" />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n   
-    <SubbehaviorNode id=\"69\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"269.35 207.9\" name=\"CleanPoop\" description=\"\"
-    cardinality=\"-1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <SubbehaviorNode id=\"69\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
-    <ConditionEvalNode id=\"61\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"556.2588 204.2529\" name=\"Basic/CheckFloat\" description=\"Eval\"
-    cardinality=\"1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <ConditionEvalNode id=\"61\" />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n   
-    <SubbehaviorNode id=\"62\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"556.2588 204.2529\" name=\"SweepFloor\" description=\"\"
-    cardinality=\"-1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n         
-    <SubbehaviorNode id=\"62\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n 
+    id=\"80\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"421.4288 547.7552\" name=\"Perception/IsPoopNearby\" description=\"Eval\"
+    cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
+    <ConditionEvalNode id=\"80\" />\r\n          <PrioritySelectorNode id=\"75\"
+    />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
+    id=\"79\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"273.143 361.143\" name=\"CleanPoop\" description=\"\" cardinality=\"-1\"
+    hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
+    id=\"79\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
+    <ConditionEvalNode id=\"78\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
+    selected=\"False\" position=\"721.6324 540.6121\" name=\"Basic/CheckFloat\" description=\"Eval\"
+    cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
+    <ConditionEvalNode id=\"78\" />\r\n          <PrioritySelectorNode id=\"75\"
+    />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
+    id=\"77\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"493.1431 375.4286\" name=\"SweepFloor\" description=\"\" cardinality=\"-1\"
+    hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
+    id=\"77\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
+    <ConditionEvalNode id=\"76\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
+    selected=\"False\" position=\"1182.647 375.0045\" name=\"AlwaysTrue\" description=\"Eval\"
+    cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
+    <ConditionEvalNode id=\"76\" />\r\n          <PrioritySelectorNode id=\"75\"
+    />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
+    id=\"26\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"789.7104 277.0746\" name=\"TakeOutGarbage\" description=\"\" cardinality=\"-1\"
+    hasParent=\"False\">\r\n          <BehaviorTree id=\"59\" />\r\n        </data>\r\n     
+    </_data>\r\n    </SubbehaviorNode>\r\n  </editorInfo>\r\n  <runtimeInfo>\r\n   
+    <BehaviorTree id=\"59\" nextId=\"1\">\r\n      <inputParams />\r\n      <outputParams
+    />\r\n      <localParams />\r\n    </BehaviorTree>\r\n  </runtimeInfo>\r\n  <editorInfo>\r\n   
+    <BehaviorTree id=\"59\" _removeIfClosed=\"False\">\r\n      <_rootList />\r\n     
+    <_nodes>\r\n        <nodes />\r\n      </_nodes>\r\n    </BehaviorTree>\r\n 
     </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 1
+  zoom: 0.7
   subslist:
   - {fileID: 11400000, guid: acdd128d0f3874d4fa077883a94296ae, type: 2}
   - {fileID: 11400000, guid: ed74b5995f9bb51498f91e5e50422c12, type: 2}

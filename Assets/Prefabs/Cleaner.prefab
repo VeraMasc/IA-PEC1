@@ -159,7 +159,7 @@ MonoBehaviour:
     floatParams:
     - 0.5
     - 4
-    - 30
+    - 10
     - 0
     floatParamsNames:
     - trueProbability

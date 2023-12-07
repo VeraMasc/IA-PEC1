@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a7c8ca992f915438a96c2077353778, type: 3}
   m_Name: ScareDog
   m_EditorClassIdentifier: 
-  brickName: Assets/Scripts/AI/Behaviors/ScareDog.asset
+  brickName: Assets/Scripts/AI/Behaviors/SubBehaviors/ScareDog.asset
   xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
     version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
     id=\"0\" guid=\"987110430bb3cc9469999a2d0f7d331c\" nextId=\"6\">\r\n      <root>\r\n       
@@ -64,7 +64,7 @@ MonoBehaviour:
     in sequence until all of them are successful\" cardinality=\"-1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <SequenceNode id=\"1\" />\r\n        </data>\r\n     
     </_data>\r\n    </SequenceNode>\r\n    <ActionNode id=\"2\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"True\" position=\"80.20001 326.8\" name=\"Speak\"
+    <data breakpoint=\"0\" selected=\"False\" position=\"80.20001 326.8\" name=\"Speak\"
     description=\"Dice un mensaje mediante un bocadillo\" cardinality=\"0\" hasParent=\"True\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"2\" />\r\n          <SequenceNode
     id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
