@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using BBUnity.Actions;
 using Pada1.BBCore;
@@ -78,7 +79,18 @@ namespace BBUnity.Conditions
             var results = Controller.singleton.dogs.AsEnumerable();//Physics.OverlapSphere(thisPos, maxRange, layerMask).AsEnumerable();
             
             if (poopingOnly){
-                Debug.Log(results.Select(dog => dog.blackboard.boolParams).ToString());
+                Debug.Log( String.Join(",", results.Select(dog =>{
+                    var index = dog.blackboard.boolParamsNames.IndexOf("IsPooping");
+                    return index == -1 ? null : (bool?)dog.blackboard.boolParams[index];
+                
+                    } ))
+                    );
+                
+                Debug.Log( String.Join(",", results.Select(dog =>{
+                        return dog.blackboard.getParam<bool?>("IsPooping");
+
+                    } ))
+                    );
                 //results = results.Where( dog => dog.blackboard.boolParams.f)
             }
 

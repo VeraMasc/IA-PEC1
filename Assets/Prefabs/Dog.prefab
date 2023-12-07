@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422fb6956201c7944ae2113a1a53b0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTasksPerTick: 500
+  maxTasksPerTick: 1
   behavior: {fileID: 11400000, guid: 69675dda0115dd446a45e14e0196d135, type: 2}
   paused: 0
   restartWhenFinished: 0
@@ -79,8 +79,9 @@ MonoBehaviour:
     intParams: 
     intParamsNames: []
     intParamsLostDefaultValue: 
-    boolParams: 
-    boolParamsNames: []
+    boolParams: 00
+    boolParamsNames:
+    - IsPooping
     boolParamsLostDefaultValue: 
     floatParams: []
     floatParamsNames: []
