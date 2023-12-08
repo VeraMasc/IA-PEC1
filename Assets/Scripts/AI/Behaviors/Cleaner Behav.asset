@@ -68,7 +68,7 @@ MonoBehaviour:
     blackboard=\"messageAlert\" />\r\n          <entry name=\"dogMessage\" type=\"UnityEngine.Sprite\"
     isBlackboard=\"True\" blackboard=\"messageDog\" />\r\n        </inputValues>\r\n     
     </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n   
-    <ConditionEvalNode id=\"80\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Perception/IsPoopNearby\">\r\n     
+    <ConditionEvalNode id=\"80\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Perception/IsPoopNearby\">\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
     type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n       
     </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
@@ -146,7 +146,7 @@ MonoBehaviour:
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode
     id=\"75\" />\r\n          <RepeatDecorator id=\"10\" />\r\n        </data>\r\n     
     </_data>\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"82\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"True\" position=\"132.8571
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"132.8571
     464.4897\" name=\"Perception/IsDogNearby\" description=\"Eval\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
     id=\"82\" />\r\n          <PrioritySelectorNode id=\"75\" />\r\n        </data>\r\n     
