@@ -72,6 +72,18 @@ namespace BBUnity.Conditions
         public override bool Check()
 		{
             var thisPos = gameObject.transform.position;
+
+            var ret = isPoopNearPos(thisPos, maxRange, out var closest);
+
+            
+            if(ret){
+                nearestObj =blackboard.detectedPoop= closest.gameObject;
+            }
+
+            return ret;
+		}
+
+        public static bool isPoopNearPos(Vector3 thisPos, float maxRange, out Poop closest){
             var results = Controller.singleton.poops.AsEnumerable();//Physics.OverlapSphere(thisPos, maxRange, layerMask).AsEnumerable();
             
         
@@ -82,13 +94,13 @@ namespace BBUnity.Conditions
                 }).Aggregate(new {  t = (Poop) null , distance = Mathf.Infinity}, (i1, i2) => i1.distance < i2.distance ? i1 : i2)
                 ;
 
-            
-            if(best.t != null && best.distance <= maxRange){
-                nearestObj =blackboard.detectedPoop= best.t.gameObject;
+            closest = best.t;
+            if(closest != null && best.distance <= maxRange){
+                
                 return true;
             }
 
             return false;
-		}
+        }
     }
 }
