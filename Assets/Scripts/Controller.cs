@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour
     public List<MyBlackboard> dogs;
 
     public List<Poop> poops;
+    
 
 	void Awake()
 	{

@@ -53,7 +53,7 @@ namespace BBUnity.Actions
             }
             var targetRot = original.transform.rotation;
             if(isRotRelative){
-                targetRot *= gameObject.transform.rotation;
+                targetRot = gameObject.transform.rotation * targetRot;
             }
             original = GameObject.Instantiate(original,targetPos, targetRot) as GameObject;
         }
