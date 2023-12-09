@@ -27,8 +27,12 @@ namespace BBUnity.Actions
         public float duration;
 
         [InParam("hasDuration")]
-        [Help("")]
+        [Help("Hace que el mensaje dure un tiempo determinado")]
         public bool hasDuration;
+
+        [InParam("isEndless")]
+        [Help("Se ejecuta eternamente hasta que algo la obligue a abortar")]
+        public bool isEndless;
 
         /// <summary></summary>
         public override void OnStart()
@@ -40,6 +44,10 @@ namespace BBUnity.Actions
         /// and otherwise it will remain in operation.</remarks>
         public override TaskStatus OnUpdate()
         {
+            if(isEndless){
+                return TaskStatus.SUSPENDED;
+            }
+
             if (!hasDuration || duration<=0){
                 
                 return TaskStatus.COMPLETED;
@@ -53,15 +61,21 @@ namespace BBUnity.Actions
         /// <summary>Abort method of MoveToRandomPosition </summary>
         public override void OnAbort()
         {
-            if(hasDuration)
-                speech.clearBubble();
+            
+            speech.clearBubble();
         }
         
         public override void OnEnd()
         {
-            if(hasDuration)
+            if(hasDuration || isEndless)
                 speech.clearBubble();
         }
+
+        public override void OnFailedEnd()
+        {
+            speech.clearBubble();
+        }
+        
         
     }
 }

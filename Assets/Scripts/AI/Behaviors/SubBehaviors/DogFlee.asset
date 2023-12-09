@@ -15,12 +15,29 @@ MonoBehaviour:
   brickName: Assets/Scripts/AI/Behaviors/SubBehaviors/DogFlee.asset
   xml: "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<BehaviorBricks xmlns:ref=\"urn:padaone\"
     version=\"1.0\">\r\n  <BehaviorTree id=\"0\" />\r\n  <runtimeInfo>\r\n    <BehaviorTree
-    id=\"0\" guid=\"6cd1441676c685849830c32387feb720\" nextId=\"1\">\r\n      <inputParams
-    />\r\n      <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n 
-    </runtimeInfo>\r\n  <editorInfo>\r\n    <BehaviorTree id=\"0\" _name=\"DogFlee\"
-    _description=\"\" _removeIfClosed=\"False\">\r\n      <_rootList />\r\n     
-    <_nodes>\r\n        <nodes />\r\n      </_nodes>\r\n    </BehaviorTree>\r\n 
-    </editorInfo>\r\n</BehaviorBricks>"
+    id=\"0\" guid=\"6cd1441676c685849830c32387feb720\" nextId=\"3\">\r\n      <root>\r\n       
+    <SequenceNode id=\"1\" />\r\n      </root>\r\n      <inputParams />\r\n     
+    <outputParams />\r\n      <localParams />\r\n    </BehaviorTree>\r\n    <SequenceNode
+    id=\"1\">\r\n      <children>\r\n        <elem>\r\n          <ActionNode id=\"2\"
+    />\r\n        </elem>\r\n      </children>\r\n      <inputParams />\r\n     
+    <outputParams />\r\n      <localParams />\r\n    </SequenceNode>\r\n    <ActionNode
+    id=\"2\" action=\"SuccessAction\">\r\n      <inputParams />\r\n      <outputParams
+    />\r\n      <localParams />\r\n    </ActionNode>\r\n  </runtimeInfo>\r\n  <editorInfo>\r\n   
+    <BehaviorTree id=\"0\" _name=\"DogFlee\" _description=\"\" _removeIfClosed=\"False\">\r\n     
+    <_rootList>\r\n        <elem>\r\n          <SequenceNode id=\"1\" />\r\n       
+    </elem>\r\n        <elem>\r\n          <ActionNode id=\"2\" />\r\n        </elem>\r\n     
+    </_rootList>\r\n      <_nodes>\r\n        <nodes>\r\n          <SequenceNode
+    id=\"1\" />\r\n          <ActionNode id=\"2\" />\r\n        </nodes>\r\n     
+    </_nodes>\r\n    </BehaviorTree>\r\n    <SequenceNode id=\"1\">\r\n      <_data>\r\n       
+    <data breakpoint=\"0\" selected=\"False\" position=\"358.2 162.8\" name=\"Sequence\"
+    description=\"Executes all its children in sequence until all of them are successful\"
+    cardinality=\"-1\" hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n         
+    <SequenceNode id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </SequenceNode>\r\n   
+    <ActionNode id=\"2\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"202.2 348.8\" name=\"SuccessAction\" description=\"Action that always
+    successes. It executes in one cycle.\" cardinality=\"0\" hasParent=\"True\">\r\n         
+    <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"2\" />\r\n          <SequenceNode
+    id=\"1\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
   zoom: 1
   subslist: []
   _guid: 6cd1441676c685849830c32387feb720
