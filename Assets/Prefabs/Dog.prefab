@@ -86,9 +86,11 @@ MonoBehaviour:
     boolParamsLostDefaultValue: 
     floatParams:
     - 4
+    - 10
     - 0
     floatParamsNames:
     - poopDuration
+    - scareDuration
     floatParamsLostDefaultValue: 
     stringParams: []
     stringParamsNames: []
@@ -101,11 +103,15 @@ MonoBehaviour:
     - {fileID: 2456029002847663828, guid: ef7939299a8c0c5499924298229df213, type: 3}
     - {fileID: -1453888577314850278, guid: 6d3d543b8ad63a748920e928edf43f1d, type: 3}
     - {fileID: 8646890233888863647, guid: dd72f50af9e454a469ee471b4955c9c3, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     objectParamsNames:
     - speechBubble
     - barkMessage
     - poopMessage
     - poopPrefab
+    - wanderArea
+    - scareMessage
     objectParamsLostDefaultValue: 
     layerMaskParams: []
     layerMaskParamsNames: []
@@ -150,6 +156,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectedPoop: {fileID: 0}
   isDogPooping: 1
+  isScared: 0
+  isShouting: 0
+  detectedDog: {fileID: 0}
+  detectedCleaner: {fileID: 0}
 --- !u!1 &2767178284293295113
 GameObject:
   m_ObjectHideFlags: 0

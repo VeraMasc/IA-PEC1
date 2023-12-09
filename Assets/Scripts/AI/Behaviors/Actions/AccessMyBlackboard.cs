@@ -2,6 +2,7 @@ using Pada1.BBCore.Tasks;
 using Pada1.BBCore;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 
 
@@ -58,7 +59,8 @@ namespace BBUnity.Actions
             }
 
             if( typeof(GameObject).IsAssignableFrom(type)){
-                objOut = (GameObject)(field.GetValue(blackboard));
+                
+                objOut = (field.GetValue(blackboard) as GameObject).gameObject;
             }
         }
 

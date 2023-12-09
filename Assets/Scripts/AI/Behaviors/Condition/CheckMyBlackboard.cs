@@ -70,7 +70,7 @@ namespace BBCore.Conditions
             field ??= typeof(MyBlackboard).GetField(fieldName);
             if (field == null)
                 throw new Exception($"MyBlackboard field with name {fieldName} not found");
-            method ??= typeof(MyBlackboard).GetMethod("compare");
+            method ??= this.GetType().GetMethod("compare");
 
             var type = field.FieldType;
             var valueA = field.GetValue(blackboard);

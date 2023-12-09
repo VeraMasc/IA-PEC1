@@ -378,8 +378,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.floatParams.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParams.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParams.Array.data[0]
@@ -390,16 +394,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2030774994}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.objectParams.Array.data[5]
+      value: 
+      objectReference: {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParamsNames.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParamsNames.Array.data[0]
       value: poopDuration
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.floatParamsNames.Array.data[1]
+      value: scareDuration
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[0]
@@ -420,6 +432,10 @@ PrefabInstance:
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[4]
       value: wanderArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.objectParamsNames.Array.data[5]
+      value: scareMessage
       objectReference: {fileID: 0}
     - target: {fileID: 4794901917981575383, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: m_RootOrder
@@ -471,7 +487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7273687059644344475, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -8.2190524e-16
+      value: -8.219057e-16
       objectReference: {fileID: 0}
     - target: {fileID: 7273687059644344475, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: m_LocalRotation.y
@@ -479,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7273687059644344475, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.3344145e-16
+      value: 1.3344153e-16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

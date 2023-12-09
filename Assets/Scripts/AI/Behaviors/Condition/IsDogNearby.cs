@@ -48,7 +48,7 @@ namespace BBUnity.Conditions
         /// <returns>Failed si la condición se ha vuelto falsa</returns>
         public override TaskStatus MonitorFailWhenFalse()
         {
-            nearestObj = _nearestObj;
+            nearestObj = _nearestObj ?? blackboard.detectedDog.gameObject;
             if (nearestObj!= null || Check()) // if (Check())
                 return TaskStatus.RUNNING;
             else
@@ -92,6 +92,7 @@ namespace BBUnity.Conditions
             
             if(best.t != null && best.distance <= maxRange){
                 nearestObj = _nearestObj = best.t.gameObject;
+                blackboard.detectedDog = best.t.gameObject;
                 return true;
             }
 

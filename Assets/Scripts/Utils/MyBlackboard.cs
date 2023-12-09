@@ -17,9 +17,15 @@ public class MyBlackboard : MonoBehaviour
 
     public bool isScared;
 
-    public MyBlackboard detectedDog;
+    public bool isShouting;
+    public GameObject detectedDog;
 
-    public MyBlackboard detectedCleaner;
+    public GameObject detectedCleaner;
+
+    public void scare(){
+        isScared = true;
+    }
+
 
 }
 

@@ -68,7 +68,7 @@ MonoBehaviour:
     blackboard=\"messageAlert\" />\r\n          <entry name=\"dogMessage\" type=\"UnityEngine.Sprite\"
     isBlackboard=\"True\" blackboard=\"messageDog\" />\r\n        </inputValues>\r\n     
     </inputParams>\r\n      <outputParams />\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n   
-    <ConditionEvalNode id=\"80\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Perception/IsPoopNearby\">\r\n     
+    <ConditionEvalNode id=\"80\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Perception/IsPoopNearby\">\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
     type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n       
     </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
