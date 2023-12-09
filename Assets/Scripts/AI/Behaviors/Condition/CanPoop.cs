@@ -19,8 +19,19 @@ namespace BBUnity.Conditions
         [InParam("poopRange")]
         [Help("Distancia mínima entre cacas")]
         public float poopRange=10;
+
+        MyBlackboard _blackboard;
+
+        MyBlackboard blackboard {
+            get =>_blackboard ??= gameObject.GetComponent<MyBlackboard>();
+            
+        }
+
         public override bool Check()
 		{
+            if (blackboard.isDogPooping)
+                return true;
+
             if (Controller.singleton.poops.Count >= poopLimit)
                 return false;
 
