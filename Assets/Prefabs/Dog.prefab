@@ -87,10 +87,14 @@ MonoBehaviour:
     floatParams:
     - 4
     - 10
+    - 5
+    - 3.5
     - 0
     floatParamsNames:
     - poopDuration
     - scareDuration
+    - fleeSpeed
+    - normalSpeed
     floatParamsLostDefaultValue: 
     stringParams: []
     stringParamsNames: []
