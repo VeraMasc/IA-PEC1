@@ -379,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParams.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParams.Array.size
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParamsNames.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.size
@@ -412,6 +412,14 @@ PrefabInstance:
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.floatParamsNames.Array.data[1]
       value: scareDuration
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.floatParamsNames.Array.data[2]
+      value: fleeSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
+      propertyPath: blackboard.floatParamsNames.Array.data[3]
+      value: normalSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 2633676077979960866, guid: e1aec956a5bae6f48a6b2581432cabf7, type: 3}
       propertyPath: blackboard.objectParamsNames.Array.data[0]
