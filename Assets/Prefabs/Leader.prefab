@@ -146,7 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   members: []
   agent: {fileID: 0}
-  spread: 2
+  shape: 0
+  spread: 3.5
   maxSpread: 8
 --- !u!1001 &8258997132106637184
 PrefabInstance:
