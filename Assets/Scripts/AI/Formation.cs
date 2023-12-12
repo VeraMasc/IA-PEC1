@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 
 public enum FormationShape{
     none,
     circle,
-    square,
-    randomSpread
+    square
 }
 
 
@@ -26,12 +26,23 @@ public class Formation : MonoBehaviour
 
     public float spread = 2f;
 
-    public float maxSpread = 8f;
+    public float tolerance = 1f;
+
+    
 
     /// <summary>
     /// Ha habido cambios desde el último updates
     /// </summary>
     public bool isDirty;
+
+    /// <summary>
+    /// Indica que todos los miembros de la formación están en su lugar
+    /// </summary>
+    public bool allInPlace{
+        get {
+            return members.All(m => m.isInPlace);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +57,9 @@ public class Formation : MonoBehaviour
             applyChanges();
     }
 
+    /// <summary>
+    /// Aplica los cambios a los miembros de la formación
+    /// </summary>
     public void applyChanges(){
         var num = 0;
         foreach( var member in members){
@@ -114,10 +128,9 @@ public class Formation : MonoBehaviour
     public Vector2Int squarePosition(int ringNum){
         var count = members.Count;
         var twice = count*2;
-        Debug.Log(twice);
         int sizex = Mathf.CeilToInt(Mathf.Sqrt(twice))/2*2;
         int sizey =  sizex /2;
-        Debug.Log($"{sizex} {sizey}");
+
         int x=0,y=1, n = 0;
 
         while (n < ringNum){

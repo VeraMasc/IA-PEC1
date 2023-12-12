@@ -23,6 +23,18 @@ public class FormationMember : MonoBehaviour
 
     public Quaternion? formRotation;
 
+    /// <summary>
+    /// Indica si el miembro de la formación está en el lugar que se le ha asignado
+    /// </summary>
+    public bool isInPlace {
+        get {
+            if (formPosition == null)
+                return true;
+            var dist = Vector3.Distance(transform.position, (Vector3)formPosition);
+            return  dist < agent.stoppingDistance + formation?.tolerance;
+        }
+    }
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
