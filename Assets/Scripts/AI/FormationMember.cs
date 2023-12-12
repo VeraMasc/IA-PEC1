@@ -23,8 +23,7 @@ public class FormationMember : MonoBehaviour
 
     public Quaternion? formRotation;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
 
@@ -37,6 +36,11 @@ public class FormationMember : MonoBehaviour
                     }).Aggregate(new { t = (Formation)null, distance = Mathf.Infinity }, (i1, i2) => i1.distance < i2.distance ? i1 : i2);
 
         joinFormation(best.t);
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
         
     }
 
@@ -50,7 +54,7 @@ public class FormationMember : MonoBehaviour
         var num = form.members.Count;
         form.members.Add(this);
         formation = form;
-        (formPosition, formRotation) = formation.getPosition(num);
+        formation.isDirty = true;
     }
 
 

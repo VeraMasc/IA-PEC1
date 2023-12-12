@@ -28,6 +28,11 @@ public class Formation : MonoBehaviour
 
     public float maxSpread = 8f;
 
+    /// <summary>
+    /// Ha habido cambios desde el último updates
+    /// </summary>
+    public bool isDirty;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +42,17 @@ public class Formation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isDirty)
+            applyChanges();
+    }
+
+    public void applyChanges(){
+        var num = 0;
+        foreach( var member in members){
+            (member.formPosition, member.formRotation) = getPosition(num);
+            num++;
+        }
+        isDirty = false;
     }
 
     public (Vector3?, Quaternion?) getPosition(int memberNum){
@@ -57,6 +72,17 @@ public class Formation : MonoBehaviour
                 pos *= -1; //Alternar el lado en el que empiezan los círculos
             pos = rotation * pos;
             return (pos, rotation);
+        
+        }else if(shape == FormationShape.square){
+            
+            var offset = squarePosition(memberNum);
+
+            var xPos = offset.x % 2 == 0 ? Vector3.right : Vector3.left;
+            xPos *= (offset.x / 2 + 0.5f) * spread;
+            var yPos = Vector3.forward * spread * offset.y;
+            
+            
+            return (xPos + yPos, Quaternion.identity);
         }
         return (null, null);
     }
@@ -83,4 +109,26 @@ public class Formation : MonoBehaviour
     public float ringRadius(int ringNum){
         return ringNum  * spread * 0.8f - (ringNum-1)*0.5f ;
     }
+
+
+    public Vector2Int squarePosition(int ringNum){
+        var count = members.Count;
+        var twice = count*2;
+        Debug.Log(twice);
+        int sizex = Mathf.CeilToInt(Mathf.Sqrt(twice))/2*2;
+        int sizey =  sizex /2;
+        Debug.Log($"{sizex} {sizey}");
+        int x=0,y=1, n = 0;
+
+        while (n < ringNum){
+            n++;
+            x++;
+            if (x >= sizex) { x = 0; y++; }
+        }
+        
+        return new Vector2Int(x,y);
+
+    }
+
+
 }
