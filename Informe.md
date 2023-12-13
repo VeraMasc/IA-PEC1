@@ -9,6 +9,10 @@
             2. [Conditions](#conditions)
         2. [Extras](#extras)
     3. [Group Behavior](#group-behavior)
+        1. [Algoritmos de formación](#algoritmos-de-formación)
+        2. [Código Grupos](#código-grupos)
+            1. [Formation](#formation)
+            2. [FormationMember](#formationmember)
 
 
 [Repositorio](https://github.com/VeraMasc/IA-PEC1)
@@ -36,7 +40,31 @@ Se encuentran todos en la carpeta Scripts/AI/Behaviors, en la subcarpeta corresp
 
 ##### Actions
 
+- **Blackboard actions**: Son usadas para solucionar el problema de que Behavior Bricks no te deja acceder a la blackboard desde fuera del behavior tree mediante una blackboard propia.
+	- **SetMyBlackboard**: Permite asignar valores a las variables de MyBlackboard desde el Behavior Tree
+	- **AccessMyBlackboard**: Permite extraer valores de las variables de MyBlackboard para usarlos en el Behavior Tree
+- **Speech actions**: Acciones usadas para controlar los bocadillos de diálogo
+    - **SpeakAction**: Pone un Sprite concreto en el diálogo permite configurarlo para que dure una cantidad limitada de tiempo, o incluso que se ejecute en paralelo y se detenga en cuanto la otra tarea finalize.
+    - **ShutUpAction**: Vacia el diálogo
+- **Basic Actions**: acciones muy fundamentales que no entiendo como no vienen ya por defecto dentro del plugin
+    - **IncreaseFloat**: Permite sumar un valor a una variable float de la blackboard.
+    - **InstantiateRelative**: Versión modificada de la acción Instantiate que permite instanciar objetos con posición y rotación relativas al objeto que ejecuta el BehaviorTree.
+    - **SetAgentSpeed**: Permite cambiar la velocidad del navmesh agent.
+- **FindTrashCan**: Obtiene la ubicación de la papelera más cercana
+- **SetFormationMode**: Cambia la forma de la formación actual (solo puede ejecutarla el líder)
+
+
 ##### Conditions
+
+- **CheckMyBlackboard**: Compara un valor con una variable de la blackboard y devuelve el resultado.
+- **Basic Chechs**: Condiciones muy fundamentales que no entiendo como no vienen ya por defecto dentro del plugin
+    - **CheckFloat**: Compara el valor de un float
+    - **CheckIfNull**: Compureba si una variable es null
+- **Environment Checks**: Comprueban ciertas cosas del entorno.
+    - **CanPoop**: Comprueba si el perro cumple las condiciones necesarias para hacer caca.
+    - **IsDogNearby**: Comprueba si hay algún perro cerca y guarda el más cercano. Se puede hacer que filtre solo los que están haciendo caca.
+    - **IsObjectNearby**: Función genérica para detectar objetos mediante tags. Al final no la uso.
+    - **IsPoopNearby**: Comprueba si hay una caca cerca y guarda la más cercana.
 
 #### Extras
 
@@ -49,3 +77,300 @@ Al final las cacas han acabado siendo un Navmesh obstacle con un cilindro invisi
 
 ### Group Behavior
 
+Para este apartado lo que he hecho es crear dos clases nuevas: un "controlador de formación" y un "controlador de miembro".
+
+La idea es que el controlador de formación se encarga de decir a cada miembro cual es su posición asignada y luego cada miembro se encarga individualmente de ir a donde le corresponde.
+
+#### Algoritmos de formación
+
+En vez de crear posiciones preasignadas o algo por el estilo, he decidido hacer un sistema "escalable" que acepta cualquier cantidad de miembros y simplemente "calcula" cual sería su posición relativa en base al número que les corresponde dentro de la lista de miembros.
+
+Una vez calculada, la posición asignada no se vuelve a recalcular a no ser que sea necesario debido a un cambio de la formación (como que se decida cambiar de forma). En vez de hacer eso, se aplica la posición asignada como un "offset" respecto a la del líder, y así obtenemos la posición en coordenadas reales.
+
+***CONTINUAR***
+
+#### Código Grupos
+
+##### Formation
+
+```cs
+/// <summary>
+/// Gestiona los movimientos en formación
+/// </summary>
+public class Formation : MonoBehaviour
+{
+
+    public List<FormationMember> members = new List<FormationMember>();
+
+    public NavMeshAgent agent;
+
+    /// <summary>
+    /// Forma actual de la formación
+    /// </summary>
+    public FormationShape shape;
+
+    /// <summary>
+    /// Distancia de separación entre los miembros de la formación
+    /// </summary>
+    public float spread = 2f;
+
+    /// <summary>
+    /// Tolerancia en la comprobación de que cada miembro esté en su sitio, ver
+    /// <see cref="FormationMember.isInPlace"/>
+    /// </summary>
+    public float tolerance = 1f;
+
+    /// <summary>
+    /// Mensaje que mostrar al cambiar a este modo de formación
+    /// </summary>
+    public Sprite[] shapeMessages;
+
+    /// <summary>
+    /// "Bocadillo" que usar para reproducir mensajes
+    /// </summary>
+    private SpeechBubble speechBubble;
+    
+
+    /// <summary>
+    /// Ha habido cambios desde el último updates
+    /// </summary>
+    public bool isDirty;
+
+    /// <summary>
+    /// Indica que todos los miembros de la formación están en su lugar
+    /// </summary>
+    public bool allInPlace{
+        get {
+            return members.All(m => m.isInPlace);
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        speechBubble = GetComponentInChildren<SpeechBubble>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isDirty)
+            applyChanges();
+    }
+
+    /// <summary>
+    /// Aplica los cambios a los miembros de la formación
+    /// </summary>
+    public void applyChanges(){
+        var num = 0;
+        foreach( var member in members){
+            (member.formPosition, member.formRotation) = getPosition(num);
+            num++;
+        }
+        isDirty = false;
+        speechBubble.say(shapeMessages[(int)shape]);
+    }
+
+    /// <summary>
+    /// Obtiane la posición que le corresponde a un miembro de la formación
+    /// </summary>
+    /// <param name="memberNum">nº de miembro cuya posición queremos saber</param>
+    /// <returns>Tupla con la posición y rotación correspondientes (null si no hay)</returns>
+    public (Vector3?, Quaternion?) getPosition(int memberNum){
+
+        if(shape == FormationShape.circle){ //Formación en círculo
+            int ringNum=1, levelPos =memberNum, ringPos ;
+
+            //Encontrar en qué nivel del anillo le toca ponerse
+            while(levelPos >= ( ringPos = ringPositions(ringNum))){
+                levelPos -= ringPos;
+                ringNum++;
+            }
+            var offset =  360 * levelPos / ringPos;
+            var rotation = Quaternion.AngleAxis(offset, Vector3.up);
+            var pos = (Vector3.forward )* ringRadius(ringNum);
+            if (ringNum % 2 == 0)
+                pos *= -1; //Alternar el lado en el que empiezan los círculos
+            pos = rotation * pos;
+            return (pos, rotation);
+        
+        }else if(shape == FormationShape.square){ //Formación cuadrada
+            
+            var offset = squarePosition(memberNum);
+
+            var xPos = offset.x % 2 == 0 ? Vector3.right : Vector3.left;
+            xPos *= (offset.x / 2 + 0.5f) * spread;
+            var yPos = Vector3.forward * spread * offset.y;
+            
+            
+            return (xPos + yPos, Quaternion.identity);
+        }
+        return (null, null);
+    }
+
+    /// <summary>
+    /// Calcula cuantas posiciones posibles hay dentro de un nivel de la formación de anillo
+    /// </summary>
+    /// <param name="ringNum"></param>
+    /// <returns></returns>
+    public int ringPositions(int ringNum){
+        
+        return (int)(ringCircumference(ringNum) / spread);
+    }
+
+    /// <summary>
+    /// Calcula la circumferencia de un nivel de los anillos
+    /// </summary>
+    /// <param name="ringNum">nº de anillo (desde dentro)</param>
+    /// <returns></returns>
+    public float ringCircumference(int ringNum){
+        return Mathf.PI * 2 * ringRadius(ringNum);
+    }
+
+    /// <summary>
+    /// Calcula el radio de un anilllo de la formación en círculo
+    /// </summary>
+    /// <param name="ringNum">nº de anillo (desde dentro)</param>
+    /// <returns></returns>
+    public float ringRadius(int ringNum){
+        return ringNum  * spread * 0.8f - (ringNum-1)*0.5f ;
+    }
+
+
+    /// <summary>
+    /// Calcula la forma de la formación cuadrada y obtiene las coordenadas del miembro indicado
+    /// </summary>
+    /// <param name="memberNum">número del miembro cuya posición queremos saber</param>
+    /// <returns>"Coordenadas" del miembro (ALERTA! hay que convertirlas a distancias)</returns>
+    public Vector2Int squarePosition(int memberNum){
+        //Calcular medidas de la formación
+        var count = members.Count;
+        var twice = count*2;
+        int sizex = Mathf.CeilToInt(Mathf.Sqrt(twice))/2*2;
+
+        //Calcular coordenadas dentro de esas medidas
+        int x=0,y=1, n = 0;
+        while (n < memberNum){
+            n++;
+            x++;
+            if (x >= sizex) { x = 0; y++; }
+        }
+        
+        return new Vector2Int(x,y);
+
+    }
+
+
+}
+```
+
+##### FormationMember
+
+```cs
+/// <summary>
+/// Script que gestiona a los miembros de una formación
+/// </summary>
+public class FormationMember : MonoBehaviour
+{
+
+    public NavMeshAgent agent;
+
+    /// <summary>
+    /// Formación a la que pertenece
+    /// </summary>
+    public Formation formation;
+
+    /// <summary>
+    /// Su posición dentro de la formación (relativa a la del líder)
+    /// </summary>
+    public Vector3? formPosition;
+
+    /// <summary>
+    /// Su rotación dentro de la formación (relativa a la del líder)
+    /// </summary>
+    public Quaternion? formRotation;
+
+    /// <summary>
+    /// Indica si el miembro de la formación está en el lugar que se le ha asignado
+    /// </summary>
+    public bool isInPlace {
+        get {
+            if (formPosition == null)
+                return true;
+            var worldpos = formationPosToWorld((Vector3)formPosition, formation.transform.rotation);
+            var dist = Vector3.Scale((Vector3)(agent.nextPosition - worldpos), new Vector3(1,0,1));
+            Debug.Log(dist);
+            return  dist.magnitude <= agent.stoppingDistance + formation?.tolerance;
+        }
+    }
+
+    void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+
+        var formations = GameObject.FindObjectsOfType<Formation>();
+        var best = formations.Select(t =>
+                    new
+                    {
+                        t,
+                        distance = Vector3.Distance(t.transform.position, transform.position)
+                    }).Aggregate(new { t = (Formation)null, distance = Mathf.Infinity }, (i1, i2) => i1.distance < i2.distance ? i1 : i2);
+
+        joinFormation(best.t);
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        followFormation();
+    }
+
+    /// <summary>
+    /// Hace que el miembro se una a una formación
+    /// </summary>
+    /// <param name="form"></param>
+    public void joinFormation(Formation form){
+        var num = form.members.Count;
+        form.members.Add(this);
+        formation = form;
+        formation.isDirty = true;
+    }
+
+
+    /// <summary>
+    /// Actualiza el destino del navmesh agent para que siga la formación
+    /// </summary>
+    public void followFormation(){
+        if (formation == null || formPosition == null || formRotation == null)
+            return;
+
+        var addRot = formation.transform.rotation;
+        var worldpos = formationPosToWorld((Vector3)formPosition, addRot);
+        if (agent.destination != worldpos){
+            agent.destination = worldpos; //actualiza la posición
+
+        } else if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance){
+            //Girar el agente en la dirección que toca
+            transform.rotation = Quaternion.Slerp(transform.rotation, (Quaternion)formRotation * addRot, Time.deltaTime * agent.angularSpeed);
+        }
+    }
+
+    /// <summary>
+    /// Convierte la posición relativa dentro de la formación en un valor de posición absoluto
+    /// </summary>
+    /// <param name="relativePos"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    public Vector3 formationPosToWorld(Vector3 relativePos,Quaternion rotation ){
+        return (rotation * relativePos) + formation.transform.position;
+    }
+}
+
+```
