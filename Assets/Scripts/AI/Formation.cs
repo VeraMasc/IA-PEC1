@@ -28,6 +28,9 @@ public class Formation : MonoBehaviour
 
     public float tolerance = 1f;
 
+    public Sprite[] shapeMessages;
+
+    private SpeechBubble speechBubble;
     
 
     /// <summary>
@@ -48,6 +51,7 @@ public class Formation : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        speechBubble = GetComponentInChildren<SpeechBubble>();
     }
 
     // Update is called once per frame
@@ -67,6 +71,7 @@ public class Formation : MonoBehaviour
             num++;
         }
         isDirty = false;
+        speechBubble.say(shapeMessages[(int)shape]);
     }
 
     public (Vector3?, Quaternion?) getPosition(int memberNum){

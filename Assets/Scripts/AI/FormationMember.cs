@@ -30,8 +30,10 @@ public class FormationMember : MonoBehaviour
         get {
             if (formPosition == null)
                 return true;
-            var dist = Vector3.Distance(transform.position, (Vector3)formPosition);
-            return  dist < agent.stoppingDistance + formation?.tolerance;
+            var worldpos = formationPosToWorld((Vector3)formPosition, formation.transform.rotation);
+            var dist = Vector3.Scale((Vector3)(agent.nextPosition - worldpos), new Vector3(1,0,1));
+            Debug.Log(dist);
+            return  dist.magnitude <= agent.stoppingDistance + formation?.tolerance;
         }
     }
 
@@ -75,13 +77,23 @@ public class FormationMember : MonoBehaviour
             return;
 
         var addRot = formation.transform.rotation;
-
-        if (agent.destination != formPosition + formation.transform.position){
-            agent.destination = (addRot * (Vector3)formPosition) + formation.transform.position; //actualiza la posición
+        var worldpos = formationPosToWorld((Vector3)formPosition, addRot);
+        if (agent.destination != worldpos){
+            agent.destination = worldpos; //actualiza la posición
 
         } else if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance){
             //Girar el agente en la dirección que toca
             transform.rotation = Quaternion.Slerp(transform.rotation, (Quaternion)formRotation * addRot, Time.deltaTime * agent.angularSpeed);
         }
+    }
+
+    /// <summary>
+    /// Convierte la posición relativa dentro de la formación en un valor de posición absoluto
+    /// </summary>
+    /// <param name="relativePos"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    public Vector3 formationPosToWorld(Vector3 relativePos,Quaternion rotation ){
+        return (rotation * relativePos) + formation.transform.position;
     }
 }

@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 375996521}
   - component: {fileID: 375996520}
   - component: {fileID: 375996524}
+  - component: {fileID: 375996525}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -261,6 +262,38 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f96d1f3a746c17549894a7be95be94e6, type: 2}
   m_BuildHeightMesh: 0
+--- !u!65 &375996525
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375996519}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8, y: 1, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &496537531 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7520201179069989861, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
+  m_PrefabInstance: {fileID: 1938522979}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fe6ebcccfc32b4a9e6d65a867d7246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &835619737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -338,6 +371,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bccad0d08112dec4781b38d51ab1fc89, type: 3}
+--- !u!1 &1277345958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3168190464217967329, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
+  m_PrefabInstance: {fileID: 1938522979}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1277345965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277345958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422fb6956201c7944ae2113a1a53b0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTasksPerTick: 1
+  behavior: {fileID: 11400000, guid: 251eed377cf68b14982f4233489bef15, type: 2}
+  paused: 0
+  restartWhenFinished: 0
+  blackboard:
+    intParams: 
+    intParamsNames: []
+    intParamsLostDefaultValue: 
+    boolParams: 
+    boolParamsNames: []
+    boolParamsLostDefaultValue: 
+    floatParams: []
+    floatParamsNames: []
+    floatParamsLostDefaultValue: 
+    stringParams: []
+    stringParamsNames: []
+    stringParamsLostDefaultValue: 
+    colorParams: []
+    colorParamsNames: []
+    colorParamsLostDefaultValue: 
+    objectParams:
+    - {fileID: 375996519}
+    - {fileID: 496537531}
+    objectParamsNames:
+    - wanderArea
+    - speechBubble
+    objectParamsLostDefaultValue: 
+    layerMaskParams: []
+    layerMaskParamsNames: []
+    layerMaskParamsLostDefaultValue: 
+    enumParamsNames: []
+    enumParamsLostDefaultValue: 
+    vector2Params: []
+    vector2ParamsNames: []
+    vector2ParamsLostDefaultValue: 
+    vector3Params: []
+    vector3ParamsNames: []
+    vector3ParamsLostDefaultValue: 
+    vector4Params: []
+    vector4ParamsNames: []
+    vector4ParamsLostDefaultValue: 
+    rectParams: []
+    rectParamsNames: []
+    rectParamsLostDefaultValue: 
+    animationCurveParams: []
+    animationCurveParamsNames: []
+    animationCurveParamsLostDefaultValue: 
+    boundsParams: []
+    boundsParamsNames: []
+    boundsParamsLostDefaultValue: 
+    gradientParams: []
+    gradientParamsNames: []
+    gradientParamsLostDefaultValue: 
+    quaternionParams: []
+    quaternionParamsNames: []
+    quaternionParamsLostDefaultValue: 
 --- !u!1001 &1371370375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -641,19 +747,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4929001737016063877, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.61166465
+      value: 0.88447374
       objectReference: {fileID: 0}
     - target: {fileID: 4929001737016063877, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 9.819631e-17
       objectReference: {fileID: 0}
     - target: {fileID: 4929001737016063877, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7911172
+      value: 0.46659
       objectReference: {fileID: 0}
     - target: {fileID: 4929001737016063877, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -5.1801895e-17
       objectReference: {fileID: 0}
     - target: {fileID: 5158373762469047874, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
       propertyPath: shape
@@ -706,7 +812,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3168190464217967329, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1277345965}
   m_SourcePrefab: {fileID: 100100000, guid: 43a461d84499f6d44b52e3c1f9bdce3c, type: 3}
 --- !u!1 &1964372444
 GameObject:
