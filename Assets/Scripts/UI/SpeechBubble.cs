@@ -18,16 +18,36 @@ public class SpeechBubble : MonoBehaviour {
 	[SerializeField] private bool lockZ;
 
 
+    
 	[Header("Elements")]
+    /// <summary>
+    /// elemento encargado de renderizar el fondo (el "bocadillo") del mensaje
+    /// </summary>
 	public Image background;
+
+    /// <summary>
+    /// Texto del mensaje. No se usa, está para hacer pruebas
+    /// </summary>
 	public Text text;
+
+    /// <summary>
+    /// Imagen que se muestra en el mensaje
+    /// </summary>
 	public Image image;
 
+    /// <summary>
+    /// Rotacion inicial del bocadillo. Se usa durante el proceso de "billboarding"
+    /// </summary>
 	private Vector3 originalRotation;
 
-	
+	/// <summary>
+    /// Modos posibles de bilboarding
+    /// </summary>
 	public enum BillboardType { LookAtCamera, CameraForward };
 
+    /// <summary>
+    /// Indica si hay que actualizar el mensaje que se muestra
+    /// </summary>
 	public bool needsUpdate;
 
 	
@@ -52,6 +72,8 @@ public class SpeechBubble : MonoBehaviour {
 			background.enabled = image.enabled = image.sprite != null;
 		}
 
+
+        //Hacer que siempre mire hacia la cámara
 		var camera = SceneView.currentDrawingSceneView?.camera;
 		camera ??= Application.isPlaying? Camera.main : null;
 		if (camera == null)
@@ -87,6 +109,10 @@ public class SpeechBubble : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Rellena el bocadillo con una imagen
+    /// </summary>
+    /// <param name="emoji">Sprite de la imagen o null para borrar la imagen actual</param>
 	public void say(Sprite emoji){
 		
 		image.sprite = emoji;

@@ -19,8 +19,14 @@ public class FormationMember : MonoBehaviour
     /// </summary>
     public Formation formation;
 
+    /// <summary>
+    /// Su posición dentro de la formación (relativa a la del líder)
+    /// </summary>
     public Vector3? formPosition;
 
+    /// <summary>
+    /// Su rotación dentro de la formación (relativa a la del líder)
+    /// </summary>
     public Quaternion? formRotation;
 
     /// <summary>
@@ -64,6 +70,10 @@ public class FormationMember : MonoBehaviour
         followFormation();
     }
 
+    /// <summary>
+    /// Hace que el miembro se una a una formación
+    /// </summary>
+    /// <param name="form"></param>
     public void joinFormation(Formation form){
         var num = form.members.Count;
         form.members.Add(this);
@@ -72,6 +82,9 @@ public class FormationMember : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Actualiza el destino del navmesh agent para que siga la formación
+    /// </summary>
     public void followFormation(){
         if (formation == null || formPosition == null || formRotation == null)
             return;

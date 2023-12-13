@@ -5,9 +5,22 @@ using UnityEngine.AI;
 using System.Linq;
 
 
+/// <summary>
+/// Formas posibles que puede tomar una formación
+/// </summary>
 public enum FormationShape{
+    /// <summary>
+    /// Sin forma
+    /// </summary>
     none,
+    /// <summary>
+    /// Anillos concentricos alrededor del líder
+    /// </summary>
     circle,
+
+    /// <summary>
+    /// Formación más o menos rectangular delante del líder (a lo pelotón)
+    /// </summary>
     square
 }
 
@@ -22,14 +35,30 @@ public class Formation : MonoBehaviour
 
     public NavMeshAgent agent;
 
+    /// <summary>
+    /// Forma actual de la formación
+    /// </summary>
     public FormationShape shape;
 
+    /// <summary>
+    /// Distancia de separación entre los miembros de la formación
+    /// </summary>
     public float spread = 2f;
 
+    /// <summary>
+    /// Tolerancia en la comprobación de que cada miembro esté en su sitio, ver
+    /// <see cref="FormationMember.isInPlace"/>
+    /// </summary>
     public float tolerance = 1f;
 
+    /// <summary>
+    /// Mensaje que mostrar al cambiar a este modo de formación
+    /// </summary>
     public Sprite[] shapeMessages;
 
+    /// <summary>
+    /// "Bocadillo" que usar para reproducir mensajes
+    /// </summary>
     private SpeechBubble speechBubble;
     
 
@@ -74,9 +103,14 @@ public class Formation : MonoBehaviour
         speechBubble.say(shapeMessages[(int)shape]);
     }
 
+    /// <summary>
+    /// Obtiane la posición que le corresponde a un miembro de la formación
+    /// </summary>
+    /// <param name="memberNum">nº de miembro cuya posición queremos saber</param>
+    /// <returns>Tupla con la posición y rotación correspondientes (null si no hay)</returns>
     public (Vector3?, Quaternion?) getPosition(int memberNum){
 
-        if(shape == FormationShape.circle){
+        if(shape == FormationShape.circle){ //Formación en círculo
             int ringNum=1, levelPos =memberNum, ringPos ;
 
             //Encontrar en qué nivel del anillo le toca ponerse
@@ -92,7 +126,7 @@ public class Formation : MonoBehaviour
             pos = rotation * pos;
             return (pos, rotation);
         
-        }else if(shape == FormationShape.square){
+        }else if(shape == FormationShape.square){ //Formación cuadrada
             
             var offset = squarePosition(memberNum);
 
@@ -119,26 +153,36 @@ public class Formation : MonoBehaviour
     /// <summary>
     /// Calcula la circumferencia de un nivel de los anillos
     /// </summary>
-    /// <param name="ringNum"></param>
+    /// <param name="ringNum">nº de anillo (desde dentro)</param>
     /// <returns></returns>
     public float ringCircumference(int ringNum){
         return Mathf.PI * 2 * ringRadius(ringNum);
     }
 
+    /// <summary>
+    /// Calcula el radio de un anilllo de la formación en círculo
+    /// </summary>
+    /// <param name="ringNum">nº de anillo (desde dentro)</param>
+    /// <returns></returns>
     public float ringRadius(int ringNum){
         return ringNum  * spread * 0.8f - (ringNum-1)*0.5f ;
     }
 
 
-    public Vector2Int squarePosition(int ringNum){
+    /// <summary>
+    /// Calcula la forma de la formación cuadrada y obtiene las coordenadas del miembro indicado
+    /// </summary>
+    /// <param name="memberNum">número del miembro cuya posición queremos saber</param>
+    /// <returns>"Coordenadas" del miembro (ALERTA! hay que convertirlas a distancias)</returns>
+    public Vector2Int squarePosition(int memberNum){
+        //Calcular medidas de la formación
         var count = members.Count;
         var twice = count*2;
         int sizex = Mathf.CeilToInt(Mathf.Sqrt(twice))/2*2;
-        int sizey =  sizex /2;
 
+        //Calcular coordenadas dentro de esas medidas
         int x=0,y=1, n = 0;
-
-        while (n < ringNum){
+        while (n < memberNum){
             n++;
             x++;
             if (x >= sizex) { x = 0; y++; }
