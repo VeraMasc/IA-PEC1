@@ -2,11 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controlador de cada boid individual
+/// </summary>
 public class Boid : MonoBehaviour
 {
+    /// <summary>
+    /// Su manager
+    /// </summary>
     public BoidManager manager;
-
+    /// <summary>
+    /// Cuanto queda para actualizar el movimiento del boid
+    /// </summary>
     public float updateTimer;
+
+    /// <summary>
+    /// Dirección de movimiento actual del boid
+    /// </summary>
     public Vector3 direction;
 
     public float speed =1f;
@@ -21,7 +33,7 @@ public class Boid : MonoBehaviour
     void Start()
     {
         direction = transform.forward * speed;
-        boidsNearby = manager.allBoids;
+        boidsNearby = manager.allBoids; ///Por defecto tiene en cuenta a todos los boids
     }
 
     // Update is called once per frame
@@ -33,42 +45,42 @@ public class Boid : MonoBehaviour
         transform.Translate(0.0f, 0.0f, Time.deltaTime * speed);
 
         updateTimer += Time.deltaTime * speed;
-        if(updateTimer >= manager.updateRate){
+        if(updateTimer >= manager.updateRate){ //Actualiza la velocidad cada cierto tiempo
             calculateSpeed();
             updateTimer = 0;
         }
         
     }
 
+    
 
-    void mantainCohesion(Boid go, ref Vector3 cohesion, float distance){
-        cohesion += go.transform.position;
-    }
 
-    void alignWithNeighbors(Boid go, ref Vector3 align, float distance){
-        align += go.direction;
-    }
-
+    /// <summary>
+    /// Fórmula del cálculo de la separación
+    /// </summary>
     void forceSeparation(Boid go, ref Vector3  separation, float distance){
                 
         separation += (transform.position - go.transform.position) / 
                                 (distance * distance);
     }
 
+    /// <summary>
+    /// Calcula la velocidad en base a los vecinos
+    /// </summary>
     void calculateSpeed(){
         Vector3 cohesion, align, separation;
         cohesion = align = separation = Vector3.zero; //Para debuggear el resto del código
 
         int num = 0;
-        foreach (Boid go in boidsNearby)
+        foreach (Boid go in boidsNearby) //Tener en cuenta solo boids "cercanos"
         {
             float distance = Vector3.Distance(go.transform.position, transform.position);
             if (go != this) { //Ignore self
                 if (distance <= manager.neighbourDistance)
                 {
-                    mantainCohesion(go, ref cohesion, distance);
-                    forceSeparation(go, ref separation, distance);
-                    alignWithNeighbors(go, ref align, distance);
+                    cohesion += go.transform.position; //Mantener cohesión
+                    forceSeparation(go, ref separation, distance); //Mantener separación
+                    align += go.direction; //Alinear con vecinos
                     num++;
                 }
                 
@@ -92,6 +104,9 @@ public class Boid : MonoBehaviour
         stayWithinBounds();
     }
 
+    /// <summary>
+    /// Altera la dirección de los boids para que vuelvan al interior de los límites si se salen
+    /// </summary>
     void stayWithinBounds(){
         var nextpos = direction + transform.position;
         if (manager.boundsBox.Contains(nextpos))

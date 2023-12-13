@@ -4,6 +4,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Controlador del conjunto de Boids
+/// </summary>
 public class BoidManager : MonoBehaviour
 {
 
@@ -22,27 +25,65 @@ public class BoidManager : MonoBehaviour
     /// </summary>
     public GameObject boidPrefab;
 
+    /// <summary>
+    /// Dimensiones a partir de las que generamos la <see cref="boundsBox"/>
+    /// </summary>
     public Vector3 bounds = new Vector3(10, 7, 10);
     [System.NonSerialized]
+    /// <summary>
+    /// Límites del area en la que se mueven los boids
+    /// </summary>
     public Bounds boundsBox ;
 
     [Header("Boid Settings")]
+    /// <summary>
+    /// Velocidad a la que los boids ajustan su dirección
+    /// </summary>
     public float rotationSpeed;
 
+    /// <summary>
+    /// Velocidad mínima de los Boids
+    /// </summary>
     public float minSpeed =0.5f;
 
+    /// <summary>
+    /// Velocidad máxima de los Boids
+    /// </summary>
     public float maxSpeed = 1.5f;
 
+    /// <summary>
+    /// Rango en el que spawnear los boids de forma aleatoria
+    /// </summary>
     public float spawnRange = 6;
 
+    /// <summary>
+    /// Cada cuanto calcular el comportamiento de los boids
+    /// </summary>
     public float updateRate =0.1f;
 
+    /// <summary>
+    /// Cada cuanto recalcular los voids cercanos que se tienen en cuenta
+    /// </summary>
     public float watchNearbyRate =0.5f;
 
+    /// <summary>
+    /// Timer de <see cref="watchNearbyRate"/>
+    /// </summary>
     public float watchNearbyTimer = 0;
 
+    /// <summary>
+    /// Distancia dentro de la cual los boids se consideran "vecinos"
+    /// </summary>
     public float neighbourDistance;
+
+    /// <summary>
+    /// Distancia a partir de la cual no se comprueba si los voids son vecinos
+    /// </summary>
     public float nearbyDistance;
+
+    /// <summary>
+    /// Aleatoriedad que añadir al movimiento
+    /// </summary>
     public float directionNoise = 0.05f;
 
     // Start is called before the first frame update
@@ -62,6 +103,9 @@ public class BoidManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Crea e inicializa los boids
+    /// </summary>
     void initBoids(){
         allBoids = new Boid[numBoids];
         for (int i = 0; i < numBoids; ++i) {
@@ -73,6 +117,10 @@ public class BoidManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Calcula los boids "cercanos" de cada boid 
+    /// (los que es posible que sean sus vecinos ahora o en el futuro cercano).
+    /// </summary>
     void calculateNearby(){
         var nearbyDict = new Dictionary<Boid, Queue<Boid>>();
         int num = 1;
@@ -100,7 +148,8 @@ public class BoidManager : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan; 
+        Gizmos.color = Color.cyan;
+        //Dibujar gizmos de los límites
         Gizmos.DrawWireCube(transform.position, bounds);
     }
 }
