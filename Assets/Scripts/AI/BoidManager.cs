@@ -19,7 +19,7 @@ public class BoidManager : MonoBehaviour
     /// <summary>
     /// Número de boids a crear
     /// </summary>
-    public int numBoids;
+    public RandomBetweenInt numBoids;
     /// <summary>
     /// prefab de los boids
     /// </summary>
@@ -75,6 +75,16 @@ public class BoidManager : MonoBehaviour
     /// Distancia dentro de la cual los boids se consideran "vecinos"
     /// </summary>
     public float neighbourDistance;
+
+    /// <summary>
+    /// Distancia dentro de la cual los boids se consideran demasiado cercanos
+    /// </summary>
+    public float tooCloseDistance;
+
+    /// <summary>
+    /// Ratio de evitación
+    /// </summary>
+    public float avoidance;
 
     /// <summary>
     /// Distancia a partir de la cual no se comprueba si los voids son vecinos
@@ -141,7 +151,7 @@ public class BoidManager : MonoBehaviour
 
         foreach (Boid boid in allBoids){
             boid.boidsNearby = nearbyDict.TryGetValue(boid, out var queue)? queue.ToArray() : new Boid[0];
-            Debug.Log(queue.ToArray());
+            
         }
     }
 

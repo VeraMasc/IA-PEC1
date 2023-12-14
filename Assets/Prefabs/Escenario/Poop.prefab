@@ -135,6 +135,75 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &8245069951821006098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5480910059370719258}
+  - component: {fileID: 5651316873002306965}
+  m_Layer: 0
+  m_Name: BoidManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5480910059370719258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245069951821006098}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.057733346}
+  m_LocalScale: {x: 0.06666667, y: 0.06666665, z: 0.06666665}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8985873635492048677}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5651316873002306965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245069951821006098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1ea809565151644b51bde6aef8e3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allBoids:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  numBoids:
+    min: 4
+    max: 7
+  boidPrefab: {fileID: 903323735182599696, guid: aca71719f2f7a304f92e0ba3d7c9ba8c, type: 3}
+  bounds: {x: 2, y: 1.2, z: 2}
+  rotationSpeed: 3
+  minSpeed: 0.8
+  maxSpeed: 1.6
+  spawnRange: 0.5
+  updateRate: 0.1
+  watchNearbyRate: 0.3
+  watchNearbyTimer: 0
+  neighbourDistance: 0.27
+  tooCloseDistance: 0.2
+  avoidance: 0.4
+  nearbyDistance: 0.8
+  directionNoise: 0.1
 --- !u!1001 &8880681798161418446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,6 +282,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 261887ba46f006b4d865e14a6cb8e23b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5060630541986104509}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 261887ba46f006b4d865e14a6cb8e23b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5480910059370719258}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 261887ba46f006b4d865e14a6cb8e23b, type: 3}
       insertIndex: -1

@@ -44,7 +44,7 @@ public class Boid : MonoBehaviour
             manager.rotationSpeed * Time.deltaTime);
         transform.Translate(0.0f, 0.0f, Time.deltaTime * speed);
 
-        updateTimer += Time.deltaTime * speed;
+        updateTimer += Time.deltaTime ;
         if(updateTimer >= manager.updateRate){ //Actualiza la velocidad cada cierto tiempo
             calculateSpeed();
             updateTimer = 0;
@@ -59,9 +59,13 @@ public class Boid : MonoBehaviour
     /// Fórmula del cálculo de la separación
     /// </summary>
     void forceSeparation(Boid go, ref Vector3  separation, float distance){
-                
-        separation += (transform.position - go.transform.position) / 
-                                (distance * distance);
+        
+        var dsp = (distance);
+        if (distance < manager.tooCloseDistance)
+            dsp *= (distance/manager.tooCloseDistance);
+        var res = manager.avoidance*(transform.position - go.transform.position) /
+                                (dsp);
+        separation += res;
     }
 
     /// <summary>
@@ -112,7 +116,11 @@ public class Boid : MonoBehaviour
         if (manager.boundsBox.Contains(nextpos))
             return;
 
-        nextpos = manager.boundsBox.ClosestPoint(nextpos);
-        direction = nextpos - transform.position;
+        // nextpos = manager.boundsBox.ClosestPoint(nextpos);
+        // direction = nextpos - transform.position;
+        var strength = manager.boundsBox.SqrDistance(nextpos);
+        var goBack = manager.transform.position - transform.position;
+
+        direction += goBack * strength;
     }
 }

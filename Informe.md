@@ -3,6 +3,9 @@
 1. [Controles](#controles)
 2. [Apartados](#apartados)
     1. [Boids](#boids)
+        1. [Código Boids](#código-boids)
+            1. [Boid](#boid)
+            2. [Boid Manager](#boid-manager)
     2. [Behavior Trees](#behavior-trees)
         1. [Custom Bricks](#custom-bricks)
             1. [Actions](#actions)
@@ -29,6 +32,300 @@
 
 ### Boids
 
+Los he implementado en base al código de ejemplo sin añadir mucha cosa más. Algo de ruido al movimiento, ratios de actualización para reducir el coste computacional y una forma más óptima de calcular los vecinos.
+
+#### Código Boids
+
+##### Boid
+
+```cs
+/// <summary>
+/// Controlador de cada boid individual
+/// </summary>
+public class Boid : MonoBehaviour
+{
+    /// <summary>
+    /// Su manager
+    /// </summary>
+    public BoidManager manager;
+    /// <summary>
+    /// Cuanto queda para actualizar el movimiento del boid
+    /// </summary>
+    public float updateTimer;
+
+    /// <summary>
+    /// Dirección de movimiento actual del boid
+    /// </summary>
+    public Vector3 direction;
+
+    public float speed =1f;
+
+    /// <summary>
+    /// Array de boids cercanos que pueden ser vecinos
+    /// </summary>
+    public Boid[] boidsNearby;
+    
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        direction = transform.forward * speed;
+        boidsNearby = manager.allBoids; ///Por defecto tiene en cuenta a todos los boids
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 
+            manager.rotationSpeed * Time.deltaTime);
+        transform.Translate(0.0f, 0.0f, Time.deltaTime * speed);
+
+        updateTimer += Time.deltaTime ;
+        if(updateTimer >= manager.updateRate){ //Actualiza la velocidad cada cierto tiempo
+            calculateSpeed();
+            updateTimer = 0;
+        }
+        
+    }
+
+    
+
+
+    /// <summary>
+    /// Fórmula del cálculo de la separación
+    /// </summary>
+    void forceSeparation(Boid go, ref Vector3  separation, float distance){
+        
+        var dsp = (distance);
+        if (distance < manager.tooCloseDistance)
+            dsp *= (distance/manager.tooCloseDistance);
+        var res = manager.avoidance*(transform.position - go.transform.position) /
+                                (dsp);
+        separation += res;
+    }
+
+    /// <summary>
+    /// Calcula la velocidad en base a los vecinos
+    /// </summary>
+    void calculateSpeed(){
+        Vector3 cohesion, align, separation;
+        cohesion = align = separation = Vector3.zero; //Para debuggear el resto del código
+
+        int num = 0;
+        foreach (Boid go in boidsNearby) //Tener en cuenta solo boids "cercanos"
+        {
+            float distance = Vector3.Distance(go.transform.position, transform.position);
+            if (go != this) { //Ignore self
+                if (distance <= manager.neighbourDistance)
+                {
+                    cohesion += go.transform.position; //Mantener cohesión
+                    forceSeparation(go, ref separation, distance); //Mantener separación
+                    align += go.direction; //Alinear con vecinos
+                    num++;
+                }
+                
+            }
+            
+            
+            
+        }
+        align += direction; //Sigue también su propio alineamiento (evita bugs)
+        //Divide by boids
+        align /= num+1;
+        //align += Random.insideUnitSphere * manager.directionNoise;
+        speed = Mathf.Clamp(align.magnitude, manager.minSpeed, manager.maxSpeed);
+
+        
+        if (num > 0)
+            cohesion = (cohesion / num - transform.position).normalized * speed;
+
+        direction = (cohesion + align + separation).normalized * speed
+            + Random.insideUnitSphere * manager.directionNoise;
+        stayWithinBounds();
+    }
+
+    /// <summary>
+    /// Altera la dirección de los boids para que vuelvan al interior de los límites si se salen
+    /// </summary>
+    void stayWithinBounds(){
+        var nextpos = direction + transform.position;
+        if (manager.boundsBox.Contains(nextpos))
+            return;
+
+        // nextpos = manager.boundsBox.ClosestPoint(nextpos);
+        // direction = nextpos - transform.position;
+        var strength = manager.boundsBox.SqrDistance(nextpos);
+        var goBack = manager.transform.position - transform.position;
+
+        direction += goBack * strength;
+    }
+}
+```
+
+##### Boid Manager
+
+```cs
+/// <summary>
+/// Controlador del conjunto de Boids
+/// </summary>
+public class BoidManager : MonoBehaviour
+{
+
+    [Header("General")]
+    /// <summary>
+    /// Lista de todos los boids
+    /// </summary>
+    public Boid[] allBoids;
+
+    /// <summary>
+    /// Número de boids a crear
+    /// </summary>
+    public RandomBetweenInt numBoids;
+    /// <summary>
+    /// prefab de los boids
+    /// </summary>
+    public GameObject boidPrefab;
+
+    /// <summary>
+    /// Dimensiones a partir de las que generamos la <see cref="boundsBox"/>
+    /// </summary>
+    public Vector3 bounds = new Vector3(10, 7, 10);
+    [System.NonSerialized]
+    /// <summary>
+    /// Límites del area en la que se mueven los boids
+    /// </summary>
+    public Bounds boundsBox ;
+
+    [Header("Boid Settings")]
+    /// <summary>
+    /// Velocidad a la que los boids ajustan su dirección
+    /// </summary>
+    public float rotationSpeed;
+
+    /// <summary>
+    /// Velocidad mínima de los Boids
+    /// </summary>
+    public float minSpeed =0.5f;
+
+    /// <summary>
+    /// Velocidad máxima de los Boids
+    /// </summary>
+    public float maxSpeed = 1.5f;
+
+    /// <summary>
+    /// Rango en el que spawnear los boids de forma aleatoria
+    /// </summary>
+    public float spawnRange = 6;
+
+    /// <summary>
+    /// Cada cuanto calcular el comportamiento de los boids
+    /// </summary>
+    public float updateRate =0.1f;
+
+    /// <summary>
+    /// Cada cuanto recalcular los voids cercanos que se tienen en cuenta
+    /// </summary>
+    public float watchNearbyRate =0.5f;
+
+    /// <summary>
+    /// Timer de <see cref="watchNearbyRate"/>
+    /// </summary>
+    public float watchNearbyTimer = 0;
+
+    /// <summary>
+    /// Distancia dentro de la cual los boids se consideran "vecinos"
+    /// </summary>
+    public float neighbourDistance;
+
+    /// <summary>
+    /// Distancia dentro de la cual los boids se consideran demasiado cercanos
+    /// </summary>
+    public float tooCloseDistance;
+
+    /// <summary>
+    /// Ratio de evitación
+    /// </summary>
+    public float avoidance;
+
+    /// <summary>
+    /// Distancia a partir de la cual no se comprueba si los voids son vecinos
+    /// </summary>
+    public float nearbyDistance;
+
+    /// <summary>
+    /// Aleatoriedad que añadir al movimiento
+    /// </summary>
+    public float directionNoise = 0.05f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        initBoids();
+        boundsBox = new Bounds(transform.position, bounds); 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        watchNearbyTimer += Time.deltaTime;
+        if (watchNearbyTimer >= watchNearbyRate || Input.GetKeyDown(KeyCode.C)){
+            calculateNearby();
+            watchNearbyTimer = 0;
+        }
+    }
+
+    /// <summary>
+    /// Crea e inicializa los boids
+    /// </summary>
+    void initBoids(){
+        allBoids = new Boid[numBoids];
+        for (int i = 0; i < numBoids; ++i) {
+            Vector3 pos = this.transform.position + Random.insideUnitSphere * spawnRange; // random position
+            Vector3 randomize = Random.insideUnitSphere.normalized; // random vector direction
+            var newBoid = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));
+            allBoids[i] = newBoid.GetComponent<Boid>();
+            allBoids[i].manager = this;
+        }
+    }
+
+    /// <summary>
+    /// Calcula los boids "cercanos" de cada boid 
+    /// (los que es posible que sean sus vecinos ahora o en el futuro cercano).
+    /// </summary>
+    void calculateNearby(){
+        var nearbyDict = new Dictionary<Boid, Queue<Boid>>();
+        int num = 1;
+        foreach (Boid boid in allBoids){
+            nearbyDict.Add(boid, new Queue<Boid>());
+        }
+        foreach (Boid boid in allBoids){ //Itera todos los boids
+            for(var i = num; i<allBoids.Length; i++){ //Evita comparar con si mismo y boids ya iterados
+                float distance = Vector3.Distance(boid.transform.position, allBoids[i].transform.position);
+
+                if(distance <= nearbyDistance){
+                    nearbyDict[boid].Enqueue(allBoids[i]);
+                    nearbyDict[allBoids[i]].Enqueue(boid);
+                }
+            }
+            num++;
+        }
+
+        foreach (Boid boid in allBoids){
+            boid.boidsNearby = nearbyDict.TryGetValue(boid, out var queue)? queue.ToArray() : new Boid[0];
+            
+        }
+    }
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        //Dibujar gizmos de los límites
+        Gizmos.DrawWireCube(transform.position, bounds);
+    }
+}
+```
 
 ### Behavior Trees
 
