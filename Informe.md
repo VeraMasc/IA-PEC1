@@ -23,7 +23,9 @@
 
 [Repositorio](https://github.com/VeraMasc/IA-PEC1)
 
-[Video](https://youtu.be/MQNjHo94NJs)
+[Video partes 1 y 2](https://youtu.be/pi8-hVTV9kQ)
+
+[Video parte 3](https://youtu.be/IX6tBokIBg8)
 
 ## Controles
 

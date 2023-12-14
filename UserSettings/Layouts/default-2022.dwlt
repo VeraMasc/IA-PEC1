@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 66
+  controlID: 112
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -414,7 +414,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0446ffff4e46ffff8c4bffffa650ffff4871ffff9271ffffb876ffffd67bffff2083ffffa887fffff087ffff3e8dffffc89fffff12a0ffff64a5ffffc6f4ffff10fbffff
+      m_ExpandedIDs: 4adcffff94dcffffd2e1ffffece6ffff10fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -794,9 +794,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 21.372532, y: -90.61327, z: 35.195602}
+    m_Target: {x: 58.65924, y: -86.6413, z: 25.311697}
     speed: 2
-    m_Value: {x: 21.372532, y: -90.61327, z: 35.195602}
+    m_Value: {x: 58.65924, y: -86.6413, z: 25.311697}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -842,20 +842,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.5019178, y: 0.23267047, z: -0.1422222, w: 0.82101244}
+    m_Target: {x: 0.3965695, y: 0.46985266, z: -0.24896954, w: 0.7485539}
     speed: 2
-    m_Value: {x: 0.5018311, y: 0.23263028, z: -0.14219764, w: 0.82087064}
+    m_Value: {x: 0.3965006, y: 0.469771, z: -0.24892628, w: 0.7484238}
   m_Size:
-    m_Target: 66.33268
+    m_Target: 61.950855
     speed: 2
-    m_Value: 66.33268
+    m_Value: 61.950855
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1
-    m_SpeedNormalized: 0.5
+    m_Speed: 0.8259
+    m_SpeedNormalized: 0.41
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -935,7 +935,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 382.2}
     m_SelectedIDs: 9e610000
     m_LastClickedID: 24990
-    m_ExpandedIDs: 00000000126000001460000016600000186000001a6000001c6000001e600000206000002260000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000126000001460000016600000186000001a6000001c6000001e6000002060000022600000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
