@@ -74,8 +74,12 @@ public class SpeechBubble : MonoBehaviour {
 
 
         //Hacer que siempre mire hacia la cámara
+        #if DEBUG
 		var camera = SceneView.currentDrawingSceneView?.camera;
 		camera ??= Application.isPlaying? Camera.main : null;
+        #else
+        var camera =  Application.isPlaying? Camera.main : null;
+        #endif
 		if (camera == null)
 			return;
 		// There are two ways people billboard things.

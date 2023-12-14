@@ -26,6 +26,7 @@ public class MyBlackboard : MonoBehaviour
 
     public void scare(){
         isScared = true;
+        isDogPooping = false;
     }
 
 

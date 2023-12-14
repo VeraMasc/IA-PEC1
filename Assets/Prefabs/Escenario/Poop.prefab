@@ -188,8 +188,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   numBoids:
-    min: 4
-    max: 7
+    min: 3
+    max: 6
   boidPrefab: {fileID: 903323735182599696, guid: aca71719f2f7a304f92e0ba3d7c9ba8c, type: 3}
   bounds: {x: 2, y: 1.2, z: 2}
   rotationSpeed: 3

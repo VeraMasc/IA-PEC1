@@ -50,7 +50,7 @@ NavMeshAgent:
   m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 99
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
     - IsPooping
     boolParamsLostDefaultValue: 
     floatParams:
-    - 4
+    - 2.5
     - 10
     - 5
     - 3.5
@@ -108,7 +108,7 @@ MonoBehaviour:
     - {fileID: -1453888577314850278, guid: 6d3d543b8ad63a748920e928edf43f1d, type: 3}
     - {fileID: 8646890233888863647, guid: dd72f50af9e454a469ee471b4955c9c3, type: 3}
     - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 7520672782168953637, guid: ade703ad6013b5746b52d68e819c99e5, type: 3}
     objectParamsNames:
     - speechBubble
     - barkMessage

@@ -122,7 +122,7 @@ public class BoidManager : MonoBehaviour
         for (int i = 0; i < allBoids.Length; ++i) {
             Vector3 pos = this.transform.position + Random.insideUnitSphere * spawnRange; // random position
             Vector3 randomize = Random.insideUnitSphere.normalized; // random vector direction
-            var newBoid = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));
+            var newBoid = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize),transform);
             allBoids[i] = newBoid.GetComponent<Boid>();
             allBoids[i].manager = this;
         }

@@ -53,7 +53,7 @@ MonoBehaviour:
     <SubbehaviorNode id=\"26\" />\r\n            </child>\r\n          </GuardAndNode>\r\n       
     </elem>\r\n      </children>\r\n      <inputParams />\r\n      <outputParams
     />\r\n      <localParams />\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode
-    id=\"82\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Perception/IsDogNearby\">\r\n     
+    id=\"82\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Perception/IsDogNearby\">\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"maxRange\"
     type=\"System.Single\" isBlackboard=\"True\" blackboard=\"visionRange\" />\r\n         
     <entry name=\"poopingOnly\" type=\"System.Boolean\" isBlackboard=\"False\" value=\"True\"
@@ -85,7 +85,7 @@ MonoBehaviour:
     </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
     <entry name=\"detectedPoop\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
     />\r\n        </outputValues>\r\n      </outputParams>\r\n      <localParams
-    />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode id=\"78\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\"
+    />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode id=\"78\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\"
     name=\"Basic/CheckFloat\">\r\n      <inputParams>\r\n        <inputValues>\r\n         
     <entry name=\"valueA\" type=\"System.Single\" isBlackboard=\"False\" value=\"10\"
     />\r\n          <entry name=\"valueB\" type=\"System.Single\" isBlackboard=\"True\"
