@@ -10,7 +10,10 @@
         1. [Custom Bricks](#custom-bricks)
             1. [Actions](#actions)
             2. [Conditions](#conditions)
-        2. [Extras](#extras)
+        2. [Árboles Creados](#árboles-creados)
+            1. [Limpiador](#limpiador)
+            2. [Perro](#perro)
+        3. [Extras](#extras)
     3. [Group Behavior](#group-behavior)
         1. [Algoritmos de formación](#algoritmos-de-formación)
         2. [Código Grupos](#código-grupos)
@@ -362,6 +365,26 @@ Se encuentran todos en la carpeta Scripts/AI/Behaviors, en la subcarpeta corresp
     - **IsDogNearby**: Comprueba si hay algún perro cerca y guarda el más cercano. Se puede hacer que filtre solo los que están haciendo caca.
     - **IsObjectNearby**: Función genérica para detectar objetos mediante tags. Al final no la uso.
     - **IsPoopNearby**: Comprueba si hay una caca cerca y guarda la más cercana.
+
+#### Árboles Creados
+
+Los dos árboles de comportamiento principales son los del limpiador y del perro. Son bastante complejos y constan de varios sub árboles pero a continuación voy a resumir su funcionamiento y la intención de mi diseño.
+
+Como utilizo cápsulas en vez de modelos, he decidido representar las acciones que toman como bocadillos de diálogo que se muestran sobre sus cabezas. Durante el tiempo que dura la acción.
+
+##### Limpiador
+
+La idea principal es que actue como el "poli" de la plaza. Moviéndose por ella y espantando a los perros cuando toque. Pero al mismo tiempo ha de emular el comportamiento de un limpiador.
+
+Para lograrlo, he hecho que cada cierto tiempo se le "llene la bolsa" y tenga que ir a "tirar la basura" a una de las papeleras que hay repartidas por el mapa para poder continuar limpiando.
+
+Para emular lo del comportamiento de Poli vs Ladrón he hecho que cuando ve a un perro haciendo caca (tras un momento de sorpresa) vaya a asustarlo para hacer que se vaya. Y si por algún motivo llega tarde y se encuentra el regalito, pues simplemente lo limpia.
+
+##### Perro
+
+El perro funciona de forma similar. Cada cierto tiempo tiene que hacer sus necesidades, así que en cuanto se encuentra en un sitio válido, se parará a hacerlas. Una vez termine, el ciclo se resetea.
+
+Si el limpiador interrumpe al perro, este se irá asustado. Corriendo más rápido de lo normal por la plaza. Y no se planteará volver a pararse a hacer sus necesidades hasta que pase un tiempo y se relaje.
 
 #### Extras
 

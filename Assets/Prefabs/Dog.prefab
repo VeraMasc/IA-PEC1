@@ -85,8 +85,8 @@ MonoBehaviour:
     - IsPooping
     boolParamsLostDefaultValue: 
     floatParams:
-    - 2.5
-    - 10
+    - 2
+    - 8
     - 5
     - 3.5
     - 0

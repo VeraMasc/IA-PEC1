@@ -78,39 +78,39 @@ MonoBehaviour:
     />\r\n          <ActionNode id=\"12\" />\r\n          <ActionNode id=\"13\" />\r\n         
     <ActionNode id=\"14\" />\r\n        </nodes>\r\n      </_nodes>\r\n    </BehaviorTree>\r\n   
     <SequenceNode id=\"7\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"379.9615 539.3784\" name=\"Sequence\" description=\"Executes all its
+    position=\"432.887 52.05681\" name=\"Sequence\" description=\"Executes all its
     children in sequence until all of them are successful\" cardinality=\"-1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <SequenceNode id=\"7\" />\r\n        </data>\r\n     
     </_data>\r\n    </SequenceNode>\r\n    <ActionNode id=\"10\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"False\" position=\"221.4247 706.8214\" name=\"FindTrashCan\"
+    <data breakpoint=\"2\" selected=\"True\" position=\"274.35 219.5\" name=\"FindTrashCan\"
     description=\"Encuentra la papelera m\xE1s cercana\" cardinality=\"0\" hasParent=\"True\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"10\" />\r\n         
     <SequenceNode id=\"7\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
     <ActionNode id=\"8\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"386.6282 789.0452\" name=\"Speak\" description=\"Dice un mensaje mediante
+    position=\"439.5538 301.7237\" name=\"Speak\" description=\"Dice un mensaje mediante
     un bocadillo\" cardinality=\"0\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ActionNode id=\"8\" />\r\n          <SequenceNode id=\"7\"
     />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n    <ActionNode
     id=\"11\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"465.4215 687.0328\" name=\"Navigation/MoveToPosition\" description=\"Moves
+    position=\"518.3471 199.7114\" name=\"Navigation/MoveToPosition\" description=\"Moves
     the game object to a given position by using a NavMeshAgent\" cardinality=\"0\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
     id=\"11\" />\r\n          <SequenceNode id=\"7\" />\r\n        </data>\r\n     
     </_data>\r\n    </ActionNode>\r\n    <ActionNode id=\"13\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"False\" position=\"624.0993 789.267\" name=\"Basic/WaitForSeconds\"
+    <data breakpoint=\"0\" selected=\"False\" position=\"677.0244 301.9455\" name=\"Basic/WaitForSeconds\"
     description=\"Action that success after a period of time.\" cardinality=\"0\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ActionNode
     id=\"13\" />\r\n          <SequenceNode id=\"7\" />\r\n        </data>\r\n     
     </_data>\r\n    </ActionNode>\r\n    <ActionNode id=\"12\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"False\" position=\"693.1827 673.3665\" name=\"ShutUp\"
+    <data breakpoint=\"0\" selected=\"False\" position=\"746.1078 186.0451\" name=\"ShutUp\"
     description=\"Deja de hablar\" cardinality=\"0\" hasParent=\"True\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <ActionNode id=\"12\" />\r\n         
     <SequenceNode id=\"7\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n   
     <ActionNode id=\"14\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"852 626.3333\" name=\"Basic/SetFloat\" description=\"Sets a value
+    position=\"904.9251 139.0117\" name=\"Basic/SetFloat\" description=\"Sets a value
     to a float variable\" cardinality=\"0\" hasParent=\"True\">\r\n          <BehaviorTree
     id=\"0\" />\r\n          <ActionNode id=\"14\" />\r\n          <SequenceNode
     id=\"7\" />\r\n        </data>\r\n      </_data>\r\n    </ActionNode>\r\n  </editorInfo>\r\n</BehaviorBricks>"
-  zoom: 0.6
+  zoom: 1
   subslist: []
   _guid: acdd128d0f3874d4fa077883a94296ae

@@ -98,8 +98,8 @@ MonoBehaviour:
     />\r\n          <entry name=\"wanderArea\" type=\"UnityEngine.GameObject\" isBlackboard=\"True\"
     blackboard=\"wanderArea\" />\r\n          <entry name=\"speechBubble\" type=\"SpeechBubble\"
     isBlackboard=\"True\" blackboard=\"speechBubble\" />\r\n          <entry name=\"TrashCollected\"
-    type=\"System.Single\" isBlackboard=\"False\" value=\"0\" />\r\n        </inputValues>\r\n     
-    </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
+    type=\"System.Single\" isBlackboard=\"True\" blackboard=\"TrashCollected\" />\r\n       
+    </inputValues>\r\n      </inputParams>\r\n      <outputParams>\r\n        <outputValues>\r\n         
     <entry name=\"targetPosition\" type=\"UnityEngine.Vector3\" isBlackboard=\"True\"
     />\r\n          <entry name=\"TrashCollected\" type=\"System.Single\" isBlackboard=\"True\"
     blackboard=\"TrashCollected\" />\r\n        </outputValues>\r\n      </outputParams>\r\n     
@@ -165,12 +165,12 @@ MonoBehaviour:
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"79\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
     <ConditionEvalNode id=\"78\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"721.6324 540.6121\" name=\"Basic/CheckFloat\" description=\"Eval\"
+    selected=\"False\" position=\"718.7752 539.1835\" name=\"Basic/CheckFloat\" description=\"Eval\"
     cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
     <ConditionEvalNode id=\"78\" />\r\n          <PrioritySelectorNode id=\"75\"
     />\r\n        </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
-    id=\"77\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"493.1431 375.4286\" name=\"SweepFloor\" description=\"\" cardinality=\"-1\"
+    id=\"77\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
+    position=\"490.286 374\" name=\"SweepFloor\" description=\"\" cardinality=\"-1\"
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"77\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
     <ConditionEvalNode id=\"76\">\r\n      <_data>\r\n        <data breakpoint=\"0\"

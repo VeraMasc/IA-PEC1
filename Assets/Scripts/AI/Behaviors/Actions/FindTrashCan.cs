@@ -3,6 +3,7 @@ using Pada1.BBCore;
 using UnityEngine;
 using System.Linq;
 using System;
+using Unity;
 
 
 namespace BBUnity.Actions
@@ -33,14 +34,12 @@ namespace BBUnity.Actions
         public override TaskStatus OnUpdate()
         {
             var thisPos = gameObject.transform.position;
-            var layerMask = LayerMask.GetMask("Interactive");
-            var results = Physics.OverlapSphere(thisPos, maxRange, layerMask)
-                .Where(obj => obj.tag == "Trash");
+            var results = GameObject.FindGameObjectsWithTag("Trash");
 
             //Obtener papelera más cercana dentro del rango
             var best = results.Select(t =>
                     new {t, distance= Vector3.Distance(t.transform.position, thisPos)
-                }).Aggregate(new {  t = (Collider) null , distance = Mathf.Infinity}, (i1, i2) => i1.distance < i2.distance ? i1 : i2)
+                }).Aggregate(new {  t = (GameObject) null , distance = Mathf.Infinity}, (i1, i2) => i1.distance < i2.distance ? i1 : i2)
                 .t;
 
             if(best != null){

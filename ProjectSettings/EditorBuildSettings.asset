@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Plaza.unity
+    guid: 84e63acfeeb42934699b0ec2cfa42095
+  - enabled: 1
+    path: Assets/Scenes/TestFormation.unity
+    guid: 909cb85c33ef1864a91e5b3604fef814
   m_configObjects: {}

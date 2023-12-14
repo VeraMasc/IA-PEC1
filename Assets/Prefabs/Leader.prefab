@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3945853325985280031}
   - component: {fileID: 3010135547998777784}
   - component: {fileID: 5158373762469047874}
+  - component: {fileID: 2114724341628155193}
   m_Layer: 0
   m_Name: Leader
   m_TagString: Untagged
@@ -154,6 +155,74 @@ MonoBehaviour:
   - {fileID: 1070286267641487716, guid: 02b555241a66c1d41bcef98fabf1091d, type: 3}
   - {fileID: -6729863265830519179, guid: e1e8b9c618e068840a5a1e1522b8ff57, type: 3}
   isDirty: 0
+--- !u!114 &2114724341628155193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3168190464217967329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422fb6956201c7944ae2113a1a53b0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTasksPerTick: 1
+  behavior: {fileID: 11400000, guid: 251eed377cf68b14982f4233489bef15, type: 2}
+  paused: 0
+  restartWhenFinished: 0
+  blackboard:
+    intParams: 
+    intParamsNames: []
+    intParamsLostDefaultValue: 
+    boolParams: 
+    boolParamsNames: []
+    boolParamsLostDefaultValue: 
+    floatParams: []
+    floatParamsNames: []
+    floatParamsLostDefaultValue: 
+    stringParams: []
+    stringParamsNames: []
+    stringParamsLostDefaultValue: 
+    colorParams: []
+    colorParamsNames: []
+    colorParamsLostDefaultValue: 
+    objectParams:
+    - {fileID: 0}
+    - {fileID: 7520201179069989861}
+    objectParamsNames:
+    - wanderArea
+    - speechBubble
+    objectParamsLostDefaultValue: 
+    layerMaskParams: []
+    layerMaskParamsNames: []
+    layerMaskParamsLostDefaultValue: 
+    enumParamsNames: []
+    enumParamsLostDefaultValue: 
+    vector2Params: []
+    vector2ParamsNames: []
+    vector2ParamsLostDefaultValue: 
+    vector3Params: []
+    vector3ParamsNames: []
+    vector3ParamsLostDefaultValue: 
+    vector4Params: []
+    vector4ParamsNames: []
+    vector4ParamsLostDefaultValue: 
+    rectParams: []
+    rectParamsNames: []
+    rectParamsLostDefaultValue: 
+    animationCurveParams: []
+    animationCurveParamsNames: []
+    animationCurveParamsLostDefaultValue: 
+    boundsParams: []
+    boundsParamsNames: []
+    boundsParamsLostDefaultValue: 
+    gradientParams: []
+    gradientParamsNames: []
+    gradientParamsLostDefaultValue: 
+    quaternionParams: []
+    quaternionParamsNames: []
+    quaternionParamsLostDefaultValue: 
 --- !u!1001 &8258997132106637184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260,3 +329,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3961635868578392069, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
   m_PrefabInstance: {fileID: 8258997132106637184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7520201179069989861 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1927757256550472805, guid: 4645f8f66b383324e98173e0db9e4ef1, type: 3}
+  m_PrefabInstance: {fileID: 8258997132106637184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fe6ebcccfc32b4a9e6d65a867d7246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
