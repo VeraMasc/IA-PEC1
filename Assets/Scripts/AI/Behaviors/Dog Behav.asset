@@ -48,7 +48,7 @@ MonoBehaviour:
     <child>\r\n              <SubbehaviorNode id=\"10\" />\r\n            </child>\r\n         
     </GuardAndNode>\r\n        </elem>\r\n      </children>\r\n      <inputParams
     />\r\n      <outputParams />\r\n      <localParams />\r\n    </PrioritySelectorNode>\r\n   
-    <ConditionEvalNode id=\"13\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"Basic/CheckMyBlackboard\">\r\n     
+    <ConditionEvalNode id=\"13\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"Basic/CheckMyBlackboard\">\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"fieldName\"
     type=\"System.String\" isBlackboard=\"False\" value=\"isScared\" />\r\n         
     <entry name=\"floatB\" type=\"System.Single\" isBlackboard=\"False\" value=\"0\"
@@ -84,7 +84,7 @@ MonoBehaviour:
     />\r\n          <entry name=\"poopDuration\" type=\"System.Single\" isBlackboard=\"True\"
     blackboard=\"poopDuration\" />\r\n        </inputValues>\r\n      </inputParams>\r\n     
     <outputParams />\r\n      <localParams />\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode
-    id=\"11\" policy=\"WAIT_UNTIL_TRUE_AND_COMPLETE\" name=\"AlwaysTrue\">\r\n     
+    id=\"11\" policy=\"WAIT_UNTIL_FALSE_AND_FAIL\" name=\"AlwaysTrue\">\r\n     
     <inputParams />\r\n      <outputParams />\r\n      <localParams />\r\n    </ConditionEvalNode>\r\n   
     <SubbehaviorNode id=\"10\">\r\n      <_guid>db2492aacb32bf84c9495029fc224e99</_guid>\r\n     
     <inputParams>\r\n        <inputValues>\r\n          <entry name=\"wanderArea\"
@@ -110,40 +110,40 @@ MonoBehaviour:
     <ConditionEvalNode id=\"11\" />\r\n          <SubbehaviorNode id=\"10\" />\r\n         
     <ConditionEvalNode id=\"15\" />\r\n        </nodes>\r\n      </_nodes>\r\n   
     </BehaviorTree>\r\n    <RepeatDecorator id=\"2\">\r\n      <_data>\r\n       
-    <data breakpoint=\"0\" selected=\"False\" position=\"308.7278 -23.15983\" name=\"Repeat\"
+    <data breakpoint=\"0\" selected=\"False\" position=\"561.5848 21.12589\" name=\"Repeat\"
     description=\"Repeats the execution of its child node\" cardinality=\"1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <RepeatDecorator id=\"2\" />\r\n       
     </data>\r\n      </_data>\r\n    </RepeatDecorator>\r\n    <PrioritySelectorNode
     id=\"9\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"249.4473 182.1996\" name=\"Priority Selector\" description=\"\" cardinality=\"1\"
+    position=\"502.3042 226.4853\" name=\"Priority Selector\" description=\"\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <PrioritySelectorNode
     id=\"9\" />\r\n          <RepeatDecorator id=\"2\" />\r\n        </data>\r\n     
     </_data>\r\n    </PrioritySelectorNode>\r\n    <ConditionEvalNode id=\"13\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"280.1212
-    596.7294\" name=\"Basic/CheckMyBlackboard\" description=\"Eval\" cardinality=\"1\"
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"532.9782
+    641.0153\" name=\"Basic/CheckMyBlackboard\" description=\"Eval\" cardinality=\"1\"
     hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n          <ConditionEvalNode
     id=\"13\" />\r\n          <PrioritySelectorNode id=\"9\" />\r\n        </data>\r\n     
     </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode id=\"12\">\r\n     
-    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"-32.12338
-    380.4861\" name=\"DogFlee\" description=\"\" cardinality=\"-1\" hasParent=\"False\">\r\n         
+    <_data>\r\n        <data breakpoint=\"0\" selected=\"False\" position=\"220.7339
+    424.7717\" name=\"DogFlee\" description=\"\" cardinality=\"-1\" hasParent=\"False\">\r\n         
     <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode id=\"12\" />\r\n       
     </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n    <ConditionEvalNode
-    id=\"15\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"629.4979 677.5259\" name=\"Perception/CanPoop\" description=\"Eval\"
+    id=\"15\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
+    position=\"882.3551 721.8118\" name=\"Perception/CanPoop\" description=\"Eval\"
     cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
     <ConditionEvalNode id=\"15\" />\r\n          <PrioritySelectorNode id=\"9\" />\r\n       
     </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
     id=\"14\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
-    position=\"314.8045 442.9143\" name=\"DogPoop\" description=\"\" cardinality=\"-1\"
+    position=\"567.6614 487.1999\" name=\"DogPoop\" description=\"\" cardinality=\"-1\"
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"14\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n   
     <ConditionEvalNode id=\"11\">\r\n      <_data>\r\n        <data breakpoint=\"0\"
-    selected=\"False\" position=\"990.8741 595.5873\" name=\"AlwaysTrue\" description=\"Eval\"
+    selected=\"False\" position=\"1243.732 639.8732\" name=\"AlwaysTrue\" description=\"Eval\"
     cardinality=\"1\" hasParent=\"True\">\r\n          <BehaviorTree id=\"0\" />\r\n         
     <ConditionEvalNode id=\"11\" />\r\n          <PrioritySelectorNode id=\"9\" />\r\n       
     </data>\r\n      </_data>\r\n    </ConditionEvalNode>\r\n    <SubbehaviorNode
-    id=\"10\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"True\"
-    position=\"562.3048 387.9141\" name=\"DogWander\" description=\"\" cardinality=\"-1\"
+    id=\"10\">\r\n      <_data>\r\n        <data breakpoint=\"0\" selected=\"False\"
+    position=\"815.162 432.1997\" name=\"DogWander\" description=\"\" cardinality=\"-1\"
     hasParent=\"False\">\r\n          <BehaviorTree id=\"0\" />\r\n          <SubbehaviorNode
     id=\"10\" />\r\n        </data>\r\n      </_data>\r\n    </SubbehaviorNode>\r\n 
     </editorInfo>\r\n</BehaviorBricks>"

@@ -22,6 +22,8 @@ public class MyBlackboard : MonoBehaviour
 
     public GameObject detectedCleaner;
 
+    public float poopDelay;
+
     public void scare(){
         isScared = true;
     }

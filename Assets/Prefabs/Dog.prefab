@@ -159,11 +159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectedPoop: {fileID: 0}
-  isDogPooping: 1
+  isDogPooping: 0
   isScared: 0
   isShouting: 0
   detectedDog: {fileID: 0}
   detectedCleaner: {fileID: 0}
+  poopDelay: 10
 --- !u!1 &2767178284293295113
 GameObject:
   m_ObjectHideFlags: 0

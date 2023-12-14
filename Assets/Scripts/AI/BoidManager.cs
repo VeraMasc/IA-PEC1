@@ -117,8 +117,9 @@ public class BoidManager : MonoBehaviour
     /// Crea e inicializa los boids
     /// </summary>
     void initBoids(){
+        
         allBoids = new Boid[numBoids];
-        for (int i = 0; i < numBoids; ++i) {
+        for (int i = 0; i < allBoids.Length; ++i) {
             Vector3 pos = this.transform.position + Random.insideUnitSphere * spawnRange; // random position
             Vector3 randomize = Random.insideUnitSphere.normalized; // random vector direction
             var newBoid = (GameObject)Instantiate(boidPrefab, pos, Quaternion.LookRotation(randomize));

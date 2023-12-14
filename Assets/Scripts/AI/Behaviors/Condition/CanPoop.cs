@@ -34,6 +34,11 @@ namespace BBUnity.Conditions
 
             if (Controller.singleton.poops.Count >= poopLimit)
                 return false;
+            
+            if(blackboard.poopDelay>0){
+                blackboard.poopDelay -= Random.Range(0.5f, 1.5f) * Time.deltaTime; //Tiempo aleatorio entre cacas
+                return false;
+            }
 
             if (IsPoopNearby.isPoopNearPos(gameObject.transform.position, poopRange, out _))
                 return false;
