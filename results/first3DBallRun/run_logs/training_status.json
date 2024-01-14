@@ -1,0 +1,38 @@
+{
+    "RollerAgent": {
+        "checkpoints": [
+            {
+                "steps": 15563,
+                "file_path": "results\\first3DBallRun\\RollerAgent\\RollerAgent-15563.onnx",
+                "reward": null,
+                "creation_time": 1705238291.6511264,
+                "auxillary_file_paths": [
+                    "results\\first3DBallRun\\RollerAgent\\RollerAgent-15563.pt"
+                ]
+            },
+            {
+                "steps": 113030,
+                "file_path": "results\\first3DBallRun\\RollerAgent\\RollerAgent-113030.onnx",
+                "reward": 1.0,
+                "creation_time": 1705249239.2078948,
+                "auxillary_file_paths": [
+                    "results\\first3DBallRun\\RollerAgent\\RollerAgent-113030.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 113030,
+            "file_path": "results\\first3DBallRun\\RollerAgent.onnx",
+            "reward": 1.0,
+            "creation_time": 1705249239.2078948,
+            "auxillary_file_paths": [
+                "results\\first3DBallRun\\RollerAgent\\RollerAgent-113030.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
