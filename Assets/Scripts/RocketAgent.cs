@@ -3,15 +3,34 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class RollerAgent : Agent
+/// <summary>
+/// Agente que se comporta como un cohete
+/// </summary>
+public class RocketAgent : Agent
 {
     Rigidbody body;
 
     public Transform Target;
 
     public float forceMultiplier = 10;
+
+    public float rotateMultiplier = 10;
+
+    /// <summary>
+    /// Velocidad mínima a la que puede ir el cohete
+    /// </summary>
+    public float minSpeed = 1;
+
+    /// <summary>
+    /// Velocidad máxima a la que puede ir el cohete
+    /// </summary>
+    public float maxSpeed = 5;
+    private float rotate;
+    private float accel;
+
     void Start () {
         body = GetComponent<Rigidbody>();
     }
@@ -42,6 +61,9 @@ public class RollerAgent : Agent
         // Agent velocity
         sensor.AddObservation(body.velocity.x);
         sensor.AddObservation(body.velocity.z);
+
+        //Agent direction
+        sensor.AddObservation(transform.forward);
     }
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -50,15 +72,33 @@ public class RollerAgent : Agent
         continuousActionsOut[1] = Input.GetAxis("Vertical");
     }
 
+    private void FixedUpdate() {
+
+        // body.AddRelativeForce(accel * new Vector3(0, forceMultiplier, 0));
+        body.AddTorque(0,rotate * rotateMultiplier,0);
+
+        //Forward velocity component
+        var projected = Vector3.Project(body.velocity, transform.up);
+        var sign = Mathf.Sign(Vector3.Dot(projected, transform.up));
+        
+        //Clamp speed
+        var newSpd = projected.magnitude * sign + accel * forceMultiplier;
+        var changeSpd = Mathf.Clamp(newSpd, minSpeed, maxSpeed) - projected.magnitude * sign;
+        changeSpd = Mathf.Clamp(changeSpd,  -forceMultiplier, forceMultiplier);
+        body.velocity += changeSpd * transform.up;
+    
+    }
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         // Actions, size = 2
-        Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = actionBuffers.ContinuousActions[0];
-        controlSignal.z = actionBuffers.ContinuousActions[1];
-        body.AddForce(controlSignal * forceMultiplier);
-
         
+        rotate = actionBuffers.ContinuousActions[0];
+        accel = actionBuffers.ContinuousActions[1];
+        
+
+    
+
         // Fell off platform
         if (transform.localPosition.y < 0)
         {

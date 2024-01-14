@@ -1,0 +1,38 @@
+{
+    "RocketAgent": {
+        "checkpoints": [
+            {
+                "steps": 71128,
+                "file_path": "results\\firstRocketRun\\RocketAgent\\RocketAgent-71128.onnx",
+                "reward": 0.9090909090909091,
+                "creation_time": 1705264564.4024396,
+                "auxillary_file_paths": [
+                    "results\\firstRocketRun\\RocketAgent\\RocketAgent-71128.pt"
+                ]
+            },
+            {
+                "steps": 125363,
+                "file_path": "results\\firstRocketRun\\RocketAgent\\RocketAgent-125363.onnx",
+                "reward": 1.0,
+                "creation_time": 1705265900.4562788,
+                "auxillary_file_paths": [
+                    "results\\firstRocketRun\\RocketAgent\\RocketAgent-125363.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 125363,
+            "file_path": "results\\firstRocketRun\\RocketAgent.onnx",
+            "reward": 1.0,
+            "creation_time": 1705265900.4562788,
+            "auxillary_file_paths": [
+                "results\\firstRocketRun\\RocketAgent\\RocketAgent-125363.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
