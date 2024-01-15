@@ -5,6 +5,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
+using Mathf = UnityEngine.Mathf;
 
 /// <summary>
 /// Agente que se comporta como un cohete
@@ -18,6 +19,10 @@ public class RocketAgent : Agent
     public float forceMultiplier = 10;
 
     public float rotateMultiplier = 10;
+
+    public float rotateCount ;
+
+    public float spawnRange =1;
 
     /// <summary>
     /// Velocidad mínima a la que puede ir el cohete
@@ -47,9 +52,9 @@ public class RocketAgent : Agent
         }
 
         // Move the target to a new spot
-        Target.localPosition = new Vector3(Random.value * 8 - 4,
+        Target.localPosition = new Vector3(Random.value * 8 - 4 * spawnRange,
                                            0.5f,
-                                           Random.value * 8 - 4);
+                                           Random.value * 8 - 4 * spawnRange);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -86,6 +91,9 @@ public class RocketAgent : Agent
         var changeSpd = Mathf.Clamp(newSpd, minSpeed, maxSpeed) - projected.magnitude * sign;
         changeSpd = Mathf.Clamp(changeSpd,  -forceMultiplier, forceMultiplier);
         body.velocity += changeSpd * transform.up;
+
+        //Track rotation
+        rotateCount = body.angularVelocity.y * Time.fixedDeltaTime;
     
     }
 
@@ -107,10 +115,15 @@ public class RocketAgent : Agent
 
         
     }
-    private void OnCollisionEnter(Collision other) {
-        if(other.collider.transform == Target){
+     private void OnTriggerEnter(Collider other) {
+        if(other.transform == Target){
             Debug.Log("Target Reached");
-            SetReward(1.0f);
+            rotateCount = Mathf.Max(rotateCount,1);
+            float reward = 1.0f;
+            reward /= rotateCount;
+            var logSteps = Mathf.Log(StepCount)*0.1f+1;
+            reward /= logSteps;
+            SetReward(reward);
             EndEpisode();
         }
     }

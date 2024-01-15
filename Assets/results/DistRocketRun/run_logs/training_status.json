@@ -1,0 +1,29 @@
+{
+    "RocketAgent": {
+        "checkpoints": [
+            {
+                "steps": 171275,
+                "file_path": "results\\DistRocketRun\\RocketAgent\\RocketAgent-171275.onnx",
+                "reward": 0.7169069051742554,
+                "creation_time": 1705273037.7463956,
+                "auxillary_file_paths": [
+                    "results\\DistRocketRun\\RocketAgent\\RocketAgent-171275.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 171275,
+            "file_path": "results\\DistRocketRun\\RocketAgent.onnx",
+            "reward": 0.7169069051742554,
+            "creation_time": 1705273037.7463956,
+            "auxillary_file_paths": [
+                "results\\DistRocketRun\\RocketAgent\\RocketAgent-171275.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
