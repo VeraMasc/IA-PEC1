@@ -50,7 +50,7 @@ public class RocketAgent : Agent
             body.velocity = Vector3.zero;
             transform.localPosition = new Vector3( 0, 0.5f, 0);
         }
-
+        rotateCount = 0;
         // Move the target to a new spot
         Target.localPosition = new Vector3(Random.value * 8 - 4 * spawnRange,
                                            0.5f,
