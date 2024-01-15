@@ -1,0 +1,29 @@
+{
+    "RocketAgent2": {
+        "checkpoints": [
+            {
+                "steps": 46922,
+                "file_path": "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.onnx",
+                "reward": null,
+                "creation_time": 1705342621.0687115,
+                "auxillary_file_paths": [
+                    "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 46922,
+            "file_path": "results\\V2RocketRun\\RocketAgent2.onnx",
+            "reward": null,
+            "creation_time": 1705342621.0687115,
+            "auxillary_file_paths": [
+                "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
