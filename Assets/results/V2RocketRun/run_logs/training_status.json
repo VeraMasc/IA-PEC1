@@ -2,22 +2,31 @@
     "RocketAgent2": {
         "checkpoints": [
             {
-                "steps": 46922,
-                "file_path": "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.onnx",
-                "reward": null,
-                "creation_time": 1705342621.0687115,
+                "steps": 499994,
+                "file_path": "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-499994.onnx",
+                "reward": 0.5705848932266235,
+                "creation_time": 1705352881.1677668,
                 "auxillary_file_paths": [
-                    "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.pt"
+                    "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-499994.pt"
+                ]
+            },
+            {
+                "steps": 500058,
+                "file_path": "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-500058.onnx",
+                "reward": 0.5705848932266235,
+                "creation_time": 1705352881.2452037,
+                "auxillary_file_paths": [
+                    "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-500058.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 46922,
+            "steps": 500058,
             "file_path": "results\\V2RocketRun\\RocketAgent2.onnx",
-            "reward": null,
-            "creation_time": 1705342621.0687115,
+            "reward": 0.5705848932266235,
+            "creation_time": 1705352881.2452037,
             "auxillary_file_paths": [
-                "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-46922.pt"
+                "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-500058.pt"
             ]
         }
     },
