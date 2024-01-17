@@ -4,7 +4,9 @@
     1. [Roller Ball](#roller-ball)
         1. [Tutorial](#tutorial)
         2. [Mejoras](#mejoras)
-    2. [Plaza](#plaza)
+            1. [Cohete](#cohete)
+            2. [Cohete v2](#cohete-v2)
+    2. [Agente Plaza](#agente-plaza)
 
 ## Apartados
 
@@ -13,6 +15,8 @@
 #### Tutorial
 
 #### Mejoras
+
+##### Cohete
 
 Como los resultados del ejemplo me parecían ya bastante buenos, he decidido complicar un poco el problema limitando la capacidad de controlar el movimiento del objeto. He hecho que solo se pueda controlar la velocidad con la que se mueve hacia adelante (no se puede parar) y su velocidad de rotación en el eje Y. Básicamente, que se comporte como un mísil, pero que se desplaza pegado al suelo. Está implementado en **RocketAgent**.
 
@@ -39,7 +43,30 @@ A continuación se puede ver una comparativa en la duración de los episodios co
 
 Sin embargo, al probar el modelo, he podido comprobar que sigue haciendo lo mismo: dar vueltas como un trompo hasta coger los cubos. Es mucho más eficiente, pero no se comporta como el mísil que yo deseaba. Analizando su comportamiento, me he dado cuenta de que probablemente esto se debe a el rango limitado en el que aparecen los cubos y el hecho de que el lateral del cohete ofrece mayor superficie de contacto. Es decir, el problema es que en el entorno de entrenamiento que he creado esta es la estrategia más eficiente.
 
+##### Cohete v2
 
+Insatisfecha con los resultados, he continuado haciendo pruebas y modificando el agente hasta obtener el comportamiento deseado.
 
-### Plaza
+En primer lugar, lo que he hecho es limitar el número de vueltas que el agente da en un episodio, pues para llegar a su objetivo no necesita más de una y el quedarse dando vueltas sobre un mismo sitio es una forma común de que el agente se quede atascado sin caer o llegar al objetivo, lo que alarga innecesariamente los episodios. Especialmente en el nuevo escenario que es el doble de grande que el anterior.
+
+Al ver que esto no era suficiente, he decidido atajar el problema de raíz haciendo que dar vueltas sea una forma mucho más ineficiente de desplazarse. He añadido un drag rotatorio proporcional a la velocidad para hacer más difícil el girar a gran velocidad y he añadido un arrastre lateral muy fuerte para impedir que se desplace derrapando (y simular el mayor arrastre que tiene un cohete yendo de lado debido a su mayor superficie).
+
+Con estas mejoras, el cohete ya no hacía tantos círculos, pero como efecto secundario su efectividad bajó mucho. Así que revisé el funcionamiento interno del agente, puliendo un poco las entradas de las señales, haciendo que supiera tener en cuenta su velocidad angular, añadiendo otra capa de neuronas y mejorando la fórmula de la recompensa.
+
+En esta fórmula he decidido penalizar al máximo el fallar por dar demasiadas vueltas(-1 de recompensa) ya que es mucho más perjudicial para mi objetivo que caerse (-0.5 de recompensa), pero luego les sumo hasta un 0.5 en base a lo cerca que han estado de su objetivo (en escala logarítmica).
+
+En el caso de tener éxito, la fórmula anterior que se usaba para recompensar la velocidad y el no dar vueltas ahora solo suma hasta medio punto, ya que el otro medio punto se se recibe siempre porque corresponde a cuan cerca ha estado del objetivo.
+
+El gráfico de recompensa acumulativa no es muy esclarecedor, pero si miramos la evolución de la distribución de recompensas podemos ver lo efectiva que ha sido su evolución
+![Recompensa acumulativa V2](image-5.png)
+
+![Distribución Recompensa V2](image-4.png)
+
+Debido al cambio en la fórmula podemos ver que hay una distribución de fallos mucho mayor pero que tiende a concentrarse cerca del -1 debido a la tendencia a dar vueltas sobre si mismo y a que es más fácil aprender a no caerse.
+
+La distribución de éxitos es peor que la del [cohete](#cohete) original, pero esto probablemente sea debido al aumento de tamaño del área en la que puede aparecer el cubo que hace que se penalice más por tardar. Al menos esto es lo que sugiere
+
+![Duración cohete v2](image-6.png){: width=150 height=100 style="float:right; padding:16px"} 
+
+### Agente Plaza
 

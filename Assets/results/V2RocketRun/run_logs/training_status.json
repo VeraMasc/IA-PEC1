@@ -18,15 +18,24 @@
                 "auxillary_file_paths": [
                     "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-500058.pt"
                 ]
+            },
+            {
+                "steps": 700004,
+                "file_path": "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-700004.onnx",
+                "reward": 0.5787884593009949,
+                "creation_time": 1705429847.5025258,
+                "auxillary_file_paths": [
+                    "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-700004.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 500058,
+            "steps": 700004,
             "file_path": "results\\V2RocketRun\\RocketAgent2.onnx",
-            "reward": 0.5705848932266235,
-            "creation_time": 1705352881.2452037,
+            "reward": 0.5787884593009949,
+            "creation_time": 1705429847.5025258,
             "auxillary_file_paths": [
-                "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-500058.pt"
+                "results\\V2RocketRun\\RocketAgent2\\RocketAgent2-700004.pt"
             ]
         }
     },
