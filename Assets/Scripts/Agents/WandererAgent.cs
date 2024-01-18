@@ -6,6 +6,7 @@ using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
 using Mathf = UnityEngine.Mathf;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Agente que se comporta como un cohete, segunda versión
@@ -17,6 +18,10 @@ public class WandererAgent : Agent
     public float visionRange = 5f;
 
     public float visionSpread=20f;
+
+    public float[] visionValues; 
+
+    public int visionMask = Physics.AllLayers; 
 
     public Transform Target;
 
@@ -48,31 +53,32 @@ public class WandererAgent : Agent
 
     void Start () {
         body = GetComponent<Rigidbody>();
+        visionValues= new float[5];
     }
 
 
     public override void OnEpisodeBegin()
     {
-       // If the Agent fell, zero its momentum
-        if (transform.localPosition.y < 0 || rotateCount>30)
-        {
-            body.angularVelocity = Vector3.zero;
-            body.velocity = Vector3.zero;
-            transform.localPosition = new Vector3( 0, 0.5f, 0);
-        }
-        rotateCount = 0;
-        closest = Mathf.Infinity;
-        // Move the target to a new spot
-        Target.localPosition = new Vector3((Random.value * 8 - 4) * spawnRange,
-                                           0.5f,
-                                           (Random.value * 8 - 4) * spawnRange);
+    //    // If the Agent fell, zero its momentum
+    //     if (transform.localPosition.y < 0 || rotateCount>30)
+    //     {
+    //         body.angularVelocity = Vector3.zero;
+    //         body.velocity = Vector3.zero;
+    //         transform.localPosition = new Vector3( 0, 0.5f, 0);
+    //     }
+    //     rotateCount = 0;
+    //     closest = Mathf.Infinity;
+    //     // Move the target to a new spot
+    //     Target.localPosition = new Vector3((Random.value * 8 - 4) * spawnRange,
+    //                                        0.5f,
+    //                                        (Random.value * 8 - 4) * spawnRange);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Target and Agent positions
-        sensor.AddObservation(Target.localPosition);
-        sensor.AddObservation(transform.localPosition);
+        // sensor.AddObservation(Target.localPosition);
+        // sensor.AddObservation(transform.localPosition);
 
         // Agent velocity
         sensor.AddObservation(body.velocity.x);
@@ -90,43 +96,47 @@ public class WandererAgent : Agent
         continuousActionsOut[1] = Input.GetAxis("Vertical");
     }
 
+    private void Update() {
+        visionRaycast();
+    }
+
     private void FixedUpdate() {
 
-        // body.AddRelativeForce(accel * new Vector3(0, forceMultiplier, 0));
-        body.AddTorque(0,rotate * rotateMultiplier,0);
+        // // body.AddRelativeForce(accel * new Vector3(0, forceMultiplier, 0));
+        // body.AddTorque(0,rotate * rotateMultiplier,0);
 
-        //Forward velocity component
-        var projected = Vector3.Project(body.velocity, transform.up);
-        var sign = Mathf.Sign(Vector3.Dot(projected, transform.up));
+        // //Forward velocity component
+        // var projected = Vector3.Project(body.velocity, transform.up);
+        // var sign = Mathf.Sign(Vector3.Dot(projected, transform.up));
 
-        //Artificial Lateral Drag
-        var rejected = body.velocity - projected;
-        body.velocity -= rejected * lateralDrag;
+        // //Artificial Lateral Drag
+        // var rejected = body.velocity - projected;
+        // body.velocity -= rejected * lateralDrag;
         
-        //Clamp speed
-        var newSpd = projected.magnitude * sign + accel * forceMultiplier;
-        newSpd = Mathf.Clamp(newSpd, minSpeed, maxSpeed);
-        var changeSpd =  newSpd - projected.magnitude * sign;
-        changeSpd = Mathf.Clamp(changeSpd,  -forceMultiplier, forceMultiplier);
-        body.velocity += changeSpd * transform.up;
+        // //Clamp speed
+        // var newSpd = projected.magnitude * sign + accel * forceMultiplier;
+        // newSpd = Mathf.Clamp(newSpd, minSpeed, maxSpeed);
+        // var changeSpd =  newSpd - projected.magnitude * sign;
+        // changeSpd = Mathf.Clamp(changeSpd,  -forceMultiplier, forceMultiplier);
+        // body.velocity += changeSpd * transform.up;
 
-        //Set rotation drag
-        body.angularDrag = newSpd * dragFactor;
+        // //Set rotation drag
+        // body.angularDrag = newSpd * dragFactor;
 
         
 
-        //Track rotation
-        rotateCount += Mathf.Abs(body.angularVelocity.y * Time.fixedDeltaTime);
+        // //Track rotation
+        // rotateCount += Mathf.Abs(body.angularVelocity.y * Time.fixedDeltaTime);
 
-        //Track distance
-        closest = Mathf.Min(closest, Vector3.Distance(transform.position,Target.position));
+        // //Track distance
+        // closest = Mathf.Min(closest, Vector3.Distance(transform.position,Target.position));
 
-        //Fail agent for spinning constantly
-        if(rotateCount>30){ 
-            AddReward(-1f);
-            rewardDistance();
-            EndEpisode();
-        }
+        // //Fail agent for spinning constantly
+        // if(rotateCount>30){ 
+        //     AddReward(-1f);
+        //     rewardDistance();
+        //     EndEpisode();
+        // }
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -166,13 +176,39 @@ public class WandererAgent : Agent
         AddReward(0.5f/distReward);
     }
 
+    private void visionRaycast(){
+        var lines = new float[]{-visionSpread*2, -visionSpread, 0, visionSpread, visionSpread*2};
+        for(var i=0; i<lines.Length; i++){
+            var vector = Quaternion.AngleAxis(lines[i],Vector3.up) * transform.forward;
+            Physics.Raycast(transform.position, vector, out RaycastHit hitInfo, visionRange, visionMask);
+            visionValues[i] = hitInfo.collider? hitInfo.distance : visionRange;
+        }
+        
+    }
 
 
     private void OnDrawGizmos() {
+        if(!Application.isPlaying) //Hace que solo recalcule en el editor
+            visionRaycast(); 
+
         //Draw shight lines
-        Gizmos.color = Color.green;
-        var sightVector = transform.forward * visionRange;
-        Gizmos.DrawLine(transform.position, transform.position + sightVector);
+        var lines = new float[]{-visionSpread*2, -visionSpread, 0, visionSpread, visionSpread*2};
+
+        for(var i=0; i<lines.Length; i++){
+            var vector = Quaternion.AngleAxis(lines[i],Vector3.up) * transform.forward * visionValues[i];
+            //Dibujar con color
+            Gizmos.color = visionValues[i] == visionRange? Color.green: Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + vector);
+        }
+        
+        
+         
+    }
+
+    private void OnValidate() {
+        if (visionValues.Length<5){
+            visionValues = new float[5];
+        }
     }
 }
  
