@@ -61,7 +61,9 @@ public class WandererAgent : Agent
     /// <summary>
     /// Contador de actualización del path
     /// </summary>
-    public float pathCounter;
+    private float pathCounter;
+
+    public float travelDecayFactor = 0.9f;
 
     /// <summary>
     /// Número máximo de elementos en el path
@@ -78,7 +80,7 @@ public class WandererAgent : Agent
     public override void OnEpisodeBegin()
     {
         pathCounter = pathRate;
-        travelPath = new List<Vector3>();
+        travelPath = new List<Vector3>(){transform.position};
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -111,7 +113,7 @@ public class WandererAgent : Agent
             if(travelPath.Count > maxPath){ //Limpiar exceso del path
                 travelPath.RemoveAt(0);
             }
-            calculateReward();
+            calculateTravelReward();
         }
     }
 
@@ -141,8 +143,31 @@ public class WandererAgent : Agent
     }
 
 
-    private void calculateReward(){
+    private float calculateTravelReward(int untilLast=1){
+        float tReward = 0f;
+        var startIndex = travelPath.Count-untilLast-1;
+        if(startIndex <0)
+            return tReward;
+        
+        var last = travelPath.Last();
 
+        var center =travelPath.GetRange(startIndex, untilLast)
+            .Aggregate(new Vector3(0,0,0), (s,v) => s + v) 
+            / untilLast;
+
+        tReward += Vector3.Distance(center,last);
+        
+        Debug.Log($"Index {untilLast}: {tReward}");
+
+        if(untilLast< travelPath.Count){
+            tReward += calculateTravelReward(untilLast+1);
+        }
+
+        
+        if(untilLast==1)
+            Debug.Log($"TotalReward: {tReward}");
+
+        return tReward;
     }
 
     private void OnCollisionStay(Collision other) {
