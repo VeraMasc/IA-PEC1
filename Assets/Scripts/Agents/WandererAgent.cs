@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -23,19 +24,11 @@ public class WandererAgent : Agent
 
     public int visionMask = Physics.AllLayers; 
 
-    public Transform Target;
-
     public float forceMultiplier = 10;
 
     public float rotateMultiplier = 10;
 
-    public float dragFactor =0.05f;
 
-    public float lateralDrag =0.1f;
-
-    public float rotateCount ;
-
-    public float spawnRange =1;
 
     /// <summary>
     /// Velocidad mínima a la que puede ir el cohete
@@ -47,9 +40,34 @@ public class WandererAgent : Agent
     /// </summary>
     public float maxSpeed = 5;
     private float rotate;
-    private float accel;
+    private float walk;
 
-    private float closest;
+    [Header("Reward Metrics")]
+    /// <summary>
+    /// Mide cuanto está chocando con el entorno
+    /// </summary>
+    public float crash;
+
+    /// <summary>
+    /// Mide lo bien que ha viajado el agente
+    /// </summary>
+    public float travel;
+
+    /// <summary>
+    /// Cada cuanto actualizar el path
+    /// </summary>
+    public float pathRate= 10f;
+
+    /// <summary>
+    /// Contador de actualización del path
+    /// </summary>
+    public float pathCounter;
+
+    /// <summary>
+    /// Número máximo de elementos en el path
+    /// </summary>
+    public int maxPath= 5;
+    public List<Vector3> travelPath;
 
     void Start () {
         body = GetComponent<Rigidbody>();
@@ -59,30 +77,16 @@ public class WandererAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-    //    // If the Agent fell, zero its momentum
-    //     if (transform.localPosition.y < 0 || rotateCount>30)
-    //     {
-    //         body.angularVelocity = Vector3.zero;
-    //         body.velocity = Vector3.zero;
-    //         transform.localPosition = new Vector3( 0, 0.5f, 0);
-    //     }
-    //     rotateCount = 0;
-    //     closest = Mathf.Infinity;
-    //     // Move the target to a new spot
-    //     Target.localPosition = new Vector3((Random.value * 8 - 4) * spawnRange,
-    //                                        0.5f,
-    //                                        (Random.value * 8 - 4) * spawnRange);
+        pathCounter = pathRate;
+        travelPath = new List<Vector3>();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Target and Agent positions
-        // sensor.AddObservation(Target.localPosition);
-        // sensor.AddObservation(transform.localPosition);
-
-        // Agent velocity
-        sensor.AddObservation(body.velocity.x);
-        sensor.AddObservation(body.velocity.z);
+        //Vision
+        foreach(var line in visionValues){
+            sensor.AddObservation(line);
+        }
 
         //Agent
         sensor.AddObservation(body.angularVelocity.y);
@@ -98,45 +102,22 @@ public class WandererAgent : Agent
 
     private void Update() {
         visionRaycast();
+
+        pathCounter -= Time.deltaTime;
+        if(pathCounter<=0){
+            pathCounter = pathRate;
+            travelPath.Add(transform.position);
+            
+            if(travelPath.Count > maxPath){ //Limpiar exceso del path
+                travelPath.RemoveAt(0);
+            }
+            calculateReward();
+        }
     }
 
     private void FixedUpdate() {
-
-        // // body.AddRelativeForce(accel * new Vector3(0, forceMultiplier, 0));
-        // body.AddTorque(0,rotate * rotateMultiplier,0);
-
-        // //Forward velocity component
-        // var projected = Vector3.Project(body.velocity, transform.up);
-        // var sign = Mathf.Sign(Vector3.Dot(projected, transform.up));
-
-        // //Artificial Lateral Drag
-        // var rejected = body.velocity - projected;
-        // body.velocity -= rejected * lateralDrag;
-        
-        // //Clamp speed
-        // var newSpd = projected.magnitude * sign + accel * forceMultiplier;
-        // newSpd = Mathf.Clamp(newSpd, minSpeed, maxSpeed);
-        // var changeSpd =  newSpd - projected.magnitude * sign;
-        // changeSpd = Mathf.Clamp(changeSpd,  -forceMultiplier, forceMultiplier);
-        // body.velocity += changeSpd * transform.up;
-
-        // //Set rotation drag
-        // body.angularDrag = newSpd * dragFactor;
-
-        
-
-        // //Track rotation
-        // rotateCount += Mathf.Abs(body.angularVelocity.y * Time.fixedDeltaTime);
-
-        // //Track distance
-        // closest = Mathf.Min(closest, Vector3.Distance(transform.position,Target.position));
-
-        // //Fail agent for spinning constantly
-        // if(rotateCount>30){ 
-        //     AddReward(-1f);
-        //     rewardDistance();
-        //     EndEpisode();
-        // }
+        body.angularVelocity = Vector3.up * rotate * rotateMultiplier;
+        body.velocity = transform.forward * walk * forceMultiplier;
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -144,37 +125,44 @@ public class WandererAgent : Agent
         // Actions, size = 2
         
         rotate = actionBuffers.ContinuousActions[0];
-        accel = actionBuffers.ContinuousActions[1];
+        walk = actionBuffers.ContinuousActions[1];
         
 
     
 
         // Fell off platform
-        if (transform.localPosition.y < 0)
+        if (transform.localPosition.y < 0 || crash > 1000)
         {
-            AddReward(-0.5f);
-            rewardDistance();
+            
             EndEpisode();
         }
 
         
     }
-    private void OnTriggerEnter(Collider other) {
-        if(other.transform == Target){
-            rotateCount = Mathf.Max(rotateCount/2f,1);
-            float reward = 0.5f;
-            reward /= rotateCount;
-            var logSteps = Mathf.Log(Mathf.Max(StepCount/4f,1))*0.1f+1;
-            reward /= logSteps;
-            SetReward(reward +0.5f);
-            EndEpisode();
-        }
+
+
+    private void calculateReward(){
+
     }
 
-    private void rewardDistance(){
-        var distReward = Mathf.Log(Mathf.Max(closest,1))+1; //Reducir la recompensa logaritmicamente con la distancia
-        AddReward(0.5f/distReward);
+    private void OnCollisionStay(Collision other) {
+        ContactPoint[] contacts = new ContactPoint[other.contactCount];
+        other.GetContacts(contacts);
+        int n =1;
+        foreach(var contact in contacts){
+            if (Vector3.Angle(contact.normal,Vector3.up) <= 30) //Ignorar colisiones con el suelo
+                continue;
+            
+            if(contact.impulse.magnitude ==0) //Ignorar colisiones sin empuje
+                continue;
+            var angle = Vector3.Angle(contact.normal, -transform.forward);
+            Debug.Log($"Contac {n}: {angle} {contact.impulse.magnitude}");
+            crash += contact.impulse.magnitude;
+            n++;
+        }
+        
     }
+    
 
     private void visionRaycast(){
         var lines = new float[]{-visionSpread*2, -visionSpread, 0, visionSpread, visionSpread*2};

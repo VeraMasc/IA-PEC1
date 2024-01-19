@@ -113,7 +113,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 48
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &7944979793337482096
 MonoBehaviour:
@@ -140,15 +140,11 @@ MonoBehaviour:
   - 0
   - 0
   visionMask: -1
-  Target: {fileID: 0}
   forceMultiplier: 5
   rotateMultiplier: 3
-  dragFactor: 0.6
-  lateralDrag: 0.2
-  rotateCount: 0
-  spawnRange: 2.5
   minSpeed: 1
   maxSpeed: 5
+  crash: 0
 --- !u!114 &7958665674353348362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 11
+    VectorObservationSize: 8
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
