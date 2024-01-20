@@ -24,6 +24,9 @@ public class WandererAgent : Agent
     public float[] visionValues; 
 
     public List<int> visionObstacles = new List<int>();
+    private int visionArea = Physics.AllLayers;
+
+    public List<string> visionLayers = new List<string>();
     private int visionMask = Physics.AllLayers; 
 
     public float forceMultiplier = 10;
@@ -210,9 +213,16 @@ public class WandererAgent : Agent
         for(var i=0; i<lines.Length; i++){
             var pos = transform.position + Vector3.down*0.5f;
             var vector = Quaternion.AngleAxis(lines[i],Vector3.up) * transform.forward;
-            //Physics.Raycast(transform.position, vector, out RaycastHit hitInfo, visionRange, visionMask);
-            NavMesh.Raycast(pos, pos+vector*visionRange,out var hitInfo, visionMask);
-            visionValues[i] = hitInfo.distance ;
+            
+            //Raycasts (se necesitan ambos para detectar todo)
+            Physics.Raycast(transform.position, vector, out RaycastHit rayInfo, visionRange, visionMask);
+            NavMesh.Raycast(pos, pos+vector*visionRange,out var hitInfo, visionArea);
+            
+            var dist =  hitInfo.distance;
+            Debug.Log(rayInfo.collider);
+            if(rayInfo.collider && rayInfo.distance<dist)
+                dist = rayInfo.distance;
+            visionValues[i] = dist ;
         }
         
     }
@@ -240,10 +250,12 @@ public class WandererAgent : Agent
         if (visionValues.Length<5){
             visionValues = new float[5];
         }
-        visionMask = NavMesh.AllAreas;
+        visionArea = NavMesh.AllAreas;
         foreach(var obstacle in visionObstacles){
-            visionMask ^= 1 << obstacle;
+            visionArea ^= 1 << obstacle;
         }
+
+        visionMask = LayerMask.GetMask(visionLayers.ToArray());
     }
 }
  
