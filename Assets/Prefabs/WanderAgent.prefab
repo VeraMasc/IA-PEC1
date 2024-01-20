@@ -139,12 +139,18 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  visionMask: -1
+  visionObstacles: 0100000004000000
+  visionMask: -19
   forceMultiplier: 5
   rotateMultiplier: 3
   minSpeed: 1
   maxSpeed: 5
   crash: 0
+  travel: 0
+  pathRate: 5
+  travelDecayFactor: 0.9
+  maxPath: 5
+  travelPath: []
 --- !u!114 &7958665674353348362
 MonoBehaviour:
   m_ObjectHideFlags: 0

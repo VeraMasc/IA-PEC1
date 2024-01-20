@@ -6,6 +6,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using Mathf = UnityEngine.Mathf;
 using Random = UnityEngine.Random;
 
@@ -22,7 +23,8 @@ public class WandererAgent : Agent
 
     public float[] visionValues; 
 
-    public int visionMask = Physics.AllLayers; 
+    public List<int> visionObstacles = new List<int>();
+    private int visionMask = Physics.AllLayers; 
 
     public float forceMultiplier = 10;
 
@@ -206,9 +208,11 @@ public class WandererAgent : Agent
     private void visionRaycast(){
         var lines = new float[]{-visionSpread*2, -visionSpread, 0, visionSpread, visionSpread*2};
         for(var i=0; i<lines.Length; i++){
+            var pos = transform.position + Vector3.down*0.5f;
             var vector = Quaternion.AngleAxis(lines[i],Vector3.up) * transform.forward;
-            Physics.Raycast(transform.position, vector, out RaycastHit hitInfo, visionRange, visionMask);
-            visionValues[i] = hitInfo.collider? hitInfo.distance : visionRange;
+            //Physics.Raycast(transform.position, vector, out RaycastHit hitInfo, visionRange, visionMask);
+            NavMesh.Raycast(pos, pos+vector*visionRange,out var hitInfo, visionMask);
+            visionValues[i] = hitInfo.distance ;
         }
         
     }
@@ -235,6 +239,10 @@ public class WandererAgent : Agent
     private void OnValidate() {
         if (visionValues.Length<5){
             visionValues = new float[5];
+        }
+        visionMask = NavMesh.AllAreas;
+        foreach(var obstacle in visionObstacles){
+            visionMask ^= 1 << obstacle;
         }
     }
 }
