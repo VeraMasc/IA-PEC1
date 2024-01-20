@@ -80,6 +80,9 @@ public class WandererAgent : Agent
     public override void OnEpisodeBegin()
     {
         pathCounter = pathRate;
+
+        transform.position= NavmeshSpawner.singleton.getSpawnPos();
+        //Save start point
         travelPath = new List<Vector3>(){transform.position};
     }
 
