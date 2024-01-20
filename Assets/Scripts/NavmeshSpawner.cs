@@ -84,7 +84,7 @@ public class NavmeshSpawner : MonoBehaviour
 
         var res = NavMesh.SamplePosition(source, out var hit, 1f, areaMask);
 
-        Debug.Log($"Source:{source} {hit.position} > {res}");
+        // Debug.Log($"Source:{source} {hit.position} > {res}");
 
         if(hit.hit==false)
             return null;

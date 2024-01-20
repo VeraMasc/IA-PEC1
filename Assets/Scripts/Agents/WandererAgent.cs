@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BBUnity.Actions;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -103,8 +104,9 @@ public class WandererAgent : Agent
             sensor.AddObservation(line);
         }
 
-        //Agent
+        //Agent velocity
         sensor.AddObservation(body.angularVelocity.y);
+        sensor.AddObservation(new Vector2(body.velocity.x, body.velocity.z));
         //Agent direction
         sensor.AddObservation(new Vector2(transform.forward.x,transform.forward.z));
     }
@@ -161,6 +163,7 @@ public class WandererAgent : Agent
     private void calculateReward(){
         SetReward(calculateTravelReward());
         AddReward(calculateCrashPunishment());
+        Debug.Log($"TotalReward: {GetCumulativeReward()}");
     }
 
     /// <summary>
@@ -190,10 +193,6 @@ public class WandererAgent : Agent
             ret = (ret * (1-travelRecFactor) + prevReward*travelRecFactor)/2; //Ponderar
         }
 
-        
-        if(untilLast==1)
-            Debug.Log($"TotalReward: {ret}");
-
         return ret;
     }
 
@@ -206,7 +205,7 @@ public class WandererAgent : Agent
         var rate = Mathf.Log((crash+1) * maxCrash * powSteps,10)
             /Mathf.Log(maxCrash *powSteps,10)
             -1 ; //Tiende a 1 en maxsteps
-        Debug.Log(rate);
+        //Debug.Log(rate);
         return Mathf.Clamp(-0.5f * rate,-0.5f,0f);
     }
 
@@ -221,7 +220,7 @@ public class WandererAgent : Agent
             if(contact.impulse.magnitude ==0) //Ignorar colisiones sin empuje
                 continue;
             var angle = Vector3.Angle(contact.normal, -transform.forward);
-            Debug.Log($"Contac {n}: {angle} {contact.impulse.magnitude}");
+            //Debug.Log($"Contac {n}: {angle} {contact.impulse.magnitude}");
             crash += contact.impulse.magnitude;
             n++;
         }
@@ -266,8 +265,6 @@ public class WandererAgent : Agent
             Gizmos.color = visionValues[i] == visionRange? Color.green: Color.yellow;
             Gizmos.DrawLine(transform.position, transform.position + vector);
         }
-        
-        
          
     }
 
