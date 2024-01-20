@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,8 @@ public class WandererAgent : Agent
     /// Mide cuanto está chocando con el entorno
     /// </summary>
     public float crash;
+
+    public float maxCrash = 1000;
 
     /// <summary>
     /// Mide lo bien que ha viajado el agente
@@ -144,7 +147,7 @@ public class WandererAgent : Agent
     
 
         // Fell off platform
-        if (transform.localPosition.y < 0 || crash > 1000)
+        if (transform.localPosition.y < 0 || crash > maxCrash)
         {
             calculateReward();
             EndEpisode();
@@ -158,6 +161,11 @@ public class WandererAgent : Agent
         AddReward(calculateCrashPunishment());
     }
 
+    /// <summary>
+    /// Calcula la recompensa dada por lo bien que está deambulando
+    /// </summary>
+    /// <param name="untilLast">Indice máximo a tener en cuenta (ignorar, usado para recursividad)</param>
+    /// <returns>Recompensa</returns>
     private float calculateTravelReward(int untilLast=1){
         float tReward = 0f;
         var startIndex = travelPath.Count-untilLast-1;
@@ -172,7 +180,7 @@ public class WandererAgent : Agent
 
         tReward += Vector3.Distance(center,last);
         
-        Debug.Log($"Index {untilLast}: {tReward}");
+        // Debug.Log($"Index {untilLast}: {tReward}");
 
         if(untilLast< travelPath.Count){
             tReward += calculateTravelReward(untilLast+1);
@@ -182,11 +190,20 @@ public class WandererAgent : Agent
         if(untilLast==1)
             Debug.Log($"TotalReward: {tReward}");
 
-        return tReward;
+        return 0f;
     }
 
+    /// <summary>
+    /// Calcula el castigo derivado de chocar con el entorno
+    /// </summary>
+    /// <returns>Entre -0.5 y 0 según cuanto se choque y cuan a menudo</returns>
     private float calculateCrashPunishment(){
-        return 0f;
+        var powSteps = Mathf.Pow(StepCount,0.9f);
+        var rate = Mathf.Log((crash+1) * maxCrash * powSteps,10)
+            /Mathf.Log(maxCrash *powSteps,10)
+            -1 ; //Tiende a 1 en maxsteps
+        Debug.Log(rate);
+        return Mathf.Clamp(-0.5f * rate,-0.5f,0f);
     }
 
     private void OnCollisionStay(Collision other) {
@@ -207,7 +224,9 @@ public class WandererAgent : Agent
         
     }
     
-
+    /// <summary>
+    /// Realiza los raycasts que se usan como inputs de la visión
+    /// </summary>
     private void visionRaycast(){
         var lines = new float[]{-visionSpread*2, -visionSpread, 0, visionSpread, visionSpread*2};
         for(var i=0; i<lines.Length; i++){
@@ -219,7 +238,6 @@ public class WandererAgent : Agent
             NavMesh.Raycast(pos, pos+vector*visionRange,out var hitInfo, visionArea);
             
             var dist =  hitInfo.distance;
-            Debug.Log(rayInfo.collider);
             if(rayInfo.collider && rayInfo.distance<dist)
                 dist = rayInfo.distance;
             visionValues[i] = dist ;
@@ -250,6 +268,8 @@ public class WandererAgent : Agent
         if (visionValues.Length<5){
             visionValues = new float[5];
         }
+
+        //Calcular máscaras
         visionArea = NavMesh.AllAreas;
         foreach(var obstacle in visionObstacles){
             visionArea ^= 1 << obstacle;
