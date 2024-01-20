@@ -113,13 +113,16 @@ public class WandererAgent : Agent
             if(travelPath.Count > maxPath){ //Limpiar exceso del path
                 travelPath.RemoveAt(0);
             }
-            calculateTravelReward();
+            calculateReward();
         }
     }
 
     private void FixedUpdate() {
         body.angularVelocity = Vector3.up * rotate * rotateMultiplier;
-        body.velocity = transform.forward * walk * forceMultiplier;
+
+        var projVel = Vector3.Project(body.velocity,transform.forward);
+        body.velocity -= projVel;
+        body.velocity += transform.forward * walk * forceMultiplier;
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -135,13 +138,17 @@ public class WandererAgent : Agent
         // Fell off platform
         if (transform.localPosition.y < 0 || crash > 1000)
         {
-            
+            calculateReward();
             EndEpisode();
         }
 
         
     }
 
+    private void calculateReward(){
+        SetReward(calculateTravelReward());
+        AddReward(calculateCrashPunishment());
+    }
 
     private float calculateTravelReward(int untilLast=1){
         float tReward = 0f;
@@ -168,6 +175,10 @@ public class WandererAgent : Agent
             Debug.Log($"TotalReward: {tReward}");
 
         return tReward;
+    }
+
+    private float calculateCrashPunishment(){
+        return 0f;
     }
 
     private void OnCollisionStay(Collision other) {
