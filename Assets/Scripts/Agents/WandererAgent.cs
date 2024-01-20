@@ -71,7 +71,9 @@ public class WandererAgent : Agent
     /// </summary>
     private float pathCounter;
 
-    public float travelDecayFactor = 0.9f;
+    public float travelDecayFactor = 0.6f;
+
+    public float travelRecFactor = 0.6f;
 
     /// <summary>
     /// Número máximo de elementos en el path
@@ -181,16 +183,18 @@ public class WandererAgent : Agent
         tReward += Vector3.Distance(center,last);
         
         // Debug.Log($"Index {untilLast}: {tReward}");
+        var ret = 1- 1/(travelDecayFactor * tReward +1);
 
         if(untilLast< travelPath.Count){
-            tReward += calculateTravelReward(untilLast+1);
+            var prevReward = calculateTravelReward(untilLast+1);
+            ret = (ret * (1-travelRecFactor) + prevReward*travelRecFactor)/2; //Ponderar
         }
 
         
         if(untilLast==1)
-            Debug.Log($"TotalReward: {tReward}");
+            Debug.Log($"TotalReward: {ret}");
 
-        return 0f;
+        return ret;
     }
 
     /// <summary>
@@ -238,8 +242,11 @@ public class WandererAgent : Agent
             NavMesh.Raycast(pos, pos+vector*visionRange,out var hitInfo, visionArea);
             
             var dist =  hitInfo.distance;
-            if(rayInfo.collider && rayInfo.distance<dist)
+            if(rayInfo.collider && rayInfo.distance < dist) //Keep minimum
                 dist = rayInfo.distance;
+
+            //Keep results within bounds
+            dist = Mathf.Min(dist, visionRange);
             visionValues[i] = dist ;
         }
         
