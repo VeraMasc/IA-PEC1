@@ -18,15 +18,24 @@
                 "auxillary_file_paths": [
                     "results\\3layerWander\\WandererAgent\\WandererAgent-262742.pt"
                 ]
+            },
+            {
+                "steps": 381785,
+                "file_path": "results\\3layerWander\\WandererAgent\\WandererAgent-381785.onnx",
+                "reward": 0.8996849656105042,
+                "creation_time": 1705873136.6562188,
+                "auxillary_file_paths": [
+                    "results\\3layerWander\\WandererAgent\\WandererAgent-381785.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 262742,
+            "steps": 381785,
             "file_path": "results\\3layerWander\\WandererAgent.onnx",
-            "reward": null,
-            "creation_time": 1705871375.741573,
+            "reward": 0.8996849656105042,
+            "creation_time": 1705873136.6562188,
             "auxillary_file_paths": [
-                "results\\3layerWander\\WandererAgent\\WandererAgent-262742.pt"
+                "results\\3layerWander\\WandererAgent\\WandererAgent-381785.pt"
             ]
         }
     },

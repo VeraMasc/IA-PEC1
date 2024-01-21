@@ -11,7 +11,8 @@
         2. [Recompensas](#recompensas)
             1. [Valoración de los choques](#valoración-de-los-choques)
             2. [Valoración del camino realizado](#valoración-del-camino-realizado)
-        3. [Problemas](#problemas)
+        3. [Configuración](#configuración)
+        4. [Problemas](#problemas)
 
 ## Apartados
 
@@ -105,7 +106,14 @@ Este cálculo se realiza en **calculateTravelReward** y de nuevo la fórmula ha 
 
 Hay una forma más sencilla de hacer esta fórmula? Seguro, pero tras muchos intentos me quedó bien así y no he querido tocarla por miedo a fastidiarla.
 
+#### Configuración
+
+Para entrenar esta IA si que he tenido que realizar más cambios a la configuración por defecto. He aumentado el tamaño de buffer a 100, reducido el learning rate a 10^-3^ y duplicado el time horizon hasta 128, todo para intentar que la IA fuera más consistente en su aprendizaje.
+
 #### Problemas
 
 En primer lugar, los resultados de la función de recompensa. No entiendo cómo, pero se salen de los límites que deberían tener. Hasta he puesto Clamps en los resultados de mis funciones para asegurarme de que no era cosa de que daban resultados fuera de lo normal y siguen dando resultados aberrantes. Todo parece indicar que es alguna especie de bug al asignar los valores de la recompensa porque no hay manera de que mis funciones den menos de -1 o más de 1 (que es lo que recomienda usar la web de mlagents para evitar inestabilidad).
+
 ![Valores Aberrantes](image-7.png)
+
+Luego, otro problema que he tenido ha sido la velocidad de mi ordenador. No es malo en absoluto, pero es un portátil gaming de hace unos 8 años y se le nota en la velocidad de ejecución y en que se recalienta como una mala cosa. Eso como tal no es un problema, es bastante rápido, pero como empecé la práctica tarde porque pillé una gripe estomacal horrible nada más volver de vacaciones y los problemas que he tenido para encontrar una configuración que funcionara para la segunda IA, pues al final solo he podido entrenal la IA en la escena de prueba que hice como concepto porque en la otra tarda mucho al tener tantos agentes en pantalla.
