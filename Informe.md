@@ -8,6 +8,8 @@
             2. [Cohete v2](#cohete-v2)
     2. [Agente Plaza](#agente-plaza)
         1. [Sensores del agente](#sensores-del-agente)
+        2. [Recompensas](#recompensas)
+            1. [Valoración de los choques](#valoración-de-los-choques)
 
 ## Apartados
 
@@ -79,4 +81,16 @@ En primer lugar, le he dado al agente 5 "sensores de proximidad" distribuidos en
 
 En segundo lugar, le he dado sensores que le permitan conocer su propio estado y los he optimizado para que utilizen el mínimo de inputs. Como su rotación está fijada en los ejes x y z, solo necesita saber su rotación sobre el eje Y, y como solo prácticamente no se moverá en el eje vertical, podemos solo tener en cuenta su velocidad en los ejes X y Z.
 
-Por último, otra opción que he decidido estudiar es el probar si "relativizando" los inputs de velocidad, es decir, que se describan en relación a la dirección hacia la que mira, podría dar mejores resultados y reducir el número de inputs. 
+Por último, otra opción que he decidido estudiar es el probar si "relativizando" los inputs de velocidad, es decir, que se describan en relación a la dirección hacia la que mira, podría dar mejores resultados y reducir el número de inputs.
+
+**ELABORAR**
+
+#### Recompensas
+
+Para las recompensas usamos dos métricas: las colisiones producidas y el cámino por el que ha viajado el agente. Ya que lo que queremos es que el agente se vaya moviendo libremente por el escenario chocando lo mínimo posible y sin deambular siempre por el mismo sitio. Al no tener este objetivo un final tan claro como el anterior (no tenemos un target con el que dar por finalizado el apisodio y calcular la recompensa) lo que hacemos es recalcular estas métricas y su recompensa asociada cada cierto tiempo y cada vez que se produce un choque.
+
+##### Valoración de los choques
+
+La valoración inicial de los choques es muy simple: se mira si corresponden a choques con el suelo y si no lo son se añade la magnitud del impacto a la variable **crash**. Si esta supera cierto límite, se considera que se ha atascado chocando y se da por fallido el episodio igual que si se hubiera caido. En ambos casos, este valor se usa para calcular un -0.5 que añadir a la "nota" del episodio.
+
+Este cálculo se realiza en **calculateCrashPunishment** y consiste en una función logarítmica compleja que recibe como inputs el valor de crash y el número de steps realizados en el episodio.

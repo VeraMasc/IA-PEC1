@@ -101,15 +101,15 @@ public class WandererAgent : Agent
             body.angularVelocity = Vector3.zero;
             body.Move(NavmeshSpawner.singleton.getSpawnPos(), 
                 Quaternion.AngleAxis(Random.Range(0,360), Vector3.up));
+
+            pathCounter = pathRate;
+            //Save start point
+            travelPath = new List<Vector3>(){transform.position};
         }
         
 
         //Reset metrics
-        pathCounter = pathRate;
         crash =0;
-
-        //Save start point
-        travelPath = new List<Vector3>(){transform.position};
         
     }
 

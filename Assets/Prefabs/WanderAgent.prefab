@@ -130,7 +130,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 2000
   visionRange: 5
   visionSpread: 20
   visionValues:
@@ -149,7 +149,7 @@ MonoBehaviour:
   maxSpeed: 5
   relativeInputs: 0
   crash: 0
-  maxCrash: 800
+  maxCrash: 200
   travel: 0
   pathRate: 5
   travelDecayFactor: 0.4
