@@ -1,0 +1,65 @@
+{
+    "WandererAgent": {
+        "checkpoints": [
+            {
+                "steps": 514151,
+                "file_path": "results\\3layerWanderer\\WandererAgent\\WandererAgent-514151.onnx",
+                "reward": null,
+                "creation_time": 1705849206.408371,
+                "auxillary_file_paths": [
+                    "results\\3layerWanderer\\WandererAgent\\WandererAgent-514151.pt"
+                ]
+            },
+            {
+                "steps": 590635,
+                "file_path": "results\\3layerWanderer\\WandererAgent\\WandererAgent-590635.onnx",
+                "reward": null,
+                "creation_time": 1705850743.7546911,
+                "auxillary_file_paths": [
+                    "results\\3layerWanderer\\WandererAgent\\WandererAgent-590635.pt"
+                ]
+            },
+            {
+                "steps": 651066,
+                "file_path": "results\\3layerWanderer\\WandererAgent\\WandererAgent-651066.onnx",
+                "reward": null,
+                "creation_time": 1705852025.3899205,
+                "auxillary_file_paths": [
+                    "results\\3layerWanderer\\WandererAgent\\WandererAgent-651066.pt"
+                ]
+            },
+            {
+                "steps": 653045,
+                "file_path": "results\\3layerWanderer\\WandererAgent\\WandererAgent-653045.onnx",
+                "reward": null,
+                "creation_time": 1705852356.122887,
+                "auxillary_file_paths": [
+                    "results\\3layerWanderer\\WandererAgent\\WandererAgent-653045.pt"
+                ]
+            },
+            {
+                "steps": 654428,
+                "file_path": "results\\3layerWanderer\\WandererAgent\\WandererAgent-654428.onnx",
+                "reward": null,
+                "creation_time": 1705852717.182442,
+                "auxillary_file_paths": [
+                    "results\\3layerWanderer\\WandererAgent\\WandererAgent-654428.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 654428,
+            "file_path": "results\\3layerWanderer\\WandererAgent.onnx",
+            "reward": null,
+            "creation_time": 1705852717.182442,
+            "auxillary_file_paths": [
+                "results\\3layerWanderer\\WandererAgent\\WandererAgent-654428.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.1.2+cpu"
+    }
+}

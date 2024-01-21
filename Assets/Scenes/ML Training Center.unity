@@ -689,6 +689,10 @@ PrefabInstance:
       value: WanderAgent
       objectReference: {fileID: 0}
     - target: {fileID: 7944979793337482096, guid: 2d58111af6d844a49a1738d7e424c8ff, type: 3}
+      propertyPath: maxCrash
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7944979793337482096, guid: 2d58111af6d844a49a1738d7e424c8ff, type: 3}
       propertyPath: visionLayers.Array.data[2]
       value: 3
       objectReference: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BBUnity.Actions;
+using Unity.Mathematics;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -49,6 +50,8 @@ public class WandererAgent : Agent
     private float rotate;
     private float walk;
 
+    public bool relativeInputs;
+
     [Header("Reward Metrics")]
     /// <summary>
     /// Mide cuanto está chocando con el entorno
@@ -90,15 +93,20 @@ public class WandererAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        
+
+        //Reset position and velocity if needed
+        if(transform.localPosition.y < 0 || crash > maxCrash){
+            body.velocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+            body.Move(NavmeshSpawner.singleton.getSpawnPos(), 
+                Quaternion.AngleAxis(Random.Range(0,360), Vector3.up));
+        }
+        
+
         //Reset metrics
         pathCounter = pathRate;
         crash =0;
-
-        //Reset position and velocity
-        body.velocity = Vector3.zero;
-        body.angularVelocity = Vector3.zero;
-        body.Move(NavmeshSpawner.singleton.getSpawnPos(), 
-            Quaternion.AngleAxis(Random.Range(0,360), Vector3.up));
 
         //Save start point
         travelPath = new List<Vector3>(){transform.position};
@@ -114,7 +122,13 @@ public class WandererAgent : Agent
 
         //Agent velocity
         sensor.AddObservation(body.angularVelocity.y);
-        sensor.AddObservation(new Vector2(body.velocity.x, body.velocity.z));
+
+        var velocity2D = new Vector2(body.velocity.x, body.velocity.z);
+        if(relativeInputs){
+            var rotation = Quaternion.FromToRotation(Vector3.forward, transform.forward);
+            velocity2D = rotation* velocity2D;
+        }
+        sensor.AddObservation(velocity2D);
         //Agent direction
         sensor.AddObservation(new Vector2(transform.forward.x,transform.forward.z));
     }
@@ -202,8 +216,10 @@ public class WandererAgent : Agent
             var prevReward = calculateTravelReward(untilLast+1);
             ret = (ret * (1-travelRecFactor) + prevReward*travelRecFactor)/2; //Ponderar
         }
-
-        return ret;
+        if(ret >1 || ret<0)
+            Debug.Log($"Travel Reward out of bounds:{ret} Raw:{tReward} Step:{untilLast}");
+        
+        return Math.Clamp(ret,0f,1f);
     }
 
     /// <summary>

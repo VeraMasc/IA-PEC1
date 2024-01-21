@@ -7,6 +7,7 @@
             1. [Cohete](#cohete)
             2. [Cohete v2](#cohete-v2)
     2. [Agente Plaza](#agente-plaza)
+        1. [Sensores del agente](#sensores-del-agente)
 
 ## Apartados
 
@@ -70,3 +71,12 @@ La distribución de éxitos es peor que la del [cohete](#cohete) original, pero 
 
 ### Agente Plaza
 
+Mi idea para este agente ha sido plantearlo un poco como un robot que se ha de desplazar por un entorno con obstáculos. Pero cómo la opción más óptima es quedarse quieto, y no quería repetir lo que hice en el primer apartado de intentar llegar a un cubo, he dedidido plantear el objetivo de este agente como "moverse por el mundo tanto como sea posible sin chocarse".
+
+#### Sensores del agente
+
+En primer lugar, le he dado al agente 5 "sensores de proximidad" distribuidos en forma de abanico en la cara fronal del agente para permitirle detectar los obstáculos del entorno. Cada uno de estos sensores consiste en dos raycasts: un **Physics.Raycast** para detectar otros agentes y un **NavMesh.Raycast** para detectar partes de la navmesh que no tiene permitido atravesar. El resultado final de la detección es la distancia de la colisión más cercana producida por estos dos raycasts que se almacena en **visionValues**.
+
+En segundo lugar, le he dado sensores que le permitan conocer su propio estado y los he optimizado para que utilizen el mínimo de inputs. Como su rotación está fijada en los ejes x y z, solo necesita saber su rotación sobre el eje Y, y como solo prácticamente no se moverá en el eje vertical, podemos solo tener en cuenta su velocidad en los ejes X y Z.
+
+Por último, otra opción que he decidido estudiar es el probar si "relativizando" los inputs de velocidad, es decir, que se describan en relación a la dirección hacia la que mira, podría dar mejores resultados y reducir el número de inputs. 
