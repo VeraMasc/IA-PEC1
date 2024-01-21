@@ -11,6 +11,7 @@
         2. [Recompensas](#recompensas)
             1. [Valoración de los choques](#valoración-de-los-choques)
             2. [Valoración del camino realizado](#valoración-del-camino-realizado)
+        3. [Problemas](#problemas)
 
 ## Apartados
 
@@ -103,3 +104,8 @@ Para valorar que el agente está siguiendo un camino no repetitivo he decidido r
 Este cálculo se realiza en **calculateTravelReward** y de nuevo la fórmula ha acabado siendo enormemente enrevesada en un intento de que sea dificil que la IA "haga trampas" y que se mantenga dentro de los rangos deseados. Es una función recursiva que calcula el "centro de masa" de distintas subsecciones del path. Primero solo coge la penultima posición y con cada recursión añade otro nodo más antiguo al cálculo. Posteriormente se calcula la distancia de la posición más reciente con el centro que hemos calculado y usamos esa distancia más una función racional para ponerle una nota de 0 a 1 a la distancia obtenida. Esa nota luego es combinada con la de las posteriores recursiones, haciendo siempre que se valore más las primeras pero que todas tengan un peso.
 
 Hay una forma más sencilla de hacer esta fórmula? Seguro, pero tras muchos intentos me quedó bien así y no he querido tocarla por miedo a fastidiarla.
+
+#### Problemas
+
+En primer lugar, los resultados de la función de recompensa. No entiendo cómo, pero se salen de los límites que deberían tener. Hasta he puesto Clamps en los resultados de mis funciones para asegurarme de que no era cosa de que daban resultados fuera de lo normal y siguen dando resultados aberrantes. Todo parece indicar que es alguna especie de bug al asignar los valores de la recompensa porque no hay manera de que mis funciones den menos de -1 o más de 1 (que es lo que recomienda usar la web de mlagents para evitar inestabilidad).
+![Valores Aberrantes](image-7.png)
