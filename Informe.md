@@ -10,6 +10,7 @@
         1. [Sensores del agente](#sensores-del-agente)
         2. [Recompensas](#recompensas)
             1. [Valoración de los choques](#valoración-de-los-choques)
+            2. [Valoración del camino realizado](#valoración-del-camino-realizado)
 
 ## Apartados
 
@@ -93,4 +94,12 @@ Para las recompensas usamos dos métricas: las colisiones producidas y el cámin
 
 La valoración inicial de los choques es muy simple: se mira si corresponden a choques con el suelo y si no lo son se añade la magnitud del impacto a la variable **crash**. Si esta supera cierto límite, se considera que se ha atascado chocando y se da por fallido el episodio igual que si se hubiera caido. En ambos casos, este valor se usa para calcular un -0.5 que añadir a la "nota" del episodio.
 
-Este cálculo se realiza en **calculateCrashPunishment** y consiste en una función logarítmica compleja que recibe como inputs el valor de crash y el número de steps realizados en el episodio.
+Este cálculo se realiza en **calculateCrashPunishment** y consiste en una función logarítmica compleja que recibe como inputs el valor de crash, el máximo valor de crash permitido y el número de steps realizados en el episodio. El resultado es logarítmico respecto al número de colisiones respecto al límite pero su velocidad de crecimiento se reduce según el número de pasos que haya dado. La idea es penalizar el darse golpes frecuentemente pero "tolerar" ligeramente que lo haga de vez en cuando para así permitir que la IA aprenda.
+
+##### Valoración del camino realizado
+
+Para valorar que el agente está siguiendo un camino no repetitivo he decidido registrar el camino del agente cada cierto tiempo y comprobar que no está pasando por los mismos puntos. Sin embargo, he decidido penalizar más los puntos más recientes ya que el tamaño limitado del escenario y los obstáculos pueden obligar a pasar de nuevo cerca de ciertos sitios.
+
+Este cálculo se realiza en **calculateTravelReward** y de nuevo la fórmula ha acabado siendo enormemente enrevesada en un intento de que sea dificil que la IA "haga trampas" y que se mantenga dentro de los rangos deseados. Es una función recursiva que calcula el "centro de masa" de distintas subsecciones del path. Primero solo coge la penultima posición y con cada recursión añade otro nodo más antiguo al cálculo. Posteriormente se calcula la distancia de la posición más reciente con el centro que hemos calculado y usamos esa distancia más una función racional para ponerle una nota de 0 a 1 a la distancia obtenida. Esa nota luego es combinada con la de las posteriores recursiones, haciendo siempre que se valore más las primeras pero que todas tengan un peso.
+
+Hay una forma más sencilla de hacer esta fórmula? Seguro, pero tras muchos intentos me quedó bien así y no he querido tocarla por miedo a fastidiarla.

@@ -175,8 +175,7 @@ public class WandererAgent : Agent
         // Fell off platform
         if (transform.localPosition.y < 0 || crash > maxCrash)
         {
-            calculateReward();
-            AddReward(-0.5f);
+            calculateReward(-0.5f);
             EndEpisode();
             // Debug.Log($"TotalReward: {GetCumulativeReward()}");
         }
@@ -184,9 +183,10 @@ public class WandererAgent : Agent
         
     }
 
-    private void calculateReward(){
-        SetReward(calculateTravelReward());
-        AddReward(calculateCrashPunishment());
+    private void calculateReward(float extra=0f){
+        var reward = calculateTravelReward()+calculateCrashPunishment();
+        SetReward(reward+extra);
+        
         
     }
 
@@ -197,7 +197,7 @@ public class WandererAgent : Agent
     /// <returns>Recompensa</returns>
     private float calculateTravelReward(int untilLast=1){
         float tReward = 0f;
-        var startIndex = travelPath.Count-untilLast-1;
+        var startIndex = travelPath.Count-untilLast-1; //Indice por el que empieza a agregar
         if(startIndex <0)
             return tReward;
         
