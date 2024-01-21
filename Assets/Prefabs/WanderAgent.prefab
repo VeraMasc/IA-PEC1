@@ -149,7 +149,7 @@ MonoBehaviour:
   maxSpeed: 5
   relativeInputs: 0
   crash: 0
-  maxCrash: 200
+  maxCrash: 100
   travel: 0
   pathRate: 5
   travelDecayFactor: 0.4
