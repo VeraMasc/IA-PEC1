@@ -140,7 +140,9 @@ MonoBehaviour:
   - 0
   - 0
   visionObstacles: 0100000004000000
-  visionLayers: []
+  visionLayers:
+  - Interactive
+  - Default
   forceMultiplier: 5
   rotateMultiplier: 3
   minSpeed: 1
@@ -149,8 +151,8 @@ MonoBehaviour:
   maxCrash: 1000
   travel: 0
   pathRate: 5
-  travelDecayFactor: 0.6
-  travelRecFactor: 0.4
+  travelDecayFactor: 0.4
+  travelRecFactor: 0.6
   maxPath: 5
   travelPath: []
 --- !u!114 &7958665674353348362
@@ -181,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 8
+    VectorObservationSize: 10
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -193,7 +195,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: WanderAgent
+  m_BehaviorName: WandererAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1

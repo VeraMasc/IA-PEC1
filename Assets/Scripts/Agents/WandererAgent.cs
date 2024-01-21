@@ -90,11 +90,19 @@ public class WandererAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        //Reset metrics
         pathCounter = pathRate;
+        crash =0;
 
-        transform.position= NavmeshSpawner.singleton.getSpawnPos();
+        //Reset position and velocity
+        body.velocity = Vector3.zero;
+        body.angularVelocity = Vector3.zero;
+        body.Move(NavmeshSpawner.singleton.getSpawnPos(), 
+            Quaternion.AngleAxis(Random.Range(0,360), Vector3.up));
+
         //Save start point
         travelPath = new List<Vector3>(){transform.position};
+        
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -192,7 +200,7 @@ public class WandererAgent : Agent
             var prevReward = calculateTravelReward(untilLast+1);
             ret = (ret * (1-travelRecFactor) + prevReward*travelRecFactor)/2; //Ponderar
         }
-
+        
         return ret;
     }
 
