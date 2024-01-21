@@ -148,7 +148,7 @@ MonoBehaviour:
   minSpeed: 1
   maxSpeed: 5
   crash: 0
-  maxCrash: 1000
+  maxCrash: 800
   travel: 0
   pathRate: 5
   travelDecayFactor: 0.4

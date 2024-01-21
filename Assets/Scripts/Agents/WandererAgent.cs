@@ -162,7 +162,9 @@ public class WandererAgent : Agent
         if (transform.localPosition.y < 0 || crash > maxCrash)
         {
             calculateReward();
+            AddReward(-0.5f);
             EndEpisode();
+            // Debug.Log($"TotalReward: {GetCumulativeReward()}");
         }
 
         
@@ -171,7 +173,7 @@ public class WandererAgent : Agent
     private void calculateReward(){
         SetReward(calculateTravelReward());
         AddReward(calculateCrashPunishment());
-        Debug.Log($"TotalReward: {GetCumulativeReward()}");
+        
     }
 
     /// <summary>
@@ -200,7 +202,7 @@ public class WandererAgent : Agent
             var prevReward = calculateTravelReward(untilLast+1);
             ret = (ret * (1-travelRecFactor) + prevReward*travelRecFactor)/2; //Ponderar
         }
-        
+
         return ret;
     }
 

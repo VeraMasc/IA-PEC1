@@ -2,22 +2,22 @@
     "WandererAgent": {
         "checkpoints": [
             {
-                "steps": 19110,
-                "file_path": "results\\firstWanderRun\\WandererAgent\\WandererAgent-19110.onnx",
-                "reward": null,
-                "creation_time": 1705832765.8345563,
+                "steps": 116159,
+                "file_path": "results\\firstWanderRun\\WandererAgent\\WandererAgent-116159.onnx",
+                "reward": -1.2869266867637634,
+                "creation_time": 1705839908.8743825,
                 "auxillary_file_paths": [
-                    "results\\firstWanderRun\\WandererAgent\\WandererAgent-19110.pt"
+                    "results\\firstWanderRun\\WandererAgent\\WandererAgent-116159.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 19110,
+            "steps": 116159,
             "file_path": "results\\firstWanderRun\\WandererAgent.onnx",
-            "reward": null,
-            "creation_time": 1705832765.8345563,
+            "reward": -1.2869266867637634,
+            "creation_time": 1705839908.8743825,
             "auxillary_file_paths": [
-                "results\\firstWanderRun\\WandererAgent\\WandererAgent-19110.pt"
+                "results\\firstWanderRun\\WandererAgent\\WandererAgent-116159.pt"
             ]
         }
     },
