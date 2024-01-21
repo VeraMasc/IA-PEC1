@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Rocket.unity
+    guid: b72304f9f8998ec4a81f73db524a2b94
+  - enabled: 1
+    path: Assets/Scenes/ML Training Center.unity
+    guid: 53c8cecd8f9aafe41a38808c5a676f38
+  - enabled: 1
     path: Assets/Scenes/Plaza.unity
     guid: 84e63acfeeb42934699b0ec2cfa42095
   - enabled: 1

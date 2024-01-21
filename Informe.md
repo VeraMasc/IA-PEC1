@@ -2,8 +2,7 @@
 
 1. [Apartados](#apartados)
     1. [Roller Ball](#roller-ball)
-        1. [Tutorial](#tutorial)
-        2. [Mejoras](#mejoras)
+        1. [Mejoras](#mejoras)
             1. [Cohete](#cohete)
             2. [Cohete v2](#cohete-v2)
     2. [Agente Plaza](#agente-plaza)
@@ -13,12 +12,17 @@
             2. [Valoración del camino realizado](#valoración-del-camino-realizado)
         3. [Configuración](#configuración)
         4. [Problemas](#problemas)
+        5. [Resultados](#resultados)
+
+[Repositorio](https://github.com/VeraMasc/IA-PEC1)
+[Video Part 1](https://youtu.be/Xy6VqzYDFkY)
+[Video Parte 2](https://youtu.be/ZFhNyrZ044w)
 
 ## Apartados
 
 ### Roller Ball
 
-#### Tutorial
+Hice el tutorial de Roller ball y me salió bastante bien. Se puede encontrar el modelo en **results/first3DBallRun**. No tengo mucho que contar sobre el tutorial porque era simplemente seguir instucciones, así que me voy a centrar en las mejoras que he hecho y como estas han cambiado fundamentalmente el ejercicio.
 
 #### Mejoras
 
@@ -86,8 +90,6 @@ En segundo lugar, le he dado sensores que le permitan conocer su propio estado y
 
 Por último, otra opción que he decidido estudiar es el probar si "relativizando" los inputs de velocidad, es decir, que se describan en relación a la dirección hacia la que mira, podría dar mejores resultados y reducir el número de inputs.
 
-**ELABORAR**
-
 #### Recompensas
 
 Para las recompensas usamos dos métricas: las colisiones producidas y el cámino por el que ha viajado el agente. Ya que lo que queremos es que el agente se vaya moviendo libremente por el escenario chocando lo mínimo posible y sin deambular siempre por el mismo sitio. Al no tener este objetivo un final tan claro como el anterior (no tenemos un target con el que dar por finalizado el apisodio y calcular la recompensa) lo que hacemos es recalcular estas métricas y su recompensa asociada cada cierto tiempo y cada vez que se produce un choque.
@@ -117,3 +119,14 @@ En primer lugar, los resultados de la función de recompensa. No entiendo cómo,
 ![Valores Aberrantes](image-7.png)
 
 Luego, otro problema que he tenido ha sido la velocidad de mi ordenador. No es malo en absoluto, pero es un portátil gaming de hace unos 8 años y se le nota en la velocidad de ejecución y en que se recalienta como una mala cosa. Eso como tal no es un problema, es bastante rápido, pero como empecé la práctica tarde porque pillé una gripe estomacal horrible nada más volver de vacaciones y los problemas que he tenido para encontrar una configuración que funcionara para la segunda IA, pues al final solo he podido entrenal la IA en la escena de prueba que hice como concepto porque en la otra tarda mucho al tener tantos agentes en pantalla.
+
+#### Resultados
+
+Sobre el papel, son bastante buenos. Se ha maximizado bastante la recompensa y los resultados se mantienen más o menos estables.
+
+![Reward Wander](image-9.png)
+![Distribución Wander](image-8.png)
+
+Sin embargo, en la práctica el movimiento es muy robótico y la IA tiene una cierta tendencia a empeorar aleatoriamente sus capacidades. No sé si esto último es debido al entorno y la complejidad de la tarea o a algún parámetro de la configuración.
+
+En definitiva, tiene muchas cosas que pulir y me gustaría haber podido entrenarlo en la plaza de verdad para darle un entorno más variado, pero funciona suficientemente bien.
